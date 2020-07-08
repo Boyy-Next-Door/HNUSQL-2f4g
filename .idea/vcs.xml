@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/../.idea" vcs="Git" />
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/HNUSQL-2f4g" vcs="Git" />
     <mapping directory="E:/HNUsql" vcs="Git" />
   </component>
 </project>
