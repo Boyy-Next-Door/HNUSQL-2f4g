@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="tinySQL">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/classes/tinySQL.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
