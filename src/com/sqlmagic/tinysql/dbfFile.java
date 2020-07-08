@@ -17,7 +17,7 @@ import java.lang.*;
 import java.io.*;
 import java.sql.Types;
 
-/**
+/** aa
 dBase read/write access <br>
 @author Brian Jepson <bjepson@home.com>
 @author Marcel Ruff <ruff@swand.lake.de> Added write access to dBase and JDK 2 support
