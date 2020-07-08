@@ -33,15 +33,43 @@ import java.util.*;
 public class tinySQLCmd
 {
    static Vector tableList;
+   /*
+   动态数组，Vector 主要用在事先不知道数组的大小，或者只是需要一个可以改变大小的数组的情况。
+    */
    static String dbVersion;
    static FileWriter spoolFileWriter = (FileWriter)null;
-   static String newLine = System.getProperty("line.separator"); 
+   /*
+   FileWriter 类从 OutputStreamWriter 类继承而来。该类按字符向流中写入数据。
+    */
+   static String newLine = System.getProperty("line.separator");
+   /*
+   windows环境下的文本文件换行符:\r\n
+   linux/unix环境下的文本文件换行符:\r
+   Mac环境下的文本文件换行符:\n
+   如果要实现程序跨平台运行，则必须使用 System.lineSeparator()进行换行。
+    */
    public static void main(String[] args) throws IOException,SQLException
    {
       DatabaseMetaData dbMeta;
+      /*
+      DatabaseMetaData类是java.sql包中的类，利用它可以获取我们连接到的数据库的结构、存储等很多信息。
+      https://blog.csdn.net/anxinliu2011/article/details/7560511
+       */
       ResultSetMetaData meta;
+      /*
+      https://www.cnblogs.com/xtdxs/p/7114927.html
+       */
       ResultSet display_rs,typesRS;
+      /*
+      ResultSet，数据库结果集的数据表，通常通过执行查询数据库的语句生成。
+      https://baike.baidu.com/item/ResultSet/10061608
+       */
       BufferedReader stdin,loadFileReader;
+      /*
+      BufferedReader类从字符输入流中读取文本并缓冲字符，以便有效地读取字符，数组和行
+      可以通过构造函数指定缓冲区大小也可以使用默认大小。对于大多数用途，默认值足够大
+      https://blog.csdn.net/ai_bao_zi/article/details/81134801
+       */
       BufferedReader startReader=(BufferedReader)null;
       String[] fields;
       Connection con;

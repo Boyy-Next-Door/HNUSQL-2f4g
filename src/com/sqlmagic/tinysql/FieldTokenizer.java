@@ -41,6 +41,8 @@ public class FieldTokenizer
  * separator is (, return strings outside and inside of the brackets.  The
  * parameter returnSep indicates whether or not the actual separator characters
  * themselves should be returned.
+ * 根据输入分隔符将输入字符串拆分为字段，忽略括号或带引号的字符串中可能出现的分隔符。
+ * 如果分隔符为（，则返回括号内外的字符串。参数returnSep指示是否应返回实际的分隔符本身。
  */
    public FieldTokenizer(String inputString,char separator, boolean returnSep)
    {
@@ -55,10 +57,34 @@ public class FieldTokenizer
          fields = new String[1];
          fields[0] = inputString;
          if ( inputString.trim().length() == 0 ) return;
+         //trim：删除头尾空白符的字符串。
       }
+      debug=true;
       if ( debug ) 
          System.out.println("FieldTokenizer: "
          + " separator is " + separator + " string is <" + inputString + ">");
+      /*
+      tinySQL>create table lala(xiebo int);
+      FieldTokenizer:  separator is   string is <create table lala(xiebo int)>
+      FieldTokenizer output[0]: <create>
+      FieldTokenizer output[1]: <table>
+      FieldTokenizer output[2]: <lala(xiebo int)>
+      FieldTokenizer:  separator is , string is <lala(xiebo int)>
+      FieldTokenizer output[0]: <lala(xiebo int)>
+      FieldTokenizer:  separator is ( string is <lala(xiebo int)>
+      FieldTokenizer output[0]: <lala>
+      FieldTokenizer output[1]: <xiebo int>
+      FieldTokenizer:  separator is , string is <xiebo int>
+      FieldTokenizer output[0]: <xiebo int>
+      FieldTokenizer:  separator is   string is <XIEBO INT>
+      FieldTokenizer output[0]: <XIEBO>
+      FieldTokenizer output[1]: <INT>
+      FieldTokenizer:  separator is ( string is <XIEBO>
+      FieldTokenizer output[0]: <XIEBO>
+      FieldTokenizer:  separator is ( string is <INT>
+      FieldTokenizer output[0]: <INT>
+      DONE
+       */
       charArray[0] = separator;
       tempStrings = new Vector();
       leftBracketCount = 0;
@@ -77,6 +103,7 @@ public class FieldTokenizer
  *          Set the bracketQuoteChar for quotes within a bracket
  *          delimited string.  This will allow handling of brackets
  *          within quoted strings that are embedded within the brackets.
+ *          为括号定界字符串中的引号设置bracketQuoteChar。 这将允许处理括号内的带引号的字符串中的括号。
  */
             if ( leftBracketCount > 0 )
             {
@@ -94,6 +121,7 @@ public class FieldTokenizer
  *             A matching quote character has been found.  Check for two
  *             adjacent single quotes which represent an embedded single
  *             quote.
+ *             找到匹配的引号字符。 检查两个相邻的单引号，它们代表一个嵌入式单引号。
  */
                if ( i < inputString.length() - 1 & quoteChar == '\'' )
                {
@@ -105,7 +133,7 @@ public class FieldTokenizer
             }
          } else if ( nextChar == '(' | nextChar == ')' ) {
 /*
- *          Ignore brackets inside quoted strings.
+ *          Ignore brackets inside quoted strings.忽略带引号的字符串中的括号。
  */
             if ( quoteChar != ' ' | bracketQuoteChar != ' ' ) continue;
             if ( nextChar == '(' )
@@ -113,7 +141,7 @@ public class FieldTokenizer
                leftBracketCount++;
 /*
  *             If bracket is the separator, return the string before the
- *             left bracket.
+ *             left bracket.如果方括号是分隔符，则返回左方括号之前的字符串。
  */
                if ( separator == '(' & leftBracketCount == 1 ) 
                {
@@ -127,7 +155,7 @@ public class FieldTokenizer
                }
             } else if ( nextChar == ')' ) {
 /*
- *             Handle nested sets of brackets.
+ *             Handle nested sets of brackets.处理嵌套套括号。
  */
                rightBracketCount++;
                if ( leftBracketCount > 0 &
@@ -137,7 +165,7 @@ public class FieldTokenizer
                   {
 /*
  *                   If bracket is the separator, return the string between the
- *                   brackets.
+ *                   brackets.如果方括号是分隔符，请返回方括号之间的字符串。
  */
                      tempString = "";
                      if ( endPosn > startPosn ) 
