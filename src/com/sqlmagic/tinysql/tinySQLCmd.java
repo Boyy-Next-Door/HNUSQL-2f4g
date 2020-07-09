@@ -76,13 +76,17 @@ public class tinySQLCmd
       Statement stmt;
       FieldTokenizer ft;
       PreparedStatement pstmt=(PreparedStatement)null;
+
       int i,rsColCount,endAt,colWidth,colScale,colPrecision,typeCount,
       colType,parameterIndex,b1,b2,parameterInt,startAt,columnIndex,valueIndex;
       String fName,tableName=null,inputString,cmdString,colTypeName,dbType,
       parameterString,loadString,fieldString,readString;
       StringBuffer lineOut,prepareBuffer,valuesBuffer,inputBuffer;
+
+
       boolean echo=false;
       stdin = new BufferedReader(new InputStreamReader(System.in));
+
       try 
       {
 /*
@@ -95,7 +99,12 @@ public class tinySQLCmd
          if ( tinySQLGlobals.DEBUG ) e.printStackTrace();
       }
       fName = ".";
-      if ( args.length > 0 ) fName = args[0];
+      if ( args.length > 0 ) {
+         System.out.println("args.lenth>0");
+         fName = args[0];
+         System.out.println("arg[0] "+args[0]);
+      }
+
 /* 
  *    Establish a connection to dBase
  */
@@ -536,7 +545,7 @@ public class tinySQLCmd
       String tableName;
       ResultSet tables_rs;
       conPath = new File(tinySQLDir);
-      fileList = conPath.listFiles();
+      fileList = conPath.listFiles();//返回某个目录下所有文件和目录的绝对路径
       if ( fileList == null )
       {
          System.out.println(tinySQLDir + " is not a valid directory.");
