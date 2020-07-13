@@ -36,15 +36,15 @@ public class tinySQLWhere
 {
    Vector whereClauseList;
 /*
- * The constructor builds a Where clause object from the input string.
+ * 构造函数从输入字符串构建Where子句对象
  */
    public tinySQLWhere(String whereString,Hashtable tableDefs)
       throws tinySQLException
    {
-      FieldTokenizer ft;
+      FieldTokenizer ft;//字段标记
       Vector whereConditions;
-      tsColumn leftColumn,rightColumn;
-      Object whereObj;
+      tsColumn leftColumn,rightColumn;//左列和右列
+      Object whereObj;//子句对象
       StringBuffer fieldBuffer;
       String nextField,upperField,wherePhrase,comp,left,right,andOr,lastWord;
       Vector whereCondition;
@@ -65,9 +65,9 @@ public class tinySQLWhere
  *    subPhrases so there has to be additional logic to reconstruct 
  *    the functions.
  */
-      ft = new FieldTokenizer(whereString,'(',true);
-      fields = ft.getFields();
-      keepFields = new String[fields.length];
+      ft = new FieldTokenizer(whereString,'(',true);//找出括号内的词
+      fields = ft.getFields();//获取函数定义和子短语
+      keepFields = new String[fields.length];//临时变量
       lastWord = "NULL";
       fieldBuffer = new StringBuffer();
       foundFunction = false;
@@ -75,17 +75,17 @@ public class tinySQLWhere
       for ( i = 0; i < fields.length; i++ )
       {
          keepFields[i] = "";
-         if ( fields[i].equals("(") )
+         if ( fields[i].equals("(") )//获取左括号
          {
 /*
  *          If this is a known function reconstruct the function definition
  *          and save the entire string.
  */
-            foundFunction = Utils.isFunctionName(lastWord);
+            foundFunction = Utils.isFunctionName(lastWord);//如果是已知的函数对象，则保存整个词
             if ( foundFunction ) 
             {
                fieldBuffer.append("(");
-            } else {
+            } else {       //如果不是已知，则暂存
                if ( fieldBuffer.length() > 0 ) 
                {
                   
@@ -96,7 +96,7 @@ public class tinySQLWhere
                keepFields[keepCount] = "(";
                keepCount++;
             }
-         } else if ( fields[i].equals(")") ) {
+         } else if ( fields[i].equals(")") ) {//有括号操作同上
             if ( foundFunction ) 
             {
                fieldBuffer.append(") ");
@@ -126,7 +126,7 @@ public class tinySQLWhere
       }
       for ( i = 0; i < keepCount; i++ )
       {
-         if ( tinySQLGlobals.WHERE_DEBUG )
+         if ( tinySQLGlobals.WHERE_DEBUG )//DEBUG就会打印消息
             System.out.println("keepFields[" + i + "]=" + keepFields[i]);
          nextField = keepFields[i];
          upperField = nextField.toUpperCase();
@@ -145,9 +145,9 @@ public class tinySQLWhere
  *          Look for AND/OR keywords - if none are found process the
  *          entire string.
  */                     
-            andOr = "AND";
-            startAt = 0;
-            while ( startAt < upperField.length() )
+            andOr = "AND";//初始设置为and
+            startAt = 0;//开始位置为0
+            while ( startAt < upperField.length() )//在条件中寻找and或者or
             {
                if ( upperField.startsWith("AND ") )
                {
@@ -231,7 +231,7 @@ public class tinySQLWhere
  *             AND keyword, add the condition to the existing Vector.
  *             For an OR keyword, create a new entry in the whereClauseList.
  */
-               if ( andOr.equals("OR") )
+               if ( andOr.equals("OR") )//如果是or关键字增加一个新的向量来储存后一个条件
                {
                   whereClauseList.addElement(whereConditions);
                   whereConditions = new Vector();
@@ -240,10 +240,8 @@ public class tinySQLWhere
             }
          }
       }
-/*
- *    Add the last where condition to the list.
- */
-      if ( whereConditions.size() > 0 ) 
+
+      if ( whereConditions.size() > 0 ) //将最后一个条件加入
          whereClauseList.addElement(whereConditions);
       if ( tinySQLGlobals.WHERE_DEBUG )
          System.out.println("Where clause is \n" + toString());
