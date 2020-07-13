@@ -120,7 +120,7 @@ public abstract class tinySQL {
    protected tsResultSet sql(Object s) throws tinySQLException 
    {
 /*
- *    Build the ResultSet
+ *    Build the ResultSet  创建结果集
  */
       tsResultSet rs = null;
       tinySQLTable jtbl;

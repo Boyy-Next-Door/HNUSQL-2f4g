@@ -82,11 +82,13 @@ public class tinySQLCmd
       parameterString,loadString,fieldString,readString;
       StringBuffer lineOut,prepareBuffer,valuesBuffer,inputBuffer;
       boolean echo=false;
+
+      //这里包装了标准输入流，在命令行输入的内容就从这个stdin里读出来
       stdin = new BufferedReader(new InputStreamReader(System.in));
       try 
       {
 /*
- *       Register the JDBC driver for dBase
+ *       Register the JDBC driver for dBase 加载驱动
  */
          Class.forName("com.sqlmagic.tinysql.dbfFileDriver");
       } catch (ClassNotFoundException e) {
@@ -94,12 +96,15 @@ public class tinySQLCmd
               "JDBC Driver could not be registered!!\n");
          if ( tinySQLGlobals.DEBUG ) e.printStackTrace();
       }
+      //默认db文件夹路径为 ‘.’ 即当前文件夹
       fName = ".";
+      //.jar文件可以带参运行 第一个参数就是指定的db文件夹路径
       if ( args.length > 0 ) fName = args[0];
 /* 
- *    Establish a connection to dBase
+ *    Establish a connection to dBase 创建到db的连接
  */
       con = dbConnect(fName);
+      //如果指定的路径不是一个有效的文件夹 那么会以当前文件夹为目标重新连接
       if ( con == (Connection)null )
       {
          fName = ".";
@@ -115,6 +120,7 @@ public class tinySQLCmd
       cmdString = "NULL";
       stmt = con.createStatement();
       inputString = (String)null;
+      //带参运行的第二个参数是第一条指令语句
       if ( args.length > 1 ) inputString = args[1].trim();
       while ( !cmdString.toUpperCase().equals("EXIT") )
       {
@@ -150,19 +156,25 @@ public class tinySQLCmd
                   startReader = (BufferedReader)null;
                   continue;
                }
+
+             //如果没有带参执行 命令行会输出tinySQL> 然后等待输入流输入一行指令
             } else if ( args.length == 0 ) {
                System.out.print("tinySQL>");
                inputString = stdin.readLine().trim();
             }
+            //读到了终止符 字符串是null 那么和exit quit效果一样 都是结束程序
             if ( inputString == (String)null ) break;
             if (inputString.toUpperCase().startsWith("EXIT") |
                 inputString.toUpperCase().startsWith("QUIT") ) break;
             startAt = 0;
             while ( startAt < inputString.length() - 1 )
             {
+               //寻找本条指令的结束符‘;’
                endAt = inputString.indexOf(";",startAt);
-               if ( endAt == -1 )
+               //本行不是完整的指令
+               if ( endAt == -1 )   //那么结束位置就是最后一个字符
                   endAt = inputString.length();
+               //①本行带有; 以此左边作为本条指令 ②本行不含; 以整行作为本条指令  （这里应该是不支持像mysql一样的指令换行）
                cmdString = inputString.substring(startAt,endAt);
                if ( echo ) System.out.println(cmdString);
                startAt = endAt + 1;
@@ -199,11 +211,17 @@ public class tinySQLCmd
                   if ( tinySQLGlobals.DEBUG )
                      System.out.println(lineOut.toString());
                   displayResults(display_rs);
-               } else if ( cmdString.toUpperCase().startsWith("CONNECT") ) {
+               }
+               // CONNECT指令  连接到指定数据库（绑定文件夹）
+               else if ( cmdString.toUpperCase().startsWith("CONNECT") ) {
                   con = dbConnect(cmdString.substring(8,cmdString.length()));
-               } else if ( cmdString.toUpperCase().startsWith("HELP") ) {
+               }
+               //HELP指令  打印help信息
+               else if ( cmdString.toUpperCase().startsWith("HELP") ) {
                   helpMsg(cmdString);
-               } else if ( cmdString.toUpperCase().startsWith("DESCRIBE") ) {
+               }
+               //DESCRIBE指令 描述当前db中的某一张表
+               else if ( cmdString.toUpperCase().startsWith("DESCRIBE") ) {
                   dbMeta = con.getMetaData();
                   tableName = cmdString.toUpperCase().substring(9);
                   display_rs = dbMeta.getColumns(null,null,tableName,null);
@@ -229,13 +247,19 @@ public class tinySQLCmd
                      lineOut.append(padString(colTypeName,20) + padString(colType,12));
                      System.out.println(lineOut.toString());
                   }
-               } else if ( cmdString.toUpperCase().equals("SHOW TABLES") ) {
+               }
+               //SHOW TABLES指令
+               else if ( cmdString.toUpperCase().equals("SHOW TABLES") ) {
                   for ( i = 0; i < tableList.size(); i++ )
                      System.out.println((String)tableList.elementAt(i));
-               } else if ( cmdString.toUpperCase().equals("SHOW TYPES") ) {
+               }
+               //SHOW TYPES指令
+               else if ( cmdString.toUpperCase().equals("SHOW TYPES") ) {
                   typesRS = dbMeta.getTypeInfo();
                   typeCount = displayResults(typesRS);
-               } else if ( cmdString.toUpperCase().startsWith("SET ") ) {
+               }
+               //SET指令 这应该是tinySQL自带的一些辅助功能的开关设置
+               else if ( cmdString.toUpperCase().startsWith("SET ") ) {
 /*
  *                Support for SET DEBUG ON/OFF and SET ECHO ON/OFF
  */
@@ -261,7 +285,9 @@ public class tinySQLCmd
                         tinySQLGlobals.EX_DEBUG = true;
                      else tinySQLGlobals.EX_DEBUG = false;
                   }
-               } else if ( cmdString.toUpperCase().startsWith("SPOOL ") ) {
+               }
+               //SPOOL指令 输出重定向到文件
+               else if ( cmdString.toUpperCase().startsWith("SPOOL ") ) {
 /*
  *                Spool output to a file.
  */
@@ -287,7 +313,9 @@ public class tinySQLCmd
                         + spoolEx.getMessage() + newLine);
                      } 
                   }
-               } else if ( cmdString.toUpperCase().startsWith("START ") ) {
+               }
+               //START指令 读取sql文件
+               else if ( cmdString.toUpperCase().startsWith("START ") ) {
                   ft = new FieldTokenizer(cmdString,' ',false);
                   fName = ft.getField(1);
                   if ( !fName.toUpperCase().endsWith(".SQL") ) fName += ".SQL";
@@ -298,7 +326,9 @@ public class tinySQLCmd
                      startReader = (BufferedReader)null;
                      throw new tinySQLException("No such file: " + fName);
                   }
-               } else if ( cmdString.toUpperCase().startsWith("LOAD") ) {
+               }
+               //LOAD指令
+               else if ( cmdString.toUpperCase().startsWith("LOAD") ) {
                   ft = new FieldTokenizer(cmdString,' ',false);
                   fName = ft.getField(1);
                   tableName = ft.getField(3);
@@ -527,6 +557,13 @@ public class tinySQLCmd
          outputBuffer.append(blanks);
       return outputBuffer.toString().substring(0,padLength);
    }
+
+   /**
+    * 创建到指定数据库的连接
+    * @param tinySQLDir 指定数据库的dir路径
+    * @return  返回java.sql标准下的Connection
+    * @throws SQLException
+    */
    private static Connection dbConnect(String tinySQLDir) throws SQLException
    {
       Connection con=null;
@@ -535,13 +572,17 @@ public class tinySQLCmd
       File[] fileList;
       String tableName;
       ResultSet tables_rs;
+      //指定的文件夹路径
       conPath = new File(tinySQLDir);
+      //列出当前文件夹下的文件名
       fileList = conPath.listFiles();
+      //文件夹为空
       if ( fileList == null )
       {
          System.out.println(tinySQLDir + " is not a valid directory.");
          return (Connection)null;
       } else {
+         //绑定到当前文件夹 即认为连接到了指定db 返回该文件夹在系统下的绝对路径（默认的数据库fname为 ‘.’ 即在当前文件夹）
          System.out.println("Connecting to " + conPath.getAbsolutePath());
          con = DriverManager.getConnection("jdbc:dbfFile:" + conPath, "", "");
       }

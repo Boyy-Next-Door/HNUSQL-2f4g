@@ -72,7 +72,9 @@ public class dbfFileDriver extends tinySQLDriver {
                   throws SQLException {
     if ( url != (String)null )
     {
-       if ( url.length() > 13 ) tinySQLGlobals.readLongNames(url.substring(13));
+       if ( url.length() > 13 )
+         //
+         tinySQLGlobals.readLongNames(url.substring(13));
     }
     return (tinySQLConnection) new dbfFileConnection(user, url, d);
   }

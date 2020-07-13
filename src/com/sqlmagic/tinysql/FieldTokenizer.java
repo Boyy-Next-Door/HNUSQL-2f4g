@@ -59,8 +59,9 @@ public class FieldTokenizer
          if ( inputString.trim().length() == 0 ) return;
          //trim：删除头尾空白符的字符串。
       }
-      debug=true;
-      if ( debug ) 
+//      debug=true;
+      debug=false;
+      if ( debug )
          System.out.println("FieldTokenizer: "
          + " separator is " + separator + " string is <" + inputString + ">");
       /*

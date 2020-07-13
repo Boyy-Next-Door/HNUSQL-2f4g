@@ -46,6 +46,7 @@ public class tinySQLGlobals
    static boolean EX_DEBUG = false;
    static int longNamesInFileCount;
    static boolean debug = false;
+   //
    public static void readLongNames(String inputDataDir)
    {
       String fullPath,longNameRecord;
