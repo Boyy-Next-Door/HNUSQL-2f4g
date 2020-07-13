@@ -4,14 +4,8 @@
     <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/FieldTokenizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/FieldTokenizer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFileDriver.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFileDriver.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLGlobals.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLGlobals.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/FieldTokenizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/FieldTokenizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/dbfFileDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/dbfFileDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLCmd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLCmd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLGlobals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLGlobals.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,17 +16,22 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1eIxUcxVcXDax6F20wReYdlNI9f" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.30095923" />
@@ -69,28 +68,42 @@
       <option name="presentableId" value="Default" />
       <updated>1594022924431</updated>
       <workItem from="1594022926065" duration="1508000" />
-      <workItem from="1594279664809" duration="4299000" />
-      <workItem from="1594369359952" duration="1278000" />
-      <workItem from="1594519386678" duration="370000" />
+      <workItem from="1594027226524" duration="110000" />
+      <workItem from="1594082578672" duration="8992000" />
+      <workItem from="1594170832456" duration="8125000" />
+      <workItem from="1594259708637" duration="1384000" />
     </task>
+    <task id="LOCAL-00001" summary="一点点注释">
+      <created>1594170959320</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1594170959321</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="pull前commit 主要是配置文件变了" />
-    <option name="LAST_COMMIT_MESSAGE" value="pull前commit 主要是配置文件变了" />
+    <MESSAGE value="一点点注释" />
+    <option name="LAST_COMMIT_MESSAGE" value="一点点注释" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="539" y="183" key="#Project_Structure" timestamp="1594023211405">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="256" y="0" key="#Project_Structure" timestamp="1594112043039">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state x="256" y="0" key="#Project_Structure/0.0.1280.800@0.0.1280.800" timestamp="1594112043039" />
     <state x="539" y="183" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1594023211405" />
-    <state x="689" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1594200591949">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="240" y="49" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594104525173">
+      <screen x="0" y="23" width="1280" height="722" />
     </state>
-    <state x="689" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1594200591949" />
+    <state x="240" y="49" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1280.722@0.23.1280.722" timestamp="1594104525173" />
+    <state x="367" y="193" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1594105015323">
+      <screen x="0" y="23" width="1280" height="722" />
+    </state>
+    <state x="367" y="193" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1280.722@0.23.1280.722" timestamp="1594105015323" />
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1594024046751">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -99,41 +112,64 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="793" y="413" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594023049527" />
-    <state x="547" y="113" key="CommitChangelistDialog2" timestamp="1594601841555">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="227" y="23" key="CommitChangelistDialog2" timestamp="1594170958918">
+      <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state x="547" y="113" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1594601841555" />
+    <state x="227" y="23" key="CommitChangelistDialog2/0.23.1280.723@0.23.1280.723" timestamp="1594170958918" />
     <state x="724" y="265" key="FileChooserDialogImpl" timestamp="1594023647448">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="724" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1594023647448" />
-    <state width="1877" height="480" key="GridCell.Tab.0.bottom" timestamp="1594201002353">
+    <state width="1238" height="169" key="GridCell.Tab.0.bottom" timestamp="1594201209215">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="938" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594024122531" />
+    <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1594114452716" />
+    <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.723@0.23.1280.723" timestamp="1594195265090" />
+    <state width="1238" height="169" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
+    <state width="1238" height="169" key="GridCell.Tab.0.center" timestamp="1594201209214">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="938" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594024122531" />
+    <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
+    <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
+    <state width="1238" height="169" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
+    <state width="1238" height="169" key="GridCell.Tab.0.left" timestamp="1594201209214">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="938" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594024122530" />
+    <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
+    <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.723@0.23.1280.723" timestamp="1594195265086" />
+    <state width="1238" height="169" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
+    <state width="1238" height="169" key="GridCell.Tab.0.right" timestamp="1594201209215">
+      <screen x="0" y="23" width="1280" height="777" />
+    </state>
+    <state width="938" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594024122531" />
+    <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
+    <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
+    <state width="1238" height="169" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
+    <state x="427" y="99" key="SettingsEditor" timestamp="1594023819602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="480" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594201002353" />
-    <state width="1877" height="480" key="GridCell.Tab.0.center" timestamp="1594201002352">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="427" y="99" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1594023819602" />
+    <state x="240" y="124" key="Vcs.Push.Dialog.v2" timestamp="1594170965651">
+      <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state width="1877" height="480" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594201002352" />
-    <state width="1877" height="480" key="GridCell.Tab.0.left" timestamp="1594201002350">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.723@0.23.1280.723" timestamp="1594170965651" />
+    <state x="407" y="185" width="670" height="471" key="search.everywhere.popup" timestamp="1594113190247">
+      <screen x="0" y="23" width="1280" height="722" />
     </state>
-    <state width="1877" height="480" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594201002350" />
-    <state width="1877" height="480" key="GridCell.Tab.0.right" timestamp="1594201002352">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="480" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594201002352" />
-    <state x="427" y="99" key="SettingsEditor" timestamp="1594197551102">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="427" y="99" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1594197551102" />
-    <state x="640" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1594519408349">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="640" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594519408349" />
-    <state x="610" y="234" width="672" height="678" key="search.everywhere.popup" timestamp="1594200961736">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="610" y="234" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1594200961736" />
+    <state x="610" y="234" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1594023030334" />
+    <state x="407" y="185" width="670" height="471" key="search.everywhere.popup/0.23.1280.722@0.23.1280.722" timestamp="1594113190247" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLCmd.java</url>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
