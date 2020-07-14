@@ -3,5 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/com/sqlmagic/tinysql/Utils.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLDatabaseMetaData.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/ui/DBMSFrame.java" charset="GBK" />
   </component>
 </project>
