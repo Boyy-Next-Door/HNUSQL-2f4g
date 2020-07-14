@@ -45,7 +45,7 @@ public class tinySQLCmd
    /*
    windows环境下的文本文件换行符:\r\n
    linux/unix环境下的文本文件换行符:\r
-   Mac环境下的文本文件换行符:\n
+   Mac环境下的文本文件换行符:\ng
    如果要实现程序跨平台运行，则必须使用 System.lineSeparator()进行换行。
     */
    public static void main(String[] args) throws IOException,SQLException
