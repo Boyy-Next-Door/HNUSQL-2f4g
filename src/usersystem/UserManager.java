@@ -6,10 +6,14 @@ import java.io.*;
 public class UserManager {
     //用户存储文件路径
     private static final String fileDir = "src/usersystem/user_file.dbuf";
-
     //用户树
     private static UserTree tree = null;
+    //开机加载userTree
+    static {
+        readTreeFromFile();
+    }
 
+    //从dbuf文件中读取userTree
     private static void readTreeFromFile() {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileDir));
@@ -24,10 +28,12 @@ public class UserManager {
         }
     }
 
+    //将内存中的tree写入文件
     private static void writeTreeToFile(){
         ObjectOutputStream objectOutputStream = null;
         try {
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream("src/usersystem/user_file.dbuf"));
+            //覆盖之前的dbuf文件
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream("src/usersystem/user_file.dbuf",false));
             objectOutputStream.writeObject(tree);
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,12 +47,9 @@ public class UserManager {
     }
 
     public static void main(String[] args) {
-        readTreeFromFile();
         System.out.println(tree);
         tree.addUserToTree(new CommonUser("100"));
         writeTreeToFile();
-
-        readTreeFromFile();
         System.out.println(tree);
     }
 }

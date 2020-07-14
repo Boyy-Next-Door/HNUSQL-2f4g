@@ -280,14 +280,17 @@ public class DBMSFrame extends javax.swing.JFrame {
         switch (selectedIndex){
             //第一页 查看所有表
             case 0:
-//                jList_tables.
-                break;
+                jButton_save.setVisible(true);
 
+                break;
+            //第二页 查看表、设计表、索引
             case 1:
-
+                jButton_save.setVisible(true);
                 break;
+            //第三页 cmd
             case 2:
-
+                jButton_save.setVisible(false);
+                jTextPane_cmd.setText("CoolDB>");
                 break;
         }
     }
