@@ -93,14 +93,14 @@ class tsColumn implements Cloneable
       longName = name;
       nameLength = name.length();
       contextList = new Vector();
-      contextList.addElement(inputContext);
+      contextList.addElement(inputContext);//将输入添加到COL中
       ft = new FieldTokenizer(name,'(',false);
       if ( ft.countFields() == 2 ) 
       {
 /*
- *       This is a function rather than a simple column or constant
+ *       代表这个字段是一个函数而不是一个简单的列或者常量
  */
-         functionName = ft.getField(0).toUpperCase();
+         functionName = ft.getField(0).toUpperCase();//找一下函数名称
          if ( functionName.equals("COUNT") )
          {
             type = Types.INTEGER;
@@ -133,7 +133,7 @@ class tsColumn implements Cloneable
  *          MAX and MIN functions can be either FLOAT or CHAR types
  *          depending upon the type of the argument.
  */
-            if ( functionName.equals("MAX") | functionName.equals("MIN") ) 
+            if ( functionName.equals("MAX") | functionName.equals("MIN") ) //找出MAX和MIN函数的类型
             {
                if ( argIndex > 0 ) 
                   throw new tinySQLException("Function can only have 1 argument");
@@ -305,7 +305,7 @@ class tsColumn implements Cloneable
    {
       return clear( (String)null );
    }
-   public boolean clear(String inputTableName)
+   public boolean clear(String inputTableName)//清空表中每列
    {
       int i;
       tsColumn argColumn;
@@ -346,7 +346,7 @@ class tsColumn implements Cloneable
  * must be done using updateFunctions because of the requirement 
  * to evaluate summary functions only once per row.
  */
-   public void update(String inputColumnName,String inputColumnValue)
+   public void update(String inputColumnName,String inputColumnValue)//更新表中的值
       throws tinySQLException
    {
       int i;
