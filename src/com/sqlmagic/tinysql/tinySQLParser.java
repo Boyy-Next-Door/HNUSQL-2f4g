@@ -38,11 +38,12 @@ import java.sql.Types;
 public class tinySQLParser
 {
    Vector columnList,tableList,actionList,valueList,contextList,
-   columnAliasList,columns;
-   Hashtable tables;
+   columnAliasList,columns,userList;
+   Hashtable tables,users;
    tinySQL dbEngine;
    tinySQLWhere whereClause;
    String tableName,tableAlias,dataDir;
+   String userName,password;
    String statementType=(String)null;
    String lastKeyWord=(String)null,orderType=(String)null;
    String oldColumnName=(String)null,newColumnName=(String)null;
@@ -142,7 +143,7 @@ public class tinySQLParser
    public void setPhrase(String inputKeyWord,String inputString)
       throws tinySQLException
    {
-      String tableName,tableAlias,tableNameAndAlias,userName;
+      String tableName,tableAlias,tableNameAndAlias,userName,password;
       tinySQLTable changeTable;
       String getKeyWord1,getKeyWord2;
       String[] getKeyWord;
@@ -349,6 +350,30 @@ public class tinySQLParser
             valueList.addElement(UtilString.removeQuotes(ft2.getField(1)));
          } else if ( inputKeyWord.equals("WHERE") ) {
             whereClause = new tinySQLWhere(nextField,tables);
+         } else if( inputKeyWord.equals("USER") ){
+            statementType = statementType + "_USER";
+            /*DROP_USER or CREATE USER*/
+            if ( statementType.equals("DROP_USER") ){
+               /*
+                * DROP USER username
+                */
+               userName = nextField;
+               try
+               {
+                  validateUser(upperField,true);//closeUser
+               } catch ( Exception dropEx ) {
+                  throw new tinySQLException("User " + userName
+                          + " does not exist.");
+               }
+            }else if ( statementType.equals("CREATE_USER") ){
+               /*
+                * CREATE USER username IDENTIFIED BY password;
+                */
+               userName = nextField;
+            }
+         } else if( inputKeyWord.equals("IDENTIFIED") ){
+            ft2 = new FieldTokenizer(nextField,' ',false);
+            password = ft2.getField(1);
          } else if( inputKeyWord.equals("GRANT")) {
             statementType = "GRANT";
 
@@ -387,6 +412,16 @@ public class tinySQLParser
 
       }
       lastKeyWord = inputKeyWord;
+   }
+   public void validateUser(String userSpec) throws tinySQLException
+   {
+      validateUser(userSpec,false);
+   }
+   public void validateUser(String userSpec,boolean closeUser)
+           throws tinySQLException
+   {
+      String userName,password;
+      FieldTokenizer ftUser;
    }
    public void validateTable(String tableSpec) throws tinySQLException
    {
