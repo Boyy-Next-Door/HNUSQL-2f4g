@@ -6,9 +6,9 @@ public class MainTest {
         //test2();
         //test3();
     }
-    //æµ‹è¯•æ ‘ç»“æ„ã€å±‚æ¬¡éå†ä¸æˆæƒï¼ˆæˆåŠŸï¼‰
+    //²âÊÔÊ÷½á¹¹¡¢²ã´Î±éÀúÓëÊÚÈ¨£¨³É¹¦£©
     public static void test1(){
-        //åˆ›å»ºadminç”¨æˆ·
+        //´´½¨adminÓÃ»§
         Admin admin = Admin.getAdmin();
         CommonUser u1 = new CommonUser("1");
         CommonUser u2 = new CommonUser("2");
@@ -31,7 +31,7 @@ public class MainTest {
         tree.addUserToTree(u9);
 
         tree.levelOrderTraversePrint(admin);
-        System.out.println("-----------æŒªåŠ¨ç»“ç‚¹------------");
+        System.out.println("-----------Å²¶¯½áµã------------");
         tree.shiftUser(u1,u1.getParent(), u3);
         tree.shiftUser(u4,u4.getParent(), u3);
         tree.shiftUser(u2,u2.getParent(), u5);
@@ -39,10 +39,10 @@ public class MainTest {
         tree.shiftUser(u8,u8.getParent(), u1);
         tree.shiftUser(u9,u9.getParent(), u8);
         tree.levelOrderTraversePrint(admin);
-        System.out.println("å…±æœ‰" + tree.getNumOfUser() + "ä¸ªç”¨æˆ·");
-        //System.out.println("æ ‘çš„é«˜åº¦ä¸ºï¼š" + tree.updateHeight(admin));
-        System.out.println("æ ‘çš„é«˜åº¦ä¸ºï¼š" + tree.getHeight());
-        System.out.println("éå†æ ‘ä¸­çš„ç”¨æˆ·listï¼š");
+        System.out.println("¹²ÓĞ" + tree.getNumOfUser() + "¸öÓÃ»§");
+        //System.out.println("Ê÷µÄ¸ß¶ÈÎª£º" + tree.updateHeight(admin));
+        System.out.println("Ê÷µÄ¸ß¶ÈÎª£º" + tree.getHeight());
+        System.out.println("±éÀúÊ÷ÖĞµÄÓÃ»§list£º");
         for(User u: tree.getUl()){
             System.out.print("user id:" + u.getId());
             if(u.getParent() != null)
@@ -50,11 +50,11 @@ public class MainTest {
             System.out.print(" level:" + u.getLevel());
             System.out.println();
         }
-        System.out.println("-----------æˆæƒtest------------");
+        System.out.println("-----------ÊÚÈ¨test------------");
         tree.processGrant(admin,u4, (byte) 0x00);
         tree.levelOrderTraversePrint(admin);
-        System.out.println("æ ‘çš„é«˜åº¦ä¸ºï¼š" + tree.getHeight());
-        System.out.println("éå†æ ‘ä¸­çš„ç”¨æˆ·listï¼š");
+        System.out.println("Ê÷µÄ¸ß¶ÈÎª£º" + tree.getHeight());
+        System.out.println("±éÀúÊ÷ÖĞµÄÓÃ»§list£º");
         for(User u: tree.getUl()){
             System.out.print("user id:" + u.getId());
             if(u.getParent() != null)
@@ -64,24 +64,24 @@ public class MainTest {
         }
         //tree.levelOrderTraverse(tree.getRoot());
     }
-    //æµ‹è¯•å•ä¾‹æ¨¡å¼ï¼ˆæˆåŠŸï¼‰
+    //²âÊÔµ¥ÀıÄ£Ê½£¨³É¹¦£©
     public static void test2(){
         Admin admin1 = Admin.getAdmin();
         Admin admin2 = Admin.getAdmin();
-        System.out.println("---------------ä¸‹é¢æ˜¯â€œadmin1â€--------------------");
+        System.out.println("---------------ÏÂÃæÊÇ¡°admin1¡±--------------------");
         System.out.println(admin1.getId());
         System.out.println(admin1.getName());
         System.out.println(admin1.getPassword());
         System.out.println(admin1.getParent());
         System.out.println(Integer.toBinaryString(admin1.getPermission()));
-        System.out.println("---------------ä¸‹é¢æ˜¯â€œadmin2â€--------------------");
+        System.out.println("---------------ÏÂÃæÊÇ¡°admin2¡±--------------------");
         System.out.println(admin2.getId());
         System.out.println(admin2.getName());
         System.out.println(admin2.getPassword());
         System.out.println(admin2.getParent());
         System.out.println(Integer.toBinaryString(admin1.getPermission()));
     }
-    //æµ‹è¯•ç™»å½•
+    //²âÊÔµÇÂ¼
     public static void test3(){
         Admin admin = Admin.getAdmin();
         UserTree tree = new UserTree(admin);
@@ -90,11 +90,11 @@ public class MainTest {
         String password1 = "123456";
         String name2 = "bayanwen";
         String password2 = "1234567";
-        //1.å¯ä»¥ç™»é™†æˆåŠŸç”¨ä¾‹ï¼š
+        //1.¿ÉÒÔµÇÂ½³É¹¦ÓÃÀı£º
         System.out.println(tree.logIn(name1, password1));
-        //2.ç”¨æˆ·ä¸å­˜åœ¨ç”¨ä¾‹ï¼š
+        //2.ÓÃ»§²»´æÔÚÓÃÀı£º
         System.out.println(tree.logIn(name2, password1));
-        //3.ç”¨æˆ·å¯†ç é”™è¯¯ç”¨ä¾‹ï¼š
+        //3.ÓÃ»§ÃÜÂë´íÎóÓÃÀı£º
         System.out.println(tree.logIn(name1, password2));
 
     }

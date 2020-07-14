@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class User {
-    protected String id;  //用户id
-    protected  String name;  //用户名
-    protected String password;  //用户密码
-    protected User parent;  //该用户的父结点
-    protected int level;  //结点的层数
-    protected List<User> children = new ArrayList<>();  //该用户的子节点
-    protected byte permission;  //该用户的权限
+    private String id;  //用户id
+    private  String name;  //用户名
+    private String password;  //用户密码
+    private User parent;  //该用户的父结点
+    private int level;  //结点的层数
+    private List<User> children = new ArrayList<>();  //该用户的子节点
+    private byte permission;  //该用户的权限
     abstract public void addChild(User user);
 
     public User() {
+    }
+
+    public User(String id) {
+        this.id = id;
     }
 
     public String getId() {

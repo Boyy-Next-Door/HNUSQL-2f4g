@@ -51,14 +51,14 @@ public class UserTree {
         if (tmp == null) return;
         LinkedList<User> queue = new LinkedList<>();
         queue.add(tmp);
-        User curr = null;
+        User curr;
         while (!queue.isEmpty()){
             curr = queue.element();
             queue.remove();
             System.out.print(curr.getId() + " ");
 
-            if (!curr.children.isEmpty()){
-                queue.addAll(curr.children);
+            if (!curr.getChildren().isEmpty()){
+                queue.addAll(curr.getChildren());
             }
         }
         System.out.println();
@@ -67,15 +67,15 @@ public class UserTree {
     public User levelOrderTraverse(String name){
         LinkedList<User> queue = new LinkedList<>();
         queue.add(root);
-        User curr = null;
+        User curr;
         while (!queue.isEmpty()){
             curr = queue.element();
             if (name.equals(curr.getName())){
                 return curr;
             }
             else queue.remove();
-            if (!curr.children.isEmpty()){
-                queue.addAll(curr.children);
+            if (!curr.getChildren().isEmpty()){
+                queue.addAll(curr.getChildren());
             }
         }
         return null;
@@ -84,12 +84,12 @@ public class UserTree {
      * 维护树的height属性
      */
     public int updateHeight(User user){
-        if (user.children.isEmpty()) {
+        if (user.getChildren().isEmpty()) {
             return user.getLevel();
         }
         else{
-            int max = user.children.get(0).getLevel();
-            for(User child: user.children){
+            int max = user.getChildren().get(0).getLevel();
+            for(User child: user.getChildren()){
                 int h1 = updateHeight(child);
                 if (max < h1)
                     max = h1;
@@ -119,7 +119,7 @@ public class UserTree {
         //1.更改u1的parent属性
         u1.setParent(p2);
         //2.在p1的children列表中删去u1
-        Iterator iterator = p1.children.iterator();
+        Iterator iterator = p1.getChildren().iterator();
         while (iterator.hasNext()){
             if (iterator.next().equals(u1)){
                 iterator.remove();
@@ -138,10 +138,11 @@ public class UserTree {
      * 处理grant子句
      * @param u1 授权用户
      * @param u2 被授权用户
-     * @param permission
+     * @param permission 要授予的权限
      */
     public void processGrant(User u1, CommonUser u2, byte permission){
         //1.如果要授给别人的权限，有不在【u1已有的权限】这之中的权限，则拒绝授权
+        //这部分if之内的判断还在实现，此版本不作数
         if (permission > u1.getPermission()) {
             System.err.println("Unauthorized authorization!");
         }
