@@ -19,10 +19,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="commit">
+    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="user system 0.2">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLGlobals.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLGlobals.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/Admin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/CommonUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/CommonUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/MainTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/MainTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/UserTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/UserTree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/CommonUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/CommonUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/MainTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/UserTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/UserTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +49,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1eIxUcxVcXDax6F20wReYdlNI9f" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -63,9 +71,9 @@
     <property name="project.structure.side.proportion" value="0.30095923" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
-  <component name="RunManager" selected="Application.User1">
-    <configuration name="User1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="usersystem.User1" />
+  <component name="RunManager" selected="Application.MainTest">
+    <configuration name="MainTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="usersystem.MainTest" />
       <module name="tinySQL-2" />
       <extension name="coverage">
         <pattern>
@@ -118,7 +126,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.User1" />
+        <item itemvalue="Application.MainTest" />
         <item itemvalue="Application.tinySQLCmd (2)" />
         <item itemvalue="Application.tinySQLCmd (1)" />
         <item itemvalue="Application.tinySQLCmd" />
@@ -155,7 +163,21 @@
       <option name="project" value="LOCAL" />
       <updated>1594605310865</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="user system 0.2">
+      <created>1594700082788</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1594700082788</updated>
+    </task>
+    <task id="LOCAL-00004" summary="user system 0.2">
+      <created>1594700118015</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1594700118015</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,18 +188,18 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="一点点注释" />
     <MESSAGE value="commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit" />
+    <MESSAGE value="user system 0.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="user system 0.2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="256" y="0" key="#Project_Structure" timestamp="1594112043039">
@@ -194,9 +216,10 @@
     </state>
     <state x="551" y="245" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1594695679501" />
     <state x="367" y="193" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1280.722@0.23.1280.722" timestamp="1594105015323" />
-    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1594024046751">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="612" y="190" key="#com.intellij.ide.util.MemberChooser" timestamp="1594701376237">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
+    <state x="612" y="190" key="#com.intellij.ide.util.MemberChooser/0.0.1536.864@0.0.1536.864" timestamp="1594701376237" />
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1594024046751" />
     <state x="793" y="413" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1594023049527">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -210,60 +233,84 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="629" y="135" key="#tinySQLCmd_(2)/0.0.1920.1040@0.0.1920.1040" timestamp="1594697216124" />
-    <state x="341" y="0" key="CommitChangelistDialog2" timestamp="1594710287474">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="227" y="23" key="CommitChangelistDialog2" timestamp="1594170958918">
+      <screen x="0" y="23" width="1280" height="723" />
     </state>
-    <state x="341" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1594710287474" />
     <state x="227" y="23" key="CommitChangelistDialog2/0.23.1280.723@0.23.1280.723" timestamp="1594170958918" />
-    <state x="184" y="85" key="DiffContextDialog" timestamp="1594710278519">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="184" y="85" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594710278519" />
     <state x="724" y="265" key="FileChooserDialogImpl" timestamp="1594023647448">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="724" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1594023647448" />
-    <state width="1877" height="271" key="GridCell.Tab.0.bottom" timestamp="1594710267091">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="746" height="330" key="GridCell.Tab.0.bottom" timestamp="1594701683285">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1877" height="271" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594710267091" />
+    <state width="746" height="330" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1594701683285" />
+    <state width="938" height="284" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594698008192" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1594114452716" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.723@0.23.1280.723" timestamp="1594195265090" />
     <state width="1238" height="169" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
-    <state width="1877" height="271" key="GridCell.Tab.0.center" timestamp="1594710267091">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="746" height="330" key="GridCell.Tab.0.center" timestamp="1594701683285">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1877" height="271" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594710267091" />
+    <state width="746" height="330" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1594701683285" />
+    <state width="938" height="284" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594698008192" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
     <state width="1238" height="169" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1877" height="271" key="GridCell.Tab.0.left" timestamp="1594710267091">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="746" height="330" key="GridCell.Tab.0.left" timestamp="1594701683284">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1877" height="271" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594710267091" />
+    <state width="746" height="330" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1594701683284" />
+    <state width="938" height="284" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594698008192" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.723@0.23.1280.723" timestamp="1594195265086" />
     <state width="1238" height="169" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1877" height="271" key="GridCell.Tab.0.right" timestamp="1594710267091">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="746" height="330" key="GridCell.Tab.0.right" timestamp="1594701683285">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1877" height="271" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594710267091" />
+    <state width="746" height="330" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1594701683285" />
+    <state width="938" height="284" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594698008192" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
     <state width="1238" height="169" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
+    <state width="746" height="277" key="GridCell.Tab.1.bottom" timestamp="1594701495148">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="746" height="277" key="GridCell.Tab.1.bottom/0.0.1536.864@0.0.1536.864" timestamp="1594701495148" />
+    <state width="746" height="277" key="GridCell.Tab.1.center" timestamp="1594701495147">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="746" height="277" key="GridCell.Tab.1.center/0.0.1536.864@0.0.1536.864" timestamp="1594701495147" />
+    <state width="746" height="277" key="GridCell.Tab.1.left" timestamp="1594701495147">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="746" height="277" key="GridCell.Tab.1.left/0.0.1536.864@0.0.1536.864" timestamp="1594701495147" />
+    <state width="746" height="277" key="GridCell.Tab.1.right" timestamp="1594701495147">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="746" height="277" key="GridCell.Tab.1.right/0.0.1536.864@0.0.1536.864" timestamp="1594701495147" />
+    <state x="783" y="130" key="RollbackChangesDialog" timestamp="1594700432463">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="783" y="130" key="RollbackChangesDialog/0.0.1536.864@0.0.1536.864" timestamp="1594700432463" />
     <state x="427" y="99" key="SettingsEditor" timestamp="1594023819602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="427" y="99" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1594023819602" />
-    <state x="360" y="145" key="Vcs.Push.Dialog.v2" timestamp="1594605322993">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="288" y="120" key="Vcs.Push.Dialog.v2" timestamp="1594700282686">
+      <screen x="0" y="0" width="1536" height="864" />
     </state>
+    <state x="288" y="120" key="Vcs.Push.Dialog.v2/0.0.1536.864@0.0.1536.864" timestamp="1594700282686" />
     <state x="360" y="145" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1594605322993" />
     <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.723@0.23.1280.723" timestamp="1594170965651" />
-    <state x="638" y="309" key="git4idea.merge.GitPullDialog" timestamp="1594710293545">
+    <state x="638" y="309" key="git4idea.merge.GitPullDialog" timestamp="1594605358944">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="638" y="309" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594710293545" />
+    <state x="638" y="309" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594605358944" />
+    <state x="608" y="188" key="refactoring.ChangeSignatureDialog" timestamp="1594701102821">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="608" y="188" key="refactoring.ChangeSignatureDialog/0.0.1536.864@0.0.1536.864" timestamp="1594701102821" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1594696688074">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

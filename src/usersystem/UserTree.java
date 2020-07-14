@@ -1,39 +1,31 @@
 package usersystem;
 
-import com.alibaba.fastjson.JSON;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class UserTree implements Serializable {
+public class UserTree {
 
-    private User root;
+    private Admin root;
     private int height;
     private int numOfUser;
     private ArrayList<User> ul = new ArrayList<>();
 
-    public UserTree(User root) {
-        this.root = root;
+    public UserTree(Admin admin) {
+        this.root = admin;
         ul.add(root);
         numOfUser = 1;
         height = 1;
-    }
-    public UserTree(){
-
     }
 
     public User getRoot() {
         return root;
     }
 
-    public void setRoot(User root) {
-        this.root = root;
-    }
+    /**  æ ‘çš„æ ¹èŠ‚ç‚¹ä¸éœ€è¦ä¿®æ”¹
+     public void setRoot(Admin root) {
+     this.root = root;
+     }*/
 
     public int getHeight() {
         return height;
@@ -47,23 +39,15 @@ public class UserTree implements Serializable {
         return numOfUser;
     }
 
-    public void setNumOfUser(int numOfUser) {
-        this.numOfUser = numOfUser;
-    }
-
-    public void setUl(ArrayList<User> ul) {
-        this.ul = ul;
-    }
-
     public ArrayList<User> getUl() {
         return ul;
     }
 
     /**
-     * ½èÖú¶ÓÁĞ²ã´Î±éÀúÊ÷£¬²¢´òÓ¡id
-     * @param tmp ±éÀú¿ªÊ¼µÄ½áµã
+     * å€ŸåŠ©é˜Ÿåˆ—å±‚æ¬¡éå†æ ‘ï¼Œå¹¶æ‰“å°id
+     * @param tmp éå†å¼€å§‹çš„ç»“ç‚¹
      */
-    public void levelOrderTraverse(User tmp){
+    public void levelOrderTraversePrint(User tmp){
         if (tmp == null) return;
         LinkedList<User> queue = new LinkedList<>();
         queue.add(tmp);
@@ -73,23 +57,39 @@ public class UserTree implements Serializable {
             queue.remove();
             System.out.print(curr.getId() + " ");
 
-            if (!curr.children.isEmpty()){
-                queue.addAll(curr.children);
+            if (!curr.getChildren().isEmpty()){
+                queue.addAll(curr.getChildren());
             }
         }
         System.out.println();
     }
 
+    public User levelOrderTraverse(String name){
+        LinkedList<User> queue = new LinkedList<>();
+        queue.add(root);
+        User curr;
+        while (!queue.isEmpty()){
+            curr = queue.element();
+            if (name.equals(curr.getName())){
+                return curr;
+            }
+            else queue.remove();
+            if (!curr.getChildren().isEmpty()){
+                queue.addAll(curr.getChildren());
+            }
+        }
+        return null;
+    }
     /**
-     * Î¬»¤Ê÷µÄheightÊôĞÔ
+     * ç»´æŠ¤æ ‘çš„heightå±æ€§
      */
     public int updateHeight(User user){
-        if (user.children.isEmpty()) {
+        if (user.getChildren().isEmpty()) {
             return user.getLevel();
         }
         else{
-            int max = user.children.get(0).getLevel();
-            for(User child: user.children){
+            int max = user.getChildren().get(0).getLevel();
+            for(User child: user.getChildren()){
                 int h1 = updateHeight(child);
                 if (max < h1)
                     max = h1;
@@ -98,10 +98,10 @@ public class UserTree implements Serializable {
         }
     }
     /**
-     * ÏòÓÃ»§Ê÷ÖĞÌí¼Ó½áµã
-     * @param user ÒªÌí¼ÓµÄÓÃ»§
+     * å‘ç”¨æˆ·æ ‘ä¸­æ·»åŠ ç»“ç‚¹
+     * @param user è¦æ·»åŠ çš„ç”¨æˆ·
      */
-    public void addUserToTree(User user){
+    public void addUserToTree(CommonUser user){
         root.addChild(user);
         ul.add(user);
         user.setLevel(root.getLevel() + 1);
@@ -109,126 +109,72 @@ public class UserTree implements Serializable {
         height = 2;
     }
     /**
-     * Åöµ½grant×Ö¾äÊ±£¬ĞèÒª½«ÓÃ»§ÒÆ¶¯µ½¸øËüÊÚÈ¨µÄ½áµãÏÂÃæ
-     * @param u1 ĞèÒªÒÆ¶¯µÄ½áµã
-     * @param p1 Ö®Ç°µÄ¸¸½áµã
-     * @param p2 ÒÆ¶¯Ö®ºóµÄ¸¸½áµã
+     * ç¢°åˆ°grantå­—å¥æ—¶ï¼Œéœ€è¦å°†ç”¨æˆ·ç§»åŠ¨åˆ°ç»™å®ƒæˆæƒçš„ç»“ç‚¹ä¸‹é¢
+     * @param u1 éœ€è¦ç§»åŠ¨çš„ç»“ç‚¹
+     * @param p1 ä¹‹å‰çš„çˆ¶ç»“ç‚¹
+     * @param p2 ç§»åŠ¨ä¹‹åçš„çˆ¶ç»“ç‚¹
      */
-    public void shiftUser(User u1, User p1, User p2){
+    public void shiftUser(CommonUser u1, User p1, User p2){
 
-        //1.¸ü¸Äu1µÄparentÊôĞÔ
+        //1.æ›´æ”¹u1çš„parentå±æ€§
         u1.setParent(p2);
-        //2.ÔÚp1µÄchildrenÁĞ±íÖĞÉ¾È¥u1
-        Iterator iterator = p1.children.iterator();
+        //2.åœ¨p1çš„childrenåˆ—è¡¨ä¸­åˆ å»u1
+        Iterator iterator = p1.getChildren().iterator();
         while (iterator.hasNext()){
             if (iterator.next().equals(u1)){
                 iterator.remove();
                 break;
             }
         }
-        //3.ÔÚp2µÄchildrenÁĞ±íÖĞ¼ÓÈëu1
+        //3.åœ¨p2çš„childrenåˆ—è¡¨ä¸­åŠ å…¥u1
         p2.addChild(u1);
-        //4.¸ü¸Äu1µÄlevelÊôĞÔ
+        //4.æ›´æ”¹u1çš„levelå±æ€§
         u1.setLevel(p2.getLevel() + 1);
-        //5.¸üĞÂÊ÷µÄ¸ß¶È
+        //5.æ›´æ–°æ ‘çš„é«˜åº¦
         height = updateHeight(root);
     }
 
     /**
-     * ´¦Àígrant×Ó¾ä
-     * @param u1 ÊÚÈ¨ÓÃ»§
-     * @param u2 ±»ÊÚÈ¨ÓÃ»§
-     * @param permission ÒªÊÚÓèµÄÈ¨ÏŞ
+     * å¤„ç†grantå­å¥
+     * @param u1 æˆæƒç”¨æˆ·
+     * @param u2 è¢«æˆæƒç”¨æˆ·
+     * @param permission è¦æˆäºˆçš„æƒé™
      */
-    public void processGrant(User u1, User u2, byte permission){
-        //1.Èç¹ûÒªÊÚ¸ø±ğÈËµÄÈ¨ÏŞ£¬ÓĞ²»ÔÚ¡¾u1ÒÑÓĞµÄÈ¨ÏŞ¡¿ÕâÖ®ÖĞµÄÈ¨ÏŞ£¬Ôò¾Ü¾øÊÚÈ¨
+    public void processGrant(User u1, CommonUser u2, byte permission){
+        //1.å¦‚æœè¦æˆç»™åˆ«äººçš„æƒé™ï¼Œæœ‰ä¸åœ¨ã€u1å·²æœ‰çš„æƒé™ã€‘è¿™ä¹‹ä¸­çš„æƒé™ï¼Œåˆ™æ‹’ç»æˆæƒ
+        //è¿™éƒ¨åˆ†ifä¹‹å†…çš„åˆ¤æ–­è¿˜åœ¨å®ç°ï¼Œæ­¤ç‰ˆæœ¬ä¸ä½œæ•°
         if (permission > u1.getPermission()) {
             System.err.println("Unauthorized authorization!");
         }
 
         else{
-            //2.¸ü¸Äu2µÄpermissionÊôĞÔ
+            //2.æ›´æ”¹u2çš„permissionå±æ€§
             u2.setPermission(permission);
-            //3.Å²¶¯u2µÄ½áµã
+            //3.æŒªåŠ¨u2çš„ç»“ç‚¹
             shiftUser(u2, u2.getParent(), u1);
-            //4.¸üĞÂÊ÷µÄ¸ß¶È
+            //4.æ›´æ–°æ ‘çš„é«˜åº¦
             height = updateHeight(root);
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        //´´½¨adminÓÃ»§
-        User admin = new User("0", 1);
-        User u1 = new User("1");
-        User u2 = new User("2");
-        User u3 = new User("3");
-        User u4 = new User("4");
-        User u5 = new User("5");
-        User u6 = new User("6");
-        User u7 = new User("7");
-        User u8 = new User("8");
-        User u9 = new User("9");
-        UserTree tree = new UserTree(admin);
-        tree.addUserToTree(u1);
-        tree.addUserToTree(u2);
-        tree.addUserToTree(u3);
-        tree.addUserToTree(u4);
-        tree.addUserToTree(u5);
-        tree.addUserToTree(u6);
-        tree.addUserToTree(u7);
-        tree.addUserToTree(u8);
-        tree.addUserToTree(u9);
-
-        tree.levelOrderTraverse(admin);
-        System.out.println("---------------Å²¶¯½áµã-----------------");
-        tree.shiftUser(u1,u1.getParent(), u3);
-        tree.shiftUser(u4,u4.getParent(), u3);
-        tree.shiftUser(u2,u2.getParent(), u5);
-        tree.shiftUser(u7,u7.getParent(), u5);
-        tree.shiftUser(u8,u8.getParent(), u1);
-        tree.shiftUser(u9,u9.getParent(), u8);
-        tree.levelOrderTraverse(admin);
-        System.out.println("¹²ÓĞ" + tree.getNumOfUser() + "¸öÓÃ»§");
-        //System.out.println("Ê÷µÄ¸ß¶ÈÎª£º" + tree.updateHeight(admin));
-        System.out.println("Ê÷µÄ¸ß¶ÈÎª£º" + tree.getHeight());
-        System.out.println("±éÀúÊ÷ÖĞµÄÓÃ»§list£º");
-        for(User u: tree.getUl()){
-            System.out.print("user id:" + u.getId());
-            if(u.getParent() != null)
-                System.out.print(" parent id:" + u.getParent().getId());
-            System.out.print(" level:" + u.getLevel());
-            System.out.println();
+    public boolean logIn(String name, String password){
+        User user = levelOrderTraverse(name);
+        //1.è¿”å›nullè¯´æ˜ç”¨æˆ·åæ‰¾ä¸åˆ°ï¼Œç”¨æˆ·ä¸å­˜åœ¨
+        if (user == null){
+            System.err.println("The user does not exist!");
+            return false;
         }
-        System.out.println("-----------ÊÚÈ¨test------------");
-        tree.processGrant(admin,u4, (byte) 0x00);
-        tree.levelOrderTraverse(admin);
-        System.out.println("Ê÷µÄ¸ß¶ÈÎª£º" + tree.getHeight());
-        System.out.println("±éÀúÊ÷ÖĞµÄÓÃ»§list£º");
-        for(User u: tree.getUl()){
-            System.out.print("user id:" + u.getId());
-            if(u.getParent() != null)
-                System.out.print(" parent id:" + u.getParent().getId());
-            System.out.print(" level:" + u.getLevel());
-            System.out.println();
+        else{
+            //2.ç”¨æˆ·åå­˜åœ¨ï¼Œå¯†ç ä¹ŸåŒ¹é…ï¼Œç™»é™†æˆåŠŸ
+            if(password.equals(user.getPassword())){
+                System.out.println("Log in successfully! " + "Welcome, " + user.getName());
+                return true;
+            }
+            //3.ç”¨æˆ·åå­˜åœ¨ï¼Œä½†æ˜¯å¯†ç ä¸åŒ¹é…
+            else{
+                System.err.println("Incorrect password!");
+                return false;
+            }
         }
-        //tree.levelOrderTraverse(tree.getRoot());
-
-        String string = JSON.toJSONString(tree);
-        FileWriter fileWriter = new FileWriter(new File("src/usersystem/user_file.dbuf"));
-        fileWriter.write(string);
-        fileWriter.flush();
-        System.out.println(string);
-        System.out.println(tree.getNumOfUser());
-    }
-
-
-    @Override
-    public String toString() {
-        return "UserTree{" +
-                "root=" + root +
-                ", height=" + height +
-                ", numOfUser=" + numOfUser +
-                ", ul=" + ul +
-                '}';
     }
 }

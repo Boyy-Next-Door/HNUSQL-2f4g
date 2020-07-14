@@ -1,35 +1,23 @@
 package usersystem;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements Serializable {
+public abstract class User {
     private String id;  //用户id
-    private String name;  //用户名
+    private  String name;  //用户名
     private String password;  //用户密码
     private User parent;  //该用户的父结点
     private int level;  //结点的层数
-    public List<User> children = new ArrayList<>();  //该用户的子节点
-    protected byte permission = 0x00;  //该用户的权限
+    private List<User> children = new ArrayList<>();  //该用户的子节点
+    private byte permission;  //该用户的权限
+    abstract public void addChild(User user);
 
     public User() {
     }
 
     public User(String id) {
         this.id = id;
-    }
-
-    public User(String id, int level) {
-        this.id = id;
-        this.level = level;
-    }
-
-    public User(String id, String name, String password, int level) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.level = level;
     }
 
     public String getId() {
@@ -87,25 +75,4 @@ public class User implements Serializable {
     public void setPermission(byte permission) {
         this.permission = permission;
     }
-
-    public void addChild(User child){
-        //1.设置chile的parent属性
-        child.setParent(this);
-        //2.在当前结点的children列表中添加child
-        children.add(child);
-
-    }
-
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                "id='" + id + '\'' +
-//                ", name='" + name + '\'' +
-//                ", password='" + password + '\'' +
-//                ", parent=" + parent +
-//                ", level=" + level +
-//                ", children=" + children +
-//                ", permission=" + permission +
-//                '}';
-//    }
 }
