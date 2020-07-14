@@ -45,7 +45,7 @@ public class tinySQLCmd
    /*
    windows环境下的文本文件换行符:\r\n
    linux/unix环境下的文本文件换行符:\r
-   Mac环境下的文本文件换行符:\n
+   Mac环境下的文本文件换行符:\ng
    如果要实现程序跨平台运行，则必须使用 System.lineSeparator()进行换行。
     */
    public static void main(String[] args) throws IOException,SQLException
@@ -77,14 +77,23 @@ public class tinySQLCmd
       FieldTokenizer ft;
       PreparedStatement pstmt=(PreparedStatement)null;
 
+      /*
+      流的相关知识
+      https://blog.csdn.net/wiebin36/article/details/51912794
+      https://blog.csdn.net/liji_xc/article/details/47291075
+      https://www.cnblogs.com/zhaoyanjun/p/6376996.html
+       */
+
       int i,rsColCount,endAt,colWidth,colScale,colPrecision,typeCount,
       colType,parameterIndex,b1,b2,parameterInt,startAt,columnIndex,valueIndex;
       String fName,tableName=null,inputString,cmdString,colTypeName,dbType,
       parameterString,loadString,fieldString,readString;
+
+
       StringBuffer lineOut,prepareBuffer,valuesBuffer,inputBuffer;
 
-
       boolean echo=false;
+
       stdin = new BufferedReader(new InputStreamReader(System.in));
 
       try 
@@ -115,16 +124,19 @@ public class tinySQLCmd
          con = dbConnect(fName);
       }
       dbMeta = con.getMetaData();
-      dbType = dbMeta.getDatabaseProductName();		
-      dbVersion = dbMeta.getDatabaseProductVersion();		
+
+      dbType = dbMeta.getDatabaseProductName();
+      dbVersion = dbMeta.getDatabaseProductVersion();
       System.out.println("===================================================");
       System.out.println(dbType + " Command line interface version " 
       + dbVersion + " released March 15, 2007");
       System.out.println("Type HELP to get information on available commands.");
+
       cmdString = "NULL";
       stmt = con.createStatement();
       inputString = (String)null;
       if ( args.length > 1 ) inputString = args[1].trim();
+      
       while ( !cmdString.toUpperCase().equals("EXIT") )
       {
          try

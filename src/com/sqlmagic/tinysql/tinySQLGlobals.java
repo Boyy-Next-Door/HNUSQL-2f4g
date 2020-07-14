@@ -41,11 +41,12 @@ public class tinySQLGlobals
    static Hashtable DB_INDEX = new Hashtable();
    static String VERSION = "2.26h";
    static boolean DEBUG = false;
-   static boolean PARSER_DEBUG = false;
+   static boolean PARSER_DEBUG = true;
    static boolean WHERE_DEBUG = false;
    static boolean EX_DEBUG = false;
    static int longNamesInFileCount;
    static boolean debug = false;
+   //
    public static void readLongNames(String inputDataDir)
    {
       String fullPath,longNameRecord;

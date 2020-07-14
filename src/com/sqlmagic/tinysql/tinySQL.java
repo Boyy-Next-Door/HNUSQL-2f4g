@@ -120,7 +120,7 @@ public abstract class tinySQL {
    protected tsResultSet sql(Object s) throws tinySQLException 
    {
 /*
- *    Build the ResultSet
+ *    Build the ResultSet  创建结果集
  */
       tsResultSet rs = null;
       tinySQLTable jtbl;
@@ -302,7 +302,10 @@ public abstract class tinySQL {
  *             SQL DROP TABLE
  */          
                DropTable( tableName );
-            } else {
+            } else if ( actionType.equals("GRANT") ) {
+               System.out.println("GRANT!!!!!!");
+            }
+            else {
                System.out.println("Unrecognized action " + actionType);
             }
          }
