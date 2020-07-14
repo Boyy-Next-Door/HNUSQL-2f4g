@@ -20,20 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="commit">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/usersystem/Admin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/usersystem/CommonUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/usersystem/MainTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/UtilString.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/UtilString.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFileTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFileTable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLGlobals.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLGlobals.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLWhere.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLWhere.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tsColumn.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tsColumn.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLCmd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLCmd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLGlobals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLGlobals.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/UserTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/UserTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +67,20 @@
     <property name="project.structure.side.proportion" value="0.30095923" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
-  <component name="RunManager" selected="Application.tinySQLCmd (2)">
+  <component name="RunManager" selected="Application.MainTest">
+    <configuration name="MainTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="usersystem.MainTest" />
+      <module name="tinySQL-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="usersystem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="tinySQLCmd (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.sqlmagic.tinysql.tinySQLCmd" />
       <module name="tinySQL-2" />
@@ -115,6 +122,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MainTest" />
         <item itemvalue="Application.tinySQLCmd (2)" />
         <item itemvalue="Application.tinySQLCmd (1)" />
         <item itemvalue="Application.tinySQLCmd" />

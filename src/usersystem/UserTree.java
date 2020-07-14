@@ -6,13 +6,13 @@ import java.util.LinkedList;
 
 public class UserTree {
 
-    private User root;
+    private Admin root;
     private int height;
     private int numOfUser;
     private ArrayList<User> ul = new ArrayList<>();
 
-    public UserTree(User root) {
-        this.root = root;
+    public UserTree(Admin admin) {
+        this.root = admin;
         ul.add(root);
         numOfUser = 1;
         height = 1;
@@ -22,9 +22,10 @@ public class UserTree {
         return root;
     }
 
-    public void setRoot(User root) {
-        this.root = root;
-    }
+    /**  树的根节点不需要修改
+     public void setRoot(Admin root) {
+     this.root = root;
+     }*/
 
     public int getHeight() {
         return height;
@@ -46,11 +47,11 @@ public class UserTree {
      * 借助队列层次遍历树，并打印id
      * @param tmp 遍历开始的结点
      */
-    public void levelOrderTraverse(User tmp){
+    public void levelOrderTraversePrint(User tmp){
         if (tmp == null) return;
         LinkedList<User> queue = new LinkedList<>();
         queue.add(tmp);
-        User curr;
+        User curr = null;
         while (!queue.isEmpty()){
             curr = queue.element();
             queue.remove();
@@ -63,6 +64,22 @@ public class UserTree {
         System.out.println();
     }
 
+    public User levelOrderTraverse(String name){
+        LinkedList<User> queue = new LinkedList<>();
+        queue.add(root);
+        User curr = null;
+        while (!queue.isEmpty()){
+            curr = queue.element();
+            if (name.equals(curr.getName())){
+                return curr;
+            }
+            else queue.remove();
+            if (!curr.children.isEmpty()){
+                queue.addAll(curr.children);
+            }
+        }
+        return null;
+    }
     /**
      * 维护树的height属性
      */
@@ -84,7 +101,7 @@ public class UserTree {
      * 向用户树中添加结点
      * @param user 要添加的用户
      */
-    public void addUserToTree(User user){
+    public void addUserToTree(CommonUser user){
         root.addChild(user);
         ul.add(user);
         user.setLevel(root.getLevel() + 1);
@@ -97,7 +114,7 @@ public class UserTree {
      * @param p1 之前的父结点
      * @param p2 移动之后的父结点
      */
-    public void shiftUser(User u1, User p1, User p2){
+    public void shiftUser(CommonUser u1, User p1, User p2){
 
         //1.更改u1的parent属性
         u1.setParent(p2);
@@ -121,9 +138,9 @@ public class UserTree {
      * 处理grant子句
      * @param u1 授权用户
      * @param u2 被授权用户
-     * @param permission 要授予的权限
+     * @param permission
      */
-    public void processGrant(User u1, User u2, byte permission){
+    public void processGrant(User u1, CommonUser u2, byte permission){
         //1.如果要授给别人的权限，有不在【u1已有的权限】这之中的权限，则拒绝授权
         if (permission > u1.getPermission()) {
             System.err.println("Unauthorized authorization!");
@@ -136,6 +153,27 @@ public class UserTree {
             shiftUser(u2, u2.getParent(), u1);
             //4.更新树的高度
             height = updateHeight(root);
+        }
+    }
+
+    public boolean logIn(String name, String password){
+        User user = levelOrderTraverse(name);
+        //1.返回null说明用户名找不到，用户不存在
+        if (user == null){
+            System.err.println("The user does not exist!");
+            return false;
+        }
+        else{
+            //2.用户名存在，密码也匹配，登陆成功
+            if(password.equals(user.getPassword())){
+                System.out.println("Log in successfully! " + "Welcome, " + user.getName());
+                return true;
+            }
+            //3.用户名存在，但是密码不匹配
+            else{
+                System.err.println("Incorrect password!");
+                return false;
+            }
         }
     }
 }
