@@ -1,10 +1,16 @@
 package usersystem;
 
+import com.alibaba.fastjson.JSON;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class UserTree {
+public class UserTree implements Serializable {
 
     private User root;
     private int height;
@@ -16,6 +22,9 @@ public class UserTree {
         ul.add(root);
         numOfUser = 1;
         height = 1;
+    }
+    public UserTree(){
+
     }
 
     public User getRoot() {
@@ -38,13 +47,21 @@ public class UserTree {
         return numOfUser;
     }
 
+    public void setNumOfUser(int numOfUser) {
+        this.numOfUser = numOfUser;
+    }
+
+    public void setUl(ArrayList<User> ul) {
+        this.ul = ul;
+    }
+
     public ArrayList<User> getUl() {
         return ul;
     }
 
     /**
-     * å€ŸåŠ©é˜Ÿåˆ—å±‚æ¬¡éåŽ†æ ‘ï¼Œå¹¶æ‰“å°id
-     * @param tmp éåŽ†å¼€å§‹çš„ç»“ç‚¹
+     * ½èÖú¶ÓÁÐ²ã´Î±éÀúÊ÷£¬²¢´òÓ¡id
+     * @param tmp ±éÀú¿ªÊ¼µÄ½áµã
      */
     public void levelOrderTraverse(User tmp){
         if (tmp == null) return;
@@ -64,7 +81,7 @@ public class UserTree {
     }
 
     /**
-     * ç»´æŠ¤æ ‘çš„heightå±žæ€§
+     * Î¬»¤Ê÷µÄheightÊôÐÔ
      */
     public int updateHeight(User user){
         if (user.children.isEmpty()) {
@@ -81,8 +98,8 @@ public class UserTree {
         }
     }
     /**
-     * å‘ç”¨æˆ·æ ‘ä¸­æ·»åŠ ç»“ç‚¹
-     * @param user è¦æ·»åŠ çš„ç”¨æˆ·
+     * ÏòÓÃ»§Ê÷ÖÐÌí¼Ó½áµã
+     * @param user ÒªÌí¼ÓµÄÓÃ»§
      */
     public void addUserToTree(User user){
         root.addChild(user);
@@ -92,16 +109,16 @@ public class UserTree {
         height = 2;
     }
     /**
-     * ç¢°åˆ°grantå­—å¥æ—¶ï¼Œéœ€è¦å°†ç”¨æˆ·ç§»åŠ¨åˆ°ç»™å®ƒæŽˆæƒçš„ç»“ç‚¹ä¸‹é¢
-     * @param u1 éœ€è¦ç§»åŠ¨çš„ç»“ç‚¹
-     * @param p1 ä¹‹å‰çš„çˆ¶ç»“ç‚¹
-     * @param p2 ç§»åŠ¨ä¹‹åŽçš„çˆ¶ç»“ç‚¹
+     * Åöµ½grant×Ö¾äÊ±£¬ÐèÒª½«ÓÃ»§ÒÆ¶¯µ½¸øËüÊÚÈ¨µÄ½áµãÏÂÃæ
+     * @param u1 ÐèÒªÒÆ¶¯µÄ½áµã
+     * @param p1 Ö®Ç°µÄ¸¸½áµã
+     * @param p2 ÒÆ¶¯Ö®ºóµÄ¸¸½áµã
      */
     public void shiftUser(User u1, User p1, User p2){
 
-        //1.æ›´æ”¹u1çš„parentå±žæ€§
+        //1.¸ü¸Äu1µÄparentÊôÐÔ
         u1.setParent(p2);
-        //2.åœ¨p1çš„childrenåˆ—è¡¨ä¸­åˆ åŽ»u1
+        //2.ÔÚp1µÄchildrenÁÐ±íÖÐÉ¾È¥u1
         Iterator iterator = p1.children.iterator();
         while (iterator.hasNext()){
             if (iterator.next().equals(u1)){
@@ -109,33 +126,109 @@ public class UserTree {
                 break;
             }
         }
-        //3.åœ¨p2çš„childrenåˆ—è¡¨ä¸­åŠ å…¥u1
+        //3.ÔÚp2µÄchildrenÁÐ±íÖÐ¼ÓÈëu1
         p2.addChild(u1);
-        //4.æ›´æ”¹u1çš„levelå±žæ€§
+        //4.¸ü¸Äu1µÄlevelÊôÐÔ
         u1.setLevel(p2.getLevel() + 1);
-        //5.æ›´æ–°æ ‘çš„é«˜åº¦
+        //5.¸üÐÂÊ÷µÄ¸ß¶È
         height = updateHeight(root);
     }
 
     /**
-     * å¤„ç†grantå­å¥
-     * @param u1 æŽˆæƒç”¨æˆ·
-     * @param u2 è¢«æŽˆæƒç”¨æˆ·
-     * @param permission è¦æŽˆäºˆçš„æƒé™
+     * ´¦Àígrant×Ó¾ä
+     * @param u1 ÊÚÈ¨ÓÃ»§
+     * @param u2 ±»ÊÚÈ¨ÓÃ»§
+     * @param permission ÒªÊÚÓèµÄÈ¨ÏÞ
      */
     public void processGrant(User u1, User u2, byte permission){
-        //1.å¦‚æžœè¦æŽˆç»™åˆ«äººçš„æƒé™ï¼Œæœ‰ä¸åœ¨ã€u1å·²æœ‰çš„æƒé™ã€‘è¿™ä¹‹ä¸­çš„æƒé™ï¼Œåˆ™æ‹’ç»æŽˆæƒ
+        //1.Èç¹ûÒªÊÚ¸ø±ðÈËµÄÈ¨ÏÞ£¬ÓÐ²»ÔÚ¡¾u1ÒÑÓÐµÄÈ¨ÏÞ¡¿ÕâÖ®ÖÐµÄÈ¨ÏÞ£¬Ôò¾Ü¾øÊÚÈ¨
         if (permission > u1.getPermission()) {
             System.err.println("Unauthorized authorization!");
         }
 
         else{
-            //2.æ›´æ”¹u2çš„permissionå±žæ€§
+            //2.¸ü¸Äu2µÄpermissionÊôÐÔ
             u2.setPermission(permission);
-            //3.æŒªåŠ¨u2çš„ç»“ç‚¹
+            //3.Å²¶¯u2µÄ½áµã
             shiftUser(u2, u2.getParent(), u1);
-            //4.æ›´æ–°æ ‘çš„é«˜åº¦
+            //4.¸üÐÂÊ÷µÄ¸ß¶È
             height = updateHeight(root);
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        //´´½¨adminÓÃ»§
+        User admin = new User("0", 1);
+        User u1 = new User("1");
+        User u2 = new User("2");
+        User u3 = new User("3");
+        User u4 = new User("4");
+        User u5 = new User("5");
+        User u6 = new User("6");
+        User u7 = new User("7");
+        User u8 = new User("8");
+        User u9 = new User("9");
+        UserTree tree = new UserTree(admin);
+        tree.addUserToTree(u1);
+        tree.addUserToTree(u2);
+        tree.addUserToTree(u3);
+        tree.addUserToTree(u4);
+        tree.addUserToTree(u5);
+        tree.addUserToTree(u6);
+        tree.addUserToTree(u7);
+        tree.addUserToTree(u8);
+        tree.addUserToTree(u9);
+
+        tree.levelOrderTraverse(admin);
+        System.out.println("---------------Å²¶¯½áµã-----------------");
+        tree.shiftUser(u1,u1.getParent(), u3);
+        tree.shiftUser(u4,u4.getParent(), u3);
+        tree.shiftUser(u2,u2.getParent(), u5);
+        tree.shiftUser(u7,u7.getParent(), u5);
+        tree.shiftUser(u8,u8.getParent(), u1);
+        tree.shiftUser(u9,u9.getParent(), u8);
+        tree.levelOrderTraverse(admin);
+        System.out.println("¹²ÓÐ" + tree.getNumOfUser() + "¸öÓÃ»§");
+        //System.out.println("Ê÷µÄ¸ß¶ÈÎª£º" + tree.updateHeight(admin));
+        System.out.println("Ê÷µÄ¸ß¶ÈÎª£º" + tree.getHeight());
+        System.out.println("±éÀúÊ÷ÖÐµÄÓÃ»§list£º");
+        for(User u: tree.getUl()){
+            System.out.print("user id:" + u.getId());
+            if(u.getParent() != null)
+                System.out.print(" parent id:" + u.getParent().getId());
+            System.out.print(" level:" + u.getLevel());
+            System.out.println();
+        }
+        System.out.println("-----------ÊÚÈ¨test------------");
+        tree.processGrant(admin,u4, (byte) 0x00);
+        tree.levelOrderTraverse(admin);
+        System.out.println("Ê÷µÄ¸ß¶ÈÎª£º" + tree.getHeight());
+        System.out.println("±éÀúÊ÷ÖÐµÄÓÃ»§list£º");
+        for(User u: tree.getUl()){
+            System.out.print("user id:" + u.getId());
+            if(u.getParent() != null)
+                System.out.print(" parent id:" + u.getParent().getId());
+            System.out.print(" level:" + u.getLevel());
+            System.out.println();
+        }
+        //tree.levelOrderTraverse(tree.getRoot());
+
+        String string = JSON.toJSONString(tree);
+        FileWriter fileWriter = new FileWriter(new File("src/usersystem/user_file.dbuf"));
+        fileWriter.write(string);
+        fileWriter.flush();
+        System.out.println(string);
+        System.out.println(tree.getNumOfUser());
+    }
+
+
+    @Override
+    public String toString() {
+        return "UserTree{" +
+                "root=" + root +
+                ", height=" + height +
+                ", numOfUser=" + numOfUser +
+                ", ul=" + ul +
+                '}';
     }
 }

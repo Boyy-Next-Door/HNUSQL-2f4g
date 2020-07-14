@@ -1,9 +1,10 @@
 package usersystem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private String id;  //用户id
     private String name;  //用户名
     private String password;  //用户密码
@@ -95,4 +96,16 @@ public class User {
 
     }
 
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id='" + id + '\'' +
+//                ", name='" + name + '\'' +
+//                ", password='" + password + '\'' +
+//                ", parent=" + parent +
+//                ", level=" + level +
+//                ", children=" + children +
+//                ", permission=" + permission +
+//                '}';
+//    }
 }
