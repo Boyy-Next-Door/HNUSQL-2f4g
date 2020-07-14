@@ -1,10 +1,12 @@
 package usersystem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class UserTree {
+public class UserTree implements Serializable {
+    private static final long serialVersionUID = 2L;
 
     private Admin root;
     private int height;
@@ -18,6 +20,9 @@ public class UserTree {
         height = 1;
     }
 
+    public UserTree(){
+
+    }
     public User getRoot() {
         return root;
     }
@@ -41,6 +46,28 @@ public class UserTree {
 
     public ArrayList<User> getUl() {
         return ul;
+    }
+
+    public void setRoot(Admin root) {
+        this.root = root;
+    }
+
+    public void setNumOfUser(int numOfUser) {
+        this.numOfUser = numOfUser;
+    }
+
+    public void setUl(ArrayList<User> ul) {
+        this.ul = ul;
+    }
+
+    @Override
+    public String toString() {
+        return "UserTree{" +
+                "root=" + root +
+                ", height=" + height +
+                ", numOfUser=" + numOfUser +
+                ", ul=" + ul +
+                '}';
     }
 
     /**
@@ -177,4 +204,6 @@ public class UserTree {
             }
         }
     }
+
+
 }

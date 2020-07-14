@@ -1,13 +1,20 @@
 package usersystem;
 
+import com.alibaba.fastjson.JSON;
+
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 public class MainTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         test1();
         //test2();
         //test3();
     }
     //测试树结构、层次遍历与授权（成功）
-    public static void test1(){
+    public static void test1() throws IOException {
         //创建admin用户
         Admin admin = Admin.getAdmin();
         CommonUser u1 = new CommonUser("1");
