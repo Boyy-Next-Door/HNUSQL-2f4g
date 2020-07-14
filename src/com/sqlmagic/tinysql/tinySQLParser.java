@@ -142,6 +142,10 @@ public class tinySQLParser
    public void setPhrase(String inputKeyWord,String inputString)
       throws tinySQLException
    {
+      String tableName,tableAlias,tableNameAndAlias,userName;
+      tinySQLTable changeTable;
+      String getKeyWord1,getKeyWord2;
+      String[] getKeyWord;
       String nextField,upperField,colTypeStr,colTypeSpec,
       fieldString,syntaxErr,tempString,columnName,columnAlias;
       StringBuffer colTypeBuffer,concatBuffer;
@@ -345,9 +349,42 @@ public class tinySQLParser
             valueList.addElement(UtilString.removeQuotes(ft2.getField(1)));
          } else if ( inputKeyWord.equals("WHERE") ) {
             whereClause = new tinySQLWhere(nextField,tables);
-         } else if ( !inputKeyWord.equals("TABLE") ) {
+         } else if( inputKeyWord.equals("GRANT")) {
+            statementType = "GRANT";
+
+            ft2 = new FieldTokenizer(nextField,',',false);
+            getKeyWord = ft2.getFields();//获取应该授权的权限
+            for(int count=0;count<ft2.countFields();count++){
+               getKeyWord1=ft2.getField(count);
+               //对该权限对用户进行操作
+            }
+            if ( ft2.countFields() == 2 ) columnAlias = ft2.getField(1);
+            else if ( ft2.countFields() == 3 ) columnAlias = ft2.getField(2);
+
+         }else if(inputKeyWord.equals("ON")){
+            /*获取到需要更改权限的表*/
+            tableName = nextField.toUpperCase();
+
+
+         }else if(inputKeyWord.equals("TO")){
+            //获取用户名
+            userName = nextField.toUpperCase();
+         }else if(inputKeyWord.equals("WITH")){
+            ft2 = new FieldTokenizer(nextField,' ',false);
+            //获取后面两个字
+            getKeyWord1 = ft2.getField(0);
+            getKeyWord2 = ft2.getField(1);
+            if(getKeyWord1.toUpperCase().equals("LINK") && getKeyWord2.toUpperCase().equals("OPTION")){
+               System.out.println("allow");
+            }else if(getKeyWord1.toUpperCase().equals("ADMIN") && getKeyWord2.toUpperCase().equals("OPTION")){
+               System.out.println("not allow");
+            }
+
+         }
+         else if ( !inputKeyWord.equals("TABLE") ) {
             throwException(10);
          }
+
       }
       lastKeyWord = inputKeyWord;
    }
@@ -558,7 +595,8 @@ public class tinySQLParser
         {"DELETE","FROM","WHERE"},
         {"CREATE","TABLE"},
         {"UPDATE","SET","WHERE"},
-        {"ALTER","TABLE","DROP","MODIFY","ADD","RENAME"}};
+        {"ALTER","TABLE","DROP","MODIFY","ADD","RENAME"},
+        {"GRANT","ON","TO","WITH"}};
       int i,j;
       for ( i = 0; i < sqlSyntax.length; i++ )
       {
