@@ -19,16 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="增加权限的基本框架">
+    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="7.15">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLGlobals.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLGlobals.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/usersystem/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/usersystem/UserTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/UserTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +154,21 @@
       <option name="project" value="LOCAL" />
       <updated>1594698972798</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="7.15">
+      <created>1594783606475</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1594783606475</updated>
+    </task>
+    <task id="LOCAL-00006" summary="7.15">
+      <created>1594783698130</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1594783698130</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,7 +190,8 @@
     <MESSAGE value="一点点注释" />
     <MESSAGE value="commit" />
     <MESSAGE value="增加权限的基本框架" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加权限的基本框架" />
+    <MESSAGE value="7.15" />
+    <option name="LAST_COMMIT_MESSAGE" value="7.15" />
   </component>
   <component name="WindowStateProjectService">
     <state x="256" y="0" key="#Project_Structure" timestamp="1594112043039">
@@ -251,31 +260,39 @@
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
     <state width="1238" height="169" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
-    <state x="56" y="90" key="MergeDialog" timestamp="1594699059982">
+    <state x="56" y="90" key="MergeDialog" timestamp="1594783809470">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="56" y="90" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594699059982" />
-    <state x="717" y="390" key="MultipleFileMergeDialog" timestamp="1594699066346">
+    <state x="56" y="90" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594783809470" />
+    <state x="717" y="390" key="MultipleFileMergeDialog" timestamp="1594783821666">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="717" y="390" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594699066346" />
+    <state x="717" y="390" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594783821666" />
+    <state x="698" y="221" key="RollbackChangesDialog" timestamp="1594784781580">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="698" y="221" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594784781580" />
     <state x="427" y="99" key="SettingsEditor" timestamp="1594023819602">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="427" y="99" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1594023819602" />
-    <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1594699058820">
+    <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1594783795582">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1920.1040@0.0.1920.1040" timestamp="1594699058820" />
+    <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1920.1040@0.0.1920.1040" timestamp="1594783795582" />
     <state x="360" y="145" key="Vcs.Push.Dialog.v2" timestamp="1594699103658">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="360" y="145" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1594699103658" />
     <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.723@0.23.1280.723" timestamp="1594170965651" />
-    <state x="638" y="309" key="git4idea.merge.GitPullDialog" timestamp="1594698982859">
+    <state x="-150" y="117" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594785002426">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="638" y="309" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594698982859" />
+    <state x="-150" y="117" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594785002426" />
+    <state x="638" y="309" key="git4idea.merge.GitPullDialog" timestamp="1594783704598">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="638" y="309" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594783704598" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1594696688074">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

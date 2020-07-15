@@ -143,7 +143,8 @@ public class tinySQLParser
    public void setPhrase(String inputKeyWord,String inputString)
       throws tinySQLException
    {
-      String tableName,tableAlias,tableNameAndAlias,userName,password;
+      String tableName,tableAlias,tableNameAndAlias,userName,dbName,password;
+      String nowUserName;//当前用户名（待获取）
       tinySQLTable changeTable;
       String getKeyWord1,getKeyWord2;
       String[] getKeyWord;
@@ -383,25 +384,41 @@ public class tinySQLParser
                getKeyWord1=ft2.getField(count);
                //对该权限对用户进行操作
             }
-            if ( ft2.countFields() == 2 ) columnAlias = ft2.getField(1);
-            else if ( ft2.countFields() == 3 ) columnAlias = ft2.getField(2);
+         }else if( inputKeyWord.equals("REVOKE")) {
+             statementType = "REVOKE";
 
-         }else if(inputKeyWord.equals("ON")){
-            /*获取到需要更改权限的表*/
-            tableName = nextField.toUpperCase();
-
-
+             ft2 = new FieldTokenizer(nextField,',',false);
+             getKeyWord = ft2.getFields();//获取应该授权的权限
+             for(int count=0;count<ft2.countFields();count++){
+                 getKeyWord1=ft2.getField(count);
+                 //对该权限对用户进行操作
+             }
+         } else if(inputKeyWord.equals("ON")){
+             /*获取到需要更改权限的表或数据库*/
+             ft2 = new FieldTokenizer(nextField,'.',false);
+             if ( ft2.countFields() == 2 ){
+                 dbName = ft2.getField(0);
+                 tableName = ft2.getField(1);
+                 System.out.println(dbName + "+" + tableName);
+             }else {
+                 tableName=ft2.getField(0);
+             }
          }else if(inputKeyWord.equals("TO")){
-            //获取用户名
-            userName = nextField.toUpperCase();
-         }else if(inputKeyWord.equals("WITH")){
+             //获取用户名
+             userName = nextField;
+         }else if(inputKeyWord.equals("FROM")) {
+             //获取用户名
+             userName = nextField;
+         } else if(inputKeyWord.equals("WITH")){
             ft2 = new FieldTokenizer(nextField,' ',false);
             //获取后面两个字
             getKeyWord1 = ft2.getField(0);
             getKeyWord2 = ft2.getField(1);
             if(getKeyWord1.toUpperCase().equals("LINK") && getKeyWord2.toUpperCase().equals("OPTION")){
+
                System.out.println("allow");
             }else if(getKeyWord1.toUpperCase().equals("ADMIN") && getKeyWord2.toUpperCase().equals("OPTION")){
+
                System.out.println("not allow");
             }
 
@@ -631,7 +648,8 @@ public class tinySQLParser
         {"CREATE","TABLE"},
         {"UPDATE","SET","WHERE"},
         {"ALTER","TABLE","DROP","MODIFY","ADD","RENAME"},
-        {"GRANT","ON","TO","WITH"}};
+        {"GRANT","ON","TO","WITH"},
+        {"REVOKE","ON","FROM","WITH"}};
       int i,j;
       for ( i = 0; i < sqlSyntax.length; i++ )
       {

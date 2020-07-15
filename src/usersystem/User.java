@@ -78,4 +78,5 @@ public abstract class User implements Serializable {
     public void setPermission(byte permission) {
         this.permission = permission;
     }
+
 }
