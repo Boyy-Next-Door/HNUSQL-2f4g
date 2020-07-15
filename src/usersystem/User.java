@@ -87,6 +87,16 @@ public class User {
         this.permission = permission;
     }
 
+    public void setHighPermission(byte permission){
+        byte a= (byte) 0b11110000;
+        this.permission = (byte) (permission & a);
+    }
+
+    public void setLowPermission(byte permission){
+        byte a= (byte) 0b00001111;
+        this.permission = (byte) (permission & a);
+    }
+
     public void addChild(User child){
         //1.设置chile的parent属性
         child.setParent(this);

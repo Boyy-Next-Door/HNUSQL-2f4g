@@ -123,13 +123,11 @@ public class UserTree {
      * @param u2 被授权用户
      * @param permission 要授予的权限
      */
-    public void processGrant(User u1, User u2, byte permission){
+    public void processGrant(User u1, User u2, byte permission) {
         //1.如果要授给别人的权限，有不在【u1已有的权限】这之中的权限，则拒绝授权
         if (permission > u1.getPermission()) {
             System.err.println("Unauthorized authorization!");
-        }
-
-        else{
+        } else {
             //2.更改u2的permission属性
             u2.setPermission(permission);
             //3.挪动u2的结点
@@ -138,4 +136,5 @@ public class UserTree {
             height = updateHeight(root);
         }
     }
+
 }
