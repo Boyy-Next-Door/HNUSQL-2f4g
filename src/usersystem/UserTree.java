@@ -133,7 +133,7 @@ public class UserTree implements Serializable {
         ul.add(user);
         user.setLevel(root.getLevel() + 1);
         numOfUser = numOfUser + 1;
-        height = 2;
+        height = updateHeight(root);
     }
     /**
      * 碰到grant字句时，需要将用户移动到给它授权的结点下面
@@ -162,25 +162,107 @@ public class UserTree implements Serializable {
     }
 
     /**
-     * 处理grant子句
-     * @param u1 授权用户
-     * @param u2 被授权用户
-     * @param permission 要授予的权限
+     * 给传入的字符数组高位补0，返回长度为4的字符数组（为不满4位的二进制数高位补0）
+     * @param ch 传进的数组
+     * @return  补0后的数组
      */
-    public void processGrant(User u1, CommonUser u2, byte permission){
-        //1.如果要授给别人的权限，有不在【u1已有的权限】这之中的权限，则拒绝授权
-        //这部分if之内的判断还在实现，此版本不作数
-        if (permission > u1.getPermission()) {
-            System.err.println("Unauthorized authorization!");
+    public char[] zeroize(char[] ch){
+        if (ch.length == 4){
+            return ch;
         }
-
         else{
-            //2.更改u2的permission属性
+            char[] chars = new char[4];
+            int len = ch.length;
+            for(int i = len - 1; i >= 0; i--){
+                chars[i+1] = ch[i];
+            }
+            len = len + 1;
+            chars[0] = '0';
+            if (len == 4)
+                return chars;
+            while(len < 4){
+                for(int i = len - 1; i >= 0; i--){
+                    chars[i+1] = chars[i];
+                }
+                len = len + 1;
+                chars[0] = '0';
+            }
+            return chars;
+        }
+    }
+
+    /**
+     * 能给别人的不能多于本身已有的。对p1低四位p2高四位关系的判断，
+     * 和对p2高四位和p2低四位关系的判断方法相同，抽出方法
+     * @param b1  本身已有的
+     * @param b2  给别人的
+     * @return  true或false，表示能不能给
+     */
+    public boolean isValid(byte b1, byte b2){
+        byte xor1 = (byte) (b1 ^ b2);
+        String s1 = Integer.toBinaryString(xor1);
+        System.out.println("s1 = " + s1);
+        char[] chars1 = s1.toCharArray();
+
+        byte and1 = (byte) (xor1 & b1);
+        String s2 = Integer.toBinaryString(and1);
+        System.out.println("s2 = " + s2);
+        char[] chars2 = s2.toCharArray();
+
+        chars1 = zeroize(chars1);
+        chars2 = zeroize(chars2);
+
+        System.out.println(chars1);
+        System.out.println(chars2);
+
+        for(int i = 0; i < 4; i++){
+            if (chars1[i] =='1' && chars2[i] != '1'){
+                return false;
+            }
+        }
+        return true;
+    }
+    /**
+     * 判断授权是否合法
+     * @param p1_low4  授权者权限的低四位
+     * @param p2_high4  要授予的权限的高四位
+     * @param p2_low4  要授予的权限的低四位
+     * @return true则授权合法，false则授权不合法
+     */
+    public boolean isPermissionLegal(byte p1_low4, byte p2_high4, byte p2_low4){
+        if (isValid(p1_low4, p2_high4) && isValid(p2_high4, p2_low4))
+            return true;
+        else return false;
+    }
+
+    /**
+     * 处理grant子句（对于结点位置更新部分还有要思考更改的地方）
+     * @param u1  授权用户
+     * @param u2  被授权用户
+     * @param permission  要授予的权限
+     * @return  是否授权成功
+     */
+    public boolean processGrant(User u1, CommonUser u2, byte permission){
+        //1.获取授权用户的permission低四位
+        byte p1_low4 = (byte) (u1.getPermission() & 0x0f);
+        //2.获取被将要授予的permission的高四位和低四位
+        byte p2_high4 = (byte) ((permission & 0xf0) >> 4);
+        byte p2_low4 = (byte) (permission & 0x0f);
+        //3.判断是否可以授权
+        if (isPermissionLegal(p1_low4, p2_high4, p2_low4)) {
+            //可以授权
+            //(1)更改u2的permission属性
             u2.setPermission(permission);
-            //3.挪动u2的结点
+            //(2)挪动u2的结点
             shiftUser(u2, u2.getParent(), u1);
-            //4.更新树的高度
+            //(3)更新树的高度
             height = updateHeight(root);
+            return true;
+        }
+        //不可以授权
+        else{
+            System.err.println("Unauthorized authorization!");
+            return false;
         }
     }
 

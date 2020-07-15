@@ -46,6 +46,14 @@ public class UserManager {
         }
     }
 
+    public boolean logIn(String name, String password){
+        return tree.logIn(name, password);
+    }
+
+    public boolean processGrant(User u1, CommonUser u2, byte permission){
+        return tree.processGrant(u1, u2, permission);
+    }
+
     public static void main(String[] args) {
         System.out.println(tree);
         tree.addUserToTree(new CommonUser("100"));

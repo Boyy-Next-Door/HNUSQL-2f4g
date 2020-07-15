@@ -304,6 +304,8 @@ public abstract class tinySQL {
                DropTable( tableName );
             } else if ( actionType.equals("GRANT") ) {
                System.out.println("GRANT!!!!!!");
+            } else if ( actionType.equals("REVOKE") ) {
+               System.out.println("REVOKE!!!!!!");
             }
             else {
                System.out.println("Unrecognized action " + actionType);
