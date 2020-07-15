@@ -4,13 +4,12 @@ package ui;/*
  * and open the template in the editor.
  */
 
+
+import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.JOptionPane;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+
 /**
  *
  * @author Shinelon
@@ -39,7 +38,7 @@ public class DBMSFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList_database = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
-        jTabbedPane_1 = new javax.swing.JTabbedPane();
+        jTabbedPane_excute = new javax.swing.JTabbedPane();
         jTabbedPane_1_1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -51,9 +50,16 @@ public class DBMSFrame extends javax.swing.JFrame {
         jTable_tableDesign = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable_index = new javax.swing.JTable();
-        jTabbedPane_3_1 = new javax.swing.JTabbedPane();
-        jScrollPane6 = new javax.swing.JScrollPane();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
         jTextPane_cmd = new javax.swing.JTextPane();
+        jTabbedPane_result = new javax.swing.JTabbedPane();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTextPane_resultInfo = new javax.swing.JTextPane();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jTable_resultContent = new javax.swing.JTable();
         jButton_save = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -88,9 +94,19 @@ public class DBMSFrame extends javax.swing.JFrame {
                                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        jTabbedPane_1.addChangeListener(new javax.swing.event.ChangeListener() {
+        jTabbedPane_excute.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jTabbedPane_1StateChanged(evt);
+                jTabbedPane_excuteStateChanged(evt);
+            }
+        });
+        jTabbedPane_excute.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTabbedPane_excuteFocusGained(evt);
+            }
+        });
+        jTabbedPane_excute.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane_excuteMouseClicked(evt);
             }
         });
 
@@ -120,7 +136,7 @@ public class DBMSFrame extends javax.swing.JFrame {
 
         jTabbedPane_1_1.addTab("tables", jPanel3);
 
-        jTabbedPane_1.addTab("对象", jTabbedPane_1_1);
+        jTabbedPane_excute.addTab("对象", jTabbedPane_1_1);
 
         jTable_tableContent.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
@@ -142,17 +158,27 @@ public class DBMSFrame extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(jTable_tableContent);
-        if (jTable_tableContent.getColumnModel().getColumnCount() > 0) {
-            jTable_tableContent.getColumnModel().getColumn(0).setHeaderValue("id");
-            jTable_tableContent.getColumnModel().getColumn(1).setHeaderValue("name");
-            jTable_tableContent.getColumnModel().getColumn(2).setHeaderValue("phone");
-            jTable_tableContent.getColumnModel().getColumn(3).setHeaderValue("major");
-        }
 
         jTabbedPane_2_1.addTab("查看表", jScrollPane3);
 
         jTable_tableDesign.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [][] {
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null},
                         {null, null, null, null, null, null, null},
                         {null, null, null, null, null, null, null},
                         {null, null, null, null, null, null, null},
@@ -197,22 +223,83 @@ public class DBMSFrame extends javax.swing.JFrame {
 
         jTabbedPane_2_1.addTab("索引", jScrollPane5);
 
-        jTabbedPane_1.addTab("表", jTabbedPane_2_1);
+        jTabbedPane_excute.addTab("表", jTabbedPane_2_1);
 
-        jScrollPane6.setViewportView(jTextPane_cmd);
+        jScrollPane7.setViewportView(jTextPane_cmd);
 
-        jTabbedPane_3_1.addTab("cmd", jScrollPane6);
+        jScrollPane6.setViewportView(jTextPane_resultInfo);
 
-        jTabbedPane_1.addTab("cmd", jTabbedPane_3_1);
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 1039, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
-        jButton_save.setText("保存");
+        jTabbedPane_result.addTab("信息", jPanel5);
+
+        jTable_resultContent.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String [] {
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
+        ));
+        jScrollPane8.setViewportView(jTable_resultContent);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 1039, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+        );
+
+        jTabbedPane_result.addTab("结果", jPanel6);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane7)
+                        .addComponent(jTabbedPane_result)
+        );
+        jPanel4Layout.setVerticalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTabbedPane_result, javax.swing.GroupLayout.PREFERRED_SIZE, 250, Short.MAX_VALUE))
+        );
+
+        jTabbedPane_excute.addTab("查询", jPanel4);
+
+        jButton_save.setText("删除选中表");
+        jButton_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_saveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jTabbedPane_1)
+                                .addComponent(jTabbedPane_excute)
                                 .addContainerGap())
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -224,7 +311,7 @@ public class DBMSFrame extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jButton_save, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTabbedPane_1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTabbedPane_excute, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -272,27 +359,79 @@ public class DBMSFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    private void jTabbedPane_1StateChanged(javax.swing.event.ChangeEvent evt) {
+    private void jButton_saveActionPerformed(java.awt.event.ActionEvent evt) {
+        //执行选中内容
+        switch (save_btn_mode) {
+            //删除表
+            case 0: {
+                int value = JOptionPane.showConfirmDialog(this, "确定删除表\'" + jList_tables.getSelectedValue() + "\'吗？");
+                if (value == JOptionPane.YES_OPTION) {
+
+                    System.out.println("你选择了是");
+
+
+                } else if (value == JOptionPane.NO_OPTION) {
+
+                    System.out.println("你选择了否");
+
+                } else if (value == JOptionPane.CANCEL_OPTION) {
+
+                    System.out.println("你选择了取消");
+
+                } else if (value == JOptionPane.CLOSED_OPTION) {
+
+                    System.out.println("你直接将窗体关闭了，没有选择");
+                }
+                break;
+            }
+            //保存
+            case 1: {
+                break;
+            }
+            case 2: {
+                //获取cmd中的选中内容
+                String selectedText = jTextPane_cmd.getSelectedText();
+                JOptionPane.showMessageDialog(this, "选中内容：" + selectedText, null, JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+
+    }
+
+    private void jTabbedPane_excuteMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-//        JOptionPane.showMessageDialog(this, "切换选项卡" , null, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void jTabbedPane_excuteFocusGained(java.awt.event.FocusEvent evt) {
+
+
+    }
+
+    private void jTabbedPane_excuteStateChanged(javax.swing.event.ChangeEvent evt) {
+        //        JOptionPane.showMessageDialog(this, "切换选项卡" , null, JOptionPane.INFORMATION_MESSAGE);
         //选项卡切换 根据不同的页面做出相应改变
-        int selectedIndex = jTabbedPane_1.getSelectedIndex();
-        switch (selectedIndex){
+        int selectedIndex = jTabbedPane_excute.getSelectedIndex();
+        switch (selectedIndex) {
             //第一页 查看所有表
             case 0:
-                jButton_save.setVisible(true);
-
+                save_btn_mode = 0;
+                jButton_save.setText("删除选中表");
                 break;
             //第二页 查看表、设计表、索引
             case 1:
-                jButton_save.setVisible(true);
+                save_btn_mode = 1;
+                jButton_save.setText("保存");
                 break;
             //第三页 cmd
             case 2:
-                jButton_save.setVisible(false);
-                jTextPane_cmd.setText("CoolDB>");
+                //修改save按钮的功能
+                save_btn_mode = 2;
+                jButton_save.setText("执行选中内容");
+                jTextPane_cmd.setText("*********************************CoolDB*********************************");
                 break;
+
         }
+
     }
 
     /**
@@ -331,8 +470,6 @@ public class DBMSFrame extends javax.swing.JFrame {
     }
 
 
-
-
     // Variables declaration - do not modify
     private javax.swing.JButton jButton_save;
     private javax.swing.JList<String> jList_database;
@@ -346,32 +483,46 @@ public class DBMSFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTabbedPane jTabbedPane_1;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane_1_1;
     private javax.swing.JTabbedPane jTabbedPane_2_1;
-    private javax.swing.JTabbedPane jTabbedPane_3_1;
+    private javax.swing.JTabbedPane jTabbedPane_excute;
+    private javax.swing.JTabbedPane jTabbedPane_result;
     private javax.swing.JTable jTable_index;
+    private javax.swing.JTable jTable_resultContent;
     private javax.swing.JTable jTable_tableContent;
     private javax.swing.JTable jTable_tableDesign;
     private javax.swing.JTextPane jTextPane_cmd;
+    private javax.swing.JTextPane jTextPane_resultInfo;
     // End of variables declaration
 
-
+    //自定义变量
+    private static int save_btn_mode = 0;     //保存按钮多功能 0-删除表 1-保存修改  2-执行选中内容
 
     //获取数据库相关资源信息 刷新到UI上
     private void initDBMS() {
 
         jList_database.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                do_list_valueChanged(e);
+                do_list_databases_valueChanged(e);
             }
         });
+        jList_tables.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                do_list_databases_valueChanged(e);
+            }
+        });
+
         String[] listData = new String[7];
         listData[0] = "database1";
         listData[1] = "database2";
@@ -382,10 +533,9 @@ public class DBMSFrame extends javax.swing.JFrame {
         listData[6] = "database7";
         jList_database.setListData(listData);
 
-
     }
 
-    protected void do_list_valueChanged(ListSelectionEvent e) {
+    protected void do_list_databases_valueChanged(ListSelectionEvent e) {
         //修改选中的数据库
         String selectedValue = jList_database.getSelectedValue();
         JOptionPane.showMessageDialog(this, "当前选择的数据库：" + selectedValue, null, JOptionPane.INFORMATION_MESSAGE);
@@ -394,25 +544,67 @@ public class DBMSFrame extends javax.swing.JFrame {
 
     }
 
-    //将Pane_tables中的内容改成当前选中数据库的表
-    private void setTables(String databaseName) {
-        //根据数据库名获取tables集合
-         ArrayList<String> tables= getTablesByDatabaseName(databaseName);
-         //将list_tables内容设置为新的表名
-        jList_tables.setListData((String[])tables.toArray(new String[0]));
+
+    protected void do_list_tables_valueChanged(ListSelectionEvent e) {
+        //修改选中的数据库
+        String selectedValue = jList_database.getSelectedValue();
+        JOptionPane.showMessageDialog(this, "当前选择的表：" + selectedValue, null, JOptionPane.INFORMATION_MESSAGE);
+        //切换数据库
+        useTable(selectedValue);
 
     }
 
+    //将Pane_tables中的内容改成当前选中数据库的表
+    private void setTables(String databaseName) {
+        //根据数据库名获取tables集合
+        ArrayList<String> tables = getTablesByDatabaseName(databaseName);
+        //将list_tables内容设置为新的表名
+        jList_tables.setListData((String[]) tables.toArray(new String[0]));
+
+    }
+
+    //将jTable_tableContent中的内容改成当前选中的表
+    private void useTable(String tableName) {
+        //设置‘查看表’模块内容
+        setTableContent(tableName);
+        //设置‘设计表’模块内容
+        setTableDesign(tableName);
+        //设置‘索引’模块内容
+        setTableIndex(tableName);
+
+    }
+
+
+
+
+
+
     private ArrayList<String> getTablesByDatabaseName(String databaseName) {
         ArrayList<String> list = new ArrayList<>();
-        for (int i=0;i<5;i++){
-            list.add(databaseName+"_table_"+i);
+        for (int i = 0; i < 5; i++) {
+            list.add(databaseName + "_table_" + i);
         }
         return list;
     }
 
+    /**
+     * 设置表内容
+     * @param tableName
+     */
+    private void setTableContent(String tableName) {
+
+    }
+
+    /**
+     * 设置‘设计表’内容
+     * @param tableName
+     */
+    private void setTableDesign(String tableName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void setTableIndex(String tableName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
-
-
-
