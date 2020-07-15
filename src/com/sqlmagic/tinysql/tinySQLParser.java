@@ -30,6 +30,8 @@
 
 package com.sqlmagic.tinysql;
 
+import com.sun.org.apache.xerces.internal.xni.grammars.Grammar;
+
 import java.io.*;
 import java.util.*;
 import java.text.*;
@@ -145,6 +147,7 @@ public class tinySQLParser
    {
       String tableName,tableAlias,tableNameAndAlias,userName,dbName,password;
       String nowUserName;//当前用户名（待获取）
+      Byte Granting=0b00000000;
       tinySQLTable changeTable;
       String getKeyWord1,getKeyWord2;
       String[] getKeyWord;
@@ -379,18 +382,36 @@ public class tinySQLParser
             statementType = "GRANT";
 
             ft2 = new FieldTokenizer(nextField,',',false);
-            getKeyWord = ft2.getFields();//获取应该授权的权限
+            Granting=0b00000000;
             for(int count=0;count<ft2.countFields();count++){
                getKeyWord1=ft2.getField(count);
+               if(getKeyWord1.toUpperCase().equals("CREATE")){
+                  Granting=(byte) (Granting | 0b10000000);
+               } else if(getKeyWord1.toUpperCase().equals("DELETE")){
+                  Granting=(byte) (Granting | 0b01000000);
+               } else if(getKeyWord1.toUpperCase().equals("UPDATE")){
+                  Granting=(byte) (Granting | 0b00100000);
+               } else if(getKeyWord1.toUpperCase().equals("SELECT")){
+                  Granting=(byte) (Granting | 0b00010000);
+               }
                //对该权限对用户进行操作
             }
          }else if( inputKeyWord.equals("REVOKE")) {
              statementType = "REVOKE";
 
              ft2 = new FieldTokenizer(nextField,',',false);
-             getKeyWord = ft2.getFields();//获取应该授权的权限
+             Granting=0b00000000;
              for(int count=0;count<ft2.countFields();count++){
                  getKeyWord1=ft2.getField(count);
+                 if(getKeyWord1.toUpperCase().equals("CREATE")){
+                    Granting=(byte) (Granting | 0b10000000);
+                 } else if(getKeyWord1.toUpperCase().equals("DELETE")){
+                    Granting=(byte) (Granting | 0b01000000);
+                 } else if(getKeyWord1.toUpperCase().equals("UPDATE")){
+                    Granting=(byte) (Granting | 0b00100000);
+                 } else if(getKeyWord1.toUpperCase().equals("SELECT")){
+                    Granting=(byte) (Granting | 0b00010000);
+                 }
                  //对该权限对用户进行操作
              }
          } else if(inputKeyWord.equals("ON")){
@@ -399,27 +420,35 @@ public class tinySQLParser
              if ( ft2.countFields() == 2 ){
                  dbName = ft2.getField(0);
                  tableName = ft2.getField(1);
-                 System.out.println(dbName + "+" + tableName);
+                 //System.out.println(dbName + "+" + tableName);
              }else {
                  tableName=ft2.getField(0);
              }
          }else if(inputKeyWord.equals("TO")){
-             //获取用户名
-             userName = nextField;
+             userName = nextField;     //获取用户名
+             //processGrant(nowUserName,username,Granting);
          }else if(inputKeyWord.equals("FROM")) {
-             //获取用户名
-             userName = nextField;
+             userName = nextField;    //获取用户名
+             //processRevoke(nowUserName,username,Granting);
          } else if(inputKeyWord.equals("WITH")){
-            ft2 = new FieldTokenizer(nextField,' ',false);
-            //获取后面两个字
+            ft2 = new FieldTokenizer(nextField,' ',false); //获取后面两个字
+
+            Granting = Granting << 4;
             getKeyWord1 = ft2.getField(0);
             getKeyWord2 = ft2.getField(1);
+
             if(getKeyWord1.toUpperCase().equals("LINK") && getKeyWord2.toUpperCase().equals("OPTION")){
-
-               System.out.println("allow");
+               if(statementType.equals("GRANT")){
+                  //processGrantWith(nowUserName,username,Granting);
+               } else if(statementType.equals("REVOKE")){
+                  //processRevokeWith(nowUserName,username,Granting);
+               }
             }else if(getKeyWord1.toUpperCase().equals("ADMIN") && getKeyWord2.toUpperCase().equals("OPTION")){
-
-               System.out.println("not allow");
+               if(statementType.equals("GRANT")){
+                  //processGrantWith(nowUserName,username,Granting);
+               } else if(statementType.equals("REVOKE")){
+                  //processRevokeWith(nowUserName,username,Granting);
+               }
             }
 
          }
