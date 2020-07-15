@@ -14,13 +14,29 @@ public abstract class User implements Serializable {
     private int level;  //结点的层数
     private List<User> children = new ArrayList<>();  //该用户的子节点
     private byte permission;  //该用户的权限
+    private boolean isGrantee;  //已被授权
     abstract public void addChild(User user);
 
     public User() {
+        this.isGrantee = false;
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
     public User(String id) {
         this.id = id;
+        this.isGrantee = false;
+    }
+
+    public User(String id, String name, String password, byte permission) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.permission = permission;
+        this.isGrantee = false;
     }
 
     public String getId() {
@@ -79,4 +95,33 @@ public abstract class User implements Serializable {
         this.permission = permission;
     }
 
+    public boolean isGrantee() {
+        return isGrantee;
+    }
+
+    public void setGrantee(boolean grantee) {
+        isGrantee = grantee;
+    }
+
+    public void setHighPermission(byte permission){
+        //本函数目标：仅改动permission的高4位（把新的权限加进来，而不是覆盖，所以要做按位或运算）
+        byte high = (byte) ((permission & 0xf0) | (this.permission & 0xf0));
+        byte low = (byte) (this.permission & 0x0f);
+        this.permission = (byte) (high + low);
+    }
+
+    public byte getHighPermission() {
+        return (byte) (permission & 0b11110000);
+    }
+
+    public void setLowPermission(byte permission){
+        //本函数目标：仅改动permission的低4位（把新的权限加进来，而不是覆盖，所以要做按位或运算）
+        byte high = (byte) (this.permission & 0xf0);
+        byte low = (byte) ((permission & 0x0f) | (this.permission & 0x0f));
+        this.permission = (byte) (high + low);
+    }
+
+    public byte getLowPermission() {
+        return (byte) (permission & 0b00001111);
+    }
 }
