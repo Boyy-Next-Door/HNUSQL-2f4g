@@ -145,7 +145,7 @@ public class tinySQLParser
    public void setPhrase(String inputKeyWord,String inputString)
       throws tinySQLException
    {
-      String tableName,tableAlias,tableNameAndAlias,userName,dbName,password;
+      String tableName1,tableAlias,tableNameAndAlias,userName,dbName,password;
       String nowUserName;//当前用户名（待获取）
       Byte Granting=0b00000000;
       tinySQLTable changeTable;
@@ -419,10 +419,10 @@ public class tinySQLParser
              ft2 = new FieldTokenizer(nextField,'.',false);
              if ( ft2.countFields() == 2 ){
                  dbName = ft2.getField(0);
-                 tableName = ft2.getField(1);
+                 tableName1 = ft2.getField(1);
                  //System.out.println(dbName + "+" + tableName);
              }else {
-                 tableName=ft2.getField(0);
+                 tableName1=ft2.getField(0);
              }
          }else if(inputKeyWord.equals("TO")){
              userName = nextField;     //获取用户名
@@ -433,7 +433,7 @@ public class tinySQLParser
          } else if(inputKeyWord.equals("WITH")){
             ft2 = new FieldTokenizer(nextField,' ',false); //获取后面两个字
 
-            Granting = Granting << 4;
+            Granting = (byte)(Granting << 4);
             getKeyWord1 = ft2.getField(0);
             getKeyWord2 = ft2.getField(1);
 
