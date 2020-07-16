@@ -21,7 +21,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="7.15">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/CommonUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/CommonUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/MainTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/UserManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem/UserTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/UserTree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +44,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1eIxUcxVcXDax6F20wReYdlNI9f" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

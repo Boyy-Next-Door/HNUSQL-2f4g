@@ -1,8 +1,6 @@
 package usersystem;
 
-import java.util.List;
-
-public class Admin extends User{
+public class Admin extends User {
 
     private static final Admin admin = new Admin();
 
@@ -12,7 +10,7 @@ public class Admin extends User{
         setPassword("123456");
         setParent(null);
         setLevel(1);
-        setPermission((byte)0x00);
+        setPermission((byte)0xff);
     }
 
     public static Admin getAdmin(){

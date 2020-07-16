@@ -45,6 +45,15 @@ public class UserManager {
             }
         }
     }
+    public Admin newAdmin(){
+        return Admin.getAdmin();
+    }
+
+    public CommonUser newCommonUser(String name, String password){
+        CommonUser user = new CommonUser("u1", "123456");
+        tree.addUserToTree(user);
+        return user;
+    }
 
     public boolean logIn(String name, String password){
         return tree.logIn(name, password);
@@ -52,6 +61,14 @@ public class UserManager {
 
     public boolean processGrant(User u1, CommonUser u2, byte permission){
         return tree.processGrant(u1, u2, permission);
+    }
+
+    public boolean processGrantWith(User u1, CommonUser u2, byte permission){
+        return tree.processGrantWith(u1, u2, permission);
+    }
+
+    public boolean delUserFromTree(String name){
+        return tree.delUserFromTree(name);
     }
 
     public static void main(String[] args) {
