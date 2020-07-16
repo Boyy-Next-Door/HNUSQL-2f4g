@@ -428,12 +428,12 @@ public class tinySQLParser
              userName = nextField;     //获取用户名
              //processGrant(nowUserName,username,Granting);
          }else if(inputKeyWord.equals("FROM")) {
-             userName = nextField;    //获取用户名
+             userName = nextField;     //获取用户名
              //processRevoke(nowUserName,username,Granting);
          } else if(inputKeyWord.equals("WITH")){
             ft2 = new FieldTokenizer(nextField,' ',false); //获取后面两个字
 
-            Granting = Granting << 4;
+            Granting = Granting >>> 4;
             getKeyWord1 = ft2.getField(0);
             getKeyWord2 = ft2.getField(1);
 
