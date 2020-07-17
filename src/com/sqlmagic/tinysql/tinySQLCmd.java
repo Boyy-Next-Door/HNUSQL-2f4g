@@ -248,7 +248,7 @@ public class tinySQLCmd {
                             System.out.println("Create failed.");
                         }
                     }
-                    //读取当前数据库下的日志
+                    //读取当前数据库下的某条日志 READ LOG 1 读取第一条 READ LOG -1 读取最新一条
                     else if(cmdString.toUpperCase().startsWith("READ LOG")){
                         try {
                             int line = Integer.parseInt(cmdString.substring(9, cmdString.length()));
@@ -257,7 +257,15 @@ public class tinySQLCmd {
                             System.out.println("linenum invalid");
                         }
                     }
-
+                    //根据日志恢复当前数据库数据 RECOVER 1 从当前数据库的第一条日志开始恢复
+                    else if(cmdString.toUpperCase().startsWith("RECOVER")){
+                        try {
+                            int line = Integer.parseInt(cmdString.substring(8, cmdString.length()));
+                            logger.recoverDatabase(line,con);
+                        } catch (Exception e) {
+                            System.out.println("linenum invalid");
+                        }
+                    }
 
                     else if (cmdString.toUpperCase().startsWith("HELP")) {
                         helpMsg(cmdString);

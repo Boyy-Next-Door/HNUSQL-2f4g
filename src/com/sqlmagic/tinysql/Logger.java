@@ -1,7 +1,9 @@
 package com.sqlmagic.tinysql;
 
 import java.io.*;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,8 +14,10 @@ public class Logger extends tinySQL {
 
     private String dataDir = null;
 
-    Logger(){}
-    Logger(String url){
+    Logger() {
+    }
+
+    Logger(String url) {
         dataDir = url;
     }
 
@@ -128,6 +132,7 @@ public class Logger extends tinySQL {
 
     /**
      * 读取并打印日志方法，根据日志行数读取，-1读取最新
+     *
      * @param linenum
      */
     public void readLog(int linenum) {
@@ -153,7 +158,6 @@ public class Logger extends tinySQL {
                         return;
                     }
                     linenum--;
-
                 }
 
                 String[] part = line.split("=");
@@ -173,11 +177,52 @@ public class Logger extends tinySQL {
         System.out.println("没写");
     }
 
+    public void recoverDatabase(int linenum, Connection con) {
+        if (linenum < 0) {
+            System.out.println("linenum invalid (>0)");
+        }
+        File toOpen = loadFile();
+        String line = null;
+        if (toOpen.exists()) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(toOpen),
+                    "UTF-8"))) {
+
+                while (linenum > 0) {
+                    line = br.readLine();
+                    if (line == null) {
+                        System.out.println("line num is out of bound");
+                        return;
+                    }
+                    linenum--;
+                }
+
+                int count = 0;
+                Statement stmt = con.createStatement();
+                while (true) {
+                    String sql = line.substring(20, line.length());
+                    System.out.println("SqlStatement: " + sql);
+                    stmt.executeUpdate(sql);
+                    count++;
+                    line = br.readLine();
+                    if (line == null) {
+                        System.out.println("Recover Done, " + count + " statement executed");
+                        return;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("log file does not exists");
+        }
+    }
+
+
     private File loadFile() {
         File toOpen;
         //若没有连接数据库，默认为项目目录下
         if (dataDir == null)
-            toOpen = new File(File.separator + "log" + File.separator + "log.txt");
+            toOpen = new File('.' + File.separator + "log" + File.separator + "log.txt");
         else
             toOpen = new File(dataDir + File.separator +
                     "log" + File.separator + "log.txt");
