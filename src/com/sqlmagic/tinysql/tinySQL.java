@@ -33,6 +33,7 @@
 
 package com.sqlmagic.tinysql;
 
+import javax.print.DocFlavor;
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -128,6 +129,8 @@ public abstract class tinySQL {
       boolean useTinyParser=true,distinct=false;
       Vector actions,columns,columnDefs,values,columnContexts,columnAliases;
       String actionType,orderType,tableName,statementType,byteString;
+      String tableName1=null,dbName=null,userName=null;
+      byte permission = 0b00000000;
       Hashtable h,selectTables;
       byte[] bStream;
       ByteArrayInputStream st;
@@ -159,11 +162,16 @@ public abstract class tinySQL {
             throw new tinySQLException("Unknown statement type" 
             + statementType);
          }
+         tinySQLParser tinyp = new tinySQLParser();
          if ( actions == (Vector)null ) 
          {
             st = new ByteArrayInputStream(bStream);
             SQLStream = (InputStream) st;
-            tinySQLParser tinyp = new tinySQLParser(SQLStream,this);
+            tinyp = new tinySQLParser(SQLStream,this);
+            tableName1=tinyp.tableName;
+            userName=tinyp.userName;
+            dbName=tinyp.dbName;
+            permission=tinyp.Granting;
             tinySQLGlobals.writeLongNames();
             actions = tinyp.getActions();
             if ( statementType.endsWith("tinySQLPreparedStatement") )
@@ -303,9 +311,16 @@ public abstract class tinySQL {
  */          
                DropTable( tableName );
             } else if ( actionType.equals("GRANT") ) {
-               System.out.println("GRANT!!!!!!");
+
+               System.out.println(tableName1);
+               System.out.println(dbName);
+               System.out.println(permission);
+               System.out.println(userName);
+
             } else if ( actionType.equals("REVOKE") ) {
-               System.out.println("REVOKE!!!!!!");
+
+            } else if( actionType.equals("GRANT_WITH") ){
+
             }
             else {
                System.out.println("Unrecognized action " + actionType);

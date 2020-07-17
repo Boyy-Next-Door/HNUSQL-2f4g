@@ -44,6 +44,7 @@ public class tinySQLParser
    String nowUserName;//当前用户名（待获取）
    Hashtable tables,users;
    tinySQL dbEngine;
+   Byte Granting=0b00000000;
    tinySQLWhere whereClause;
    String tableName,tableAlias,dataDir,dbName;
    String userName,password;
@@ -53,6 +54,9 @@ public class tinySQLParser
    String[] colTypeNames = {"INT","FLOAT","CHAR","DATE"};
    int[] colTypes = {Types.INTEGER,Types.FLOAT,Types.CHAR,Types.DATE};
    boolean distinct=false,defaultOrderBy=true;
+   public tinySQLParser(){
+
+   }
    public tinySQLParser(InputStream sqlInput,tinySQL inputEngine)
       throws tinySQLException
    {
@@ -147,7 +151,7 @@ public class tinySQLParser
       throws tinySQLException
    {
 
-      Byte Granting=0b00000000;
+
       tinySQLTable changeTable;
       String getKeyWord1,getKeyWord2;
       String[] getKeyWord;
@@ -421,7 +425,7 @@ public class tinySQLParser
                  dbName = ft2.getField(0);
                  tableName = ft2.getField(1);
                  //System.out.println(dbName + "+" + tableName);
-             }else {
+             }else if( ft2.countFields() == 1 ){
                  tableName = ft2.getField(0);
              }
          }else if(inputKeyWord.equals("TO")){
@@ -431,24 +435,17 @@ public class tinySQLParser
              userName = nextField;    //获取用户名
              //processRevoke(nowUserName,username,Granting);
          } else if(inputKeyWord.equals("WITH")){
+            statementType = statementType + "_WITH";
             ft2 = new FieldTokenizer(nextField,' ',false); //获取后面两个字
 
-            Granting = (byte)(Granting << 4);
+            Granting = (byte)(Granting >>> 4 | Granting);
             getKeyWord1 = ft2.getField(0);
             getKeyWord2 = ft2.getField(1);
 
             if(getKeyWord1.toUpperCase().equals("LINK") && getKeyWord2.toUpperCase().equals("OPTION")){
-               if(statementType.equals("GRANT")){
-                  //processGrantWith(nowUserName,username,Granting);
-               } else if(statementType.equals("REVOKE")){
-                  //processRevokeWith(nowUserName,username,Granting);
-               }
+               statementType = statementType + "_WITH" + "_LINK";
             }else if(getKeyWord1.toUpperCase().equals("ADMIN") && getKeyWord2.toUpperCase().equals("OPTION")){
-               if(statementType.equals("GRANT")){
-                  //processGrantWith(nowUserName,username,Granting);
-               } else if(statementType.equals("REVOKE")){
-                  //processRevokeWith(nowUserName,username,Granting);
-               }
+               statementType = statementType + "_WITH" + "_ADMIN";
             }
 
          }
@@ -795,5 +792,9 @@ public class tinySQLParser
    public Vector getActions()
    {
       return actionList;
+   }
+
+   public String getTableName(){
+      return tableName;
    }
 }
