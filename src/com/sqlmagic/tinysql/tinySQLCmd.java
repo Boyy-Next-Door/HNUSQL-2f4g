@@ -84,6 +84,8 @@ public class tinySQLCmd {
       https://blog.csdn.net/liji_xc/article/details/47291075
       https://www.cnblogs.com/zhaoyanjun/p/6376996.html
        */
+        //声明默认路径logger
+        Logger logger = new Logger();
 
         int i, rsColCount, endAt, colWidth, colScale, colPrecision, typeCount,
                 colType, parameterIndex, b1, b2, parameterInt, startAt, columnIndex, valueIndex;
@@ -218,9 +220,17 @@ public class tinySQLCmd {
                     else if (cmdString.toUpperCase().startsWith("USE")) {
                         String url = DatabaseMapper.getURL(cmdString.substring(4, cmdString.length()));
                         con = dbConnect(url);
+
+                        //若成功 为logger设置url
+                        if(!"DB_NOT_EXIST".equals(url) && con != null) {
+                            logger.setDataDir(url);
+                        }
+
+
                     }
                     //查看所有数据库
                     else if (cmdString.toUpperCase().equals("SHOW DATABASES")) {
+
                         ArrayList<DatabaseMapper.MapperEntry> databases = getDatabaseList();
                         MyTableUtil database_name = new MyTableUtil().addColumn("database_name");
                         for (DatabaseMapper.MapperEntry entry : databases) {
@@ -238,6 +248,16 @@ public class tinySQLCmd {
                             System.out.println("Create failed.");
                         }
                     }
+                    //读取当前数据库下的日志
+                    else if(cmdString.toUpperCase().startsWith("READ LOG")){
+                        try {
+                            int line = Integer.parseInt(cmdString.substring(9, cmdString.length()));
+                            logger.readLog(line);
+                        } catch (Exception e) {
+                            System.out.println("linenum invalid");
+                        }
+                    }
+
 
                     else if (cmdString.toUpperCase().startsWith("HELP")) {
                         helpMsg(cmdString);
@@ -291,6 +311,9 @@ public class tinySQLCmd {
                         if (fields[1].equals("ECHO")) {
                             if (fields[2].equals("ON")) echo = true;
                             else echo = false;
+                        } else if ( fields[1].equals("LOG") ) {
+                            if ( fields[2].equals("ON") ) tinySQLGlobals.LOG = true;
+                            else tinySQLGlobals.LOG = false;
                         } else if (fields[1].equals("DEBUG")) {
                             if (fields[2].equals("ON")) tinySQLGlobals.DEBUG = true;
                             else tinySQLGlobals.DEBUG = false;
@@ -416,6 +439,10 @@ public class tinySQLCmd {
                         } else {
                             try {
                                 stmt.executeUpdate(cmdString);
+                                //logger记录
+                                if(tinySQLGlobals.LOG) {
+                                    logger.logStatement(cmdString);
+                                }
                                 System.out.println("DONE\n");
                             } catch (Exception upex) {
                                 System.out.println(upex.getMessage());

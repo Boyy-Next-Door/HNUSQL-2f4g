@@ -474,57 +474,56 @@ public class tinySQLParser
       validateTable(tableSpec,false);
    }
    public void validateTable(String tableSpec,boolean closeTable) 
-      throws tinySQLException
-   {
-/*
- *    Create a table object for each table used in the SELECT statement
- *    and store these objects in the tables Hashtable.  Save the original
- *    list of table names to set the default selection order.
- *
- *    If closeTable is true the table object will be closed after it is
- *    validated (for DROP TABLE and ALTER TABLE commands).
- */
-      String tableName,tableAlias,tableNameAndAlias,sortName;
-      tinySQLTable addTable,sortTable;
+      throws tinySQLException {
+      /*
+       *    Create a table object for each table used in the SELECT statement
+       *    and store these objects in the tables Hashtable.  Save the original
+       *    list of table names to set the default selection order.
+       *
+       *    If closeTable is true the table object will be closed after it is
+       *    validated (for DROP TABLE and ALTER TABLE commands).
+       */
+      String tableName, tableAlias, tableNameAndAlias, sortName;
+      tinySQLTable addTable, sortTable;
       boolean tableAdded;
       FieldTokenizer ftTable;
-      int i,addRowCount,sortRowCount;
-      ftTable = new FieldTokenizer(tableSpec,' ',false);
+      int i, addRowCount, sortRowCount;
+      ftTable = new FieldTokenizer(tableSpec, ' ', false);
       tableName = ftTable.getField(0);
-      tableAlias = (ftTable.getField(1,tableName)).toUpperCase();
+      tableAlias = (ftTable.getField(1, tableName)).toUpperCase();
       tableNameAndAlias = tableName + "->" + tableAlias;
       addTable = dbEngine.getTable(tableNameAndAlias);
-      addTable.GoTop();
-      addRowCount = addTable.GetRowCount();
-      if ( closeTable ) addTable.close();
-      if ( tinySQLGlobals.PARSER_DEBUG )
-         System.out.println("Add table " + tableNameAndAlias + " to tables");
-      tables.put(tableNameAndAlias,addTable);
-      tableAdded = false;
-      for (i = 0; i < tableList.size(); i++)
-      {
-         sortName = (String)tableList.elementAt(i);
-         sortTable = (tinySQLTable)tables.get(sortName);
-         sortRowCount = sortTable.GetRowCount();
-/*
- *       Sort the table selections from smallest to largest table to 
- *       enhance the query performance.
- */
-         if ( addRowCount > sortRowCount ) continue;
-         tableList.insertElementAt(tableNameAndAlias,i);
-         tableAdded = true;
-         break;
-      }
-      if ( !tableAdded ) tableList.addElement(tableNameAndAlias);
-      if ( tinySQLGlobals.PARSER_DEBUG ) 
-      {
-         System.out.println("Table selection order");
-         for ( i = 0; i < tableList.size(); i++ )
-         {
-            sortName = (String)tableList.elementAt(i);
-            sortTable = (tinySQLTable)tables.get(sortName);
+      //Modified if!=null
+      if (addTable != null) {
+         addTable.GoTop();
+         addRowCount = addTable.GetRowCount();
+         if (closeTable) addTable.close();
+         if (tinySQLGlobals.PARSER_DEBUG)
+            System.out.println("Add table " + tableNameAndAlias + " to tables");
+         tables.put(tableNameAndAlias, addTable);
+         tableAdded = false;
+         for (i = 0; i < tableList.size(); i++) {
+            sortName = (String) tableList.elementAt(i);
+            sortTable = (tinySQLTable) tables.get(sortName);
             sortRowCount = sortTable.GetRowCount();
-            System.out.println(sortName + " " + sortRowCount);
+            /*
+             *       Sort the table selections from smallest to largest table to
+             *       enhance the query performance.
+             */
+            if (addRowCount > sortRowCount) continue;
+            tableList.insertElementAt(tableNameAndAlias, i);
+            tableAdded = true;
+            break;
+         }
+         if (!tableAdded) tableList.addElement(tableNameAndAlias);
+         if (tinySQLGlobals.PARSER_DEBUG) {
+            System.out.println("Table selection order");
+            for (i = 0; i < tableList.size(); i++) {
+               sortName = (String) tableList.elementAt(i);
+               sortTable = (tinySQLTable) tables.get(sortName);
+               sortRowCount = sortTable.GetRowCount();
+               System.out.println(sortName + " " + sortRowCount);
+            }
          }
       }
    }
