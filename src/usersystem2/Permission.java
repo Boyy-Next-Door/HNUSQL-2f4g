@@ -3,11 +3,12 @@ package usersystem2;
 import com.sun.org.apache.xml.internal.security.keys.keyresolver.implementations.PrivateKeyResolver;
 
 public class Permission {
-    private int target;     //0--database  1--table
+    private int target = 1;     //0--database  1--table（默认）
     private Database database;
     private Table table;
-    private byte permission;  //该用户的权限
+    private byte permission;    //该用户的权限
     private User grantedBy;
+    private int grantType;      // 0-link 1-admin
 
     public int getTarget() {
         return target;
@@ -47,5 +48,24 @@ public class Permission {
 
     public void setGrantedBy(User grantedBy) {
         this.grantedBy = grantedBy;
+    }
+
+    public int getGrantType() {
+        return grantType;
+    }
+
+    public void setGrantType(int grantType) {
+        this.grantType = grantType;
+    }
+
+    /**
+     * 校验当前权限能否下发目标权限
+     *
+     * @param currentPerm
+     * @param targetPerm
+     */
+    public boolean isGrantable(Permission currentPerm, byte targetPerm) {
+        //TODO 需要实现
+        return false;
     }
 }

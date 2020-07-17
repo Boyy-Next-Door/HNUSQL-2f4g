@@ -33,11 +33,21 @@ public class User {
     }
 
     public boolean isGrantable(String database, String table, byte permission) {
+        Table table1 = new Table(new Database(database), table);
+        Permission permission1 = permissions.get(table1);
 
-        return false;
+        //检查是否能够下发权限
+        return  permission1.isGrantable(permission1,permission);
     }
 
     public void acquirePermission(String granterName, String database, String table, byte permission, int grantType) {
-
+        Table table1 = new Table(new Database(database), table);
+        Permission permission1 = new Permission();
+        permission1.setGrantedBy(UserManager2.getUserByName(granterName));
+        permission1.setTarget(1);                   //默认目标为表
+        permission1.setTable(table1);               //记录目标表
+        permission1.setDatabase(table1.getDb());    //记录目标数据库
+        permission1.setPermission(permission);      //设置权限位
+        permission1.setGrantType(grantType);        //记录权限下发形式
     }
 }
