@@ -1,6 +1,7 @@
 package usersystem2;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class User {
     private String username;
@@ -33,15 +34,27 @@ public class User {
     }
 
     public boolean isGrantable(String database, String table, byte permission) {
-        Table table1 = new Table(new Database(database), table);
-        Permission permission1 = permissions.get(table1);
+        boolean isGrantable=false;
+        for(Map.Entry<Table, Permission> entry:permissions.entrySet()){
+            //本用户关于这个表的某一组权限
+            Table key = entry.getKey();
+            if(key.getDb().getDatabaseName().equals(database) && key.getTableName().equals(table)){
+                //TODO 检查一下这个权限能否下发 如果不行 还可能有针对该表的其他permission可以下发
+                byte permission1 = entry.getKey().getPermission();
+//                if(可以下发)
+//                  isGrantable=true;
+//                  break;
+//                else(不能下发 找下一个)
+//                  continue;
+            }
+        }
 
         //检查是否能够下发权限
-        return  permission1.isGrantable(permission1,permission);
+        return  isGrantable;
     }
 
     public void acquirePermission(String granterName, String database, String table, byte permission, int grantType) {
-        Table table1 = new Table(new Database(database), table);
+        Table table1 = new Table(new Database(database), table,permission);
         Permission permission1 = new Permission();
         permission1.setGrantedBy(UserManager2.getUserByName(granterName));
         permission1.setTarget(1);                   //默认目标为表
