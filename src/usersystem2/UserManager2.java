@@ -31,7 +31,7 @@ public class UserManager2 {
     public static void addUser(User user) {
         //检查用户名是否已存在
         if (users.containsKey(user.getUsername())) {
-            System.err.println("用户名已存在,添加失败");
+            System.err.println("用户" + user.getUsername() + "已存在,添加失败");
             return;
         }
         users.put(user.getUsername(), user);
@@ -40,10 +40,23 @@ public class UserManager2 {
 
     public static void deleteUser(String username) {
         if (!users.containsKey(username)) {
-            System.err.println("用户名不存在,删除失败");
+            System.err.println("用户" + username + "不存在,删除失败");
             return;
         }
         users.remove(username);
+        writeUsersToFile();
+    }
+
+    /**
+     * 修改用户信息
+     * @param username 原用户名
+     * @param newname 新用户名
+     * @param newPaswrd 新密码
+     */
+    public static void modifyName(String username, String newname, String newPaswrd){
+        User user = getUserByName(username);
+        user.setUsername(newname);
+        user.setPassword(newPaswrd);
         writeUsersToFile();
     }
 
@@ -61,7 +74,7 @@ public class UserManager2 {
         User grantee = users.get(granteeName);
 
         //检查授权者是否拥有权限且可以下发
-        if (granter.isGrantable(database, table, permission)) {
+        if (granter.isGrantable(database, table, permission) && grantee.canBeAuthorized(database, table, permission)) {
             //授权者拥有对该表的权限，那么可以下发
             grantee.acquirePermission(granterName, database, table, permission, grantType);
             return true;
@@ -70,8 +83,6 @@ public class UserManager2 {
             System.err.println("授权者无权下发目标权限");
             return false;
         }
-
-
     }
 
 
@@ -128,13 +139,13 @@ public class UserManager2 {
             }
         }
     }
-
-    public static void main(String[] args) {
-        User user = new User();
-        user.setUsername("yjz");
-        user.setPassword("123");
-        user.setPermissions(new HashMap<>());
-        addUser(user);
-
-    }
+    //
+    // public static void main(String[] args) {
+    //     User user = new User();
+    //     user.setUsername("yjz");
+    //     user.setPassword("123");
+    //     user.setPermissions(new HashMap<>());
+    //     addUser(user);
+    //
+    // }
 }
