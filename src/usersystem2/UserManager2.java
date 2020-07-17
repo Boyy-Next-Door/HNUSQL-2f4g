@@ -1,6 +1,5 @@
 package usersystem2;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserManager2 {
@@ -22,6 +21,9 @@ public class UserManager2 {
         users.remove(username);
     }
 
+    public static User getUserByName(String username){
+        return users.get(username);
+    }
     public static boolean grant(String granterName, String granteeName, String database, String table, byte permission, int grantType) throws Exception {
         if (!(users.containsKey(granterName) && users.containsKey(granteeName))) {
             System.err.println("参数用户不存在");

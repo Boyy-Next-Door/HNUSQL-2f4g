@@ -3,13 +3,17 @@ package usersystem2;
 import java.util.ArrayList;
 
 public class Database {
-    private ArrayList<Table> tables;
+    private String databaseName;
 
-    public ArrayList<Table> getTables() {
-        return tables;
+    public Database(String databaseName) {
+        this.databaseName = databaseName;
     }
 
-    public void setTables(ArrayList<Table> tables) {
-        this.tables = tables;
+    public String getDatabaseName() {
+        return databaseName;
+    }
+
+    public void setDatabaseName(String databaseName) {
+        this.databaseName = databaseName;
     }
 }
