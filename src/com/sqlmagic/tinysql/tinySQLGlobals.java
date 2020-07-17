@@ -46,6 +46,8 @@ public class tinySQLGlobals
    static boolean EX_DEBUG = false;
    static int longNamesInFileCount;
    static boolean debug = false;
+   //日志功能标志位
+   static boolean LOG = false;
    //
    public static void readLongNames(String inputDataDir)
    {
