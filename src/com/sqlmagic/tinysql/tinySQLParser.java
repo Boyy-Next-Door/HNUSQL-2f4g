@@ -41,10 +41,11 @@ public class tinySQLParser
 {
    Vector columnList,tableList,actionList,valueList,contextList,
    columnAliasList,columns,userList;
+   String nowUserName;//当前用户名（待获取）
    Hashtable tables,users;
    tinySQL dbEngine;
    tinySQLWhere whereClause;
-   String tableName,tableAlias,dataDir;
+   String tableName,tableAlias,dataDir,dbName;
    String userName,password;
    String statementType=(String)null;
    String lastKeyWord=(String)null,orderType=(String)null;
@@ -145,8 +146,7 @@ public class tinySQLParser
    public void setPhrase(String inputKeyWord,String inputString)
       throws tinySQLException
    {
-      String tableName1,tableAlias,tableNameAndAlias,userName,dbName,password;
-      String nowUserName;//当前用户名（待获取）
+
       Byte Granting=0b00000000;
       tinySQLTable changeTable;
       String getKeyWord1,getKeyWord2;
@@ -419,10 +419,10 @@ public class tinySQLParser
              ft2 = new FieldTokenizer(nextField,'.',false);
              if ( ft2.countFields() == 2 ){
                  dbName = ft2.getField(0);
-                 tableName1 = ft2.getField(1);
+                 tableName = ft2.getField(1);
                  //System.out.println(dbName + "+" + tableName);
              }else {
-                 tableName1=ft2.getField(0);
+                 tableName = ft2.getField(0);
              }
          }else if(inputKeyWord.equals("TO")){
              userName = nextField;     //获取用户名

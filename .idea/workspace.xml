@@ -19,8 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="7.15">
+    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="7.17">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594868525073</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="7.17">
+      <created>1594951355189</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1594951355189</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,7 +220,8 @@
     <MESSAGE value="增加权限的基本框架" />
     <MESSAGE value="7.15" />
     <MESSAGE value="7.16" />
-    <option name="LAST_COMMIT_MESSAGE" value="7.16" />
+    <MESSAGE value="7.17" />
+    <option name="LAST_COMMIT_MESSAGE" value="7.17" />
   </component>
   <component name="WindowStateProjectService">
     <state x="256" y="0" key="#Project_Structure" timestamp="1594112043039">
@@ -310,10 +319,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-150" y="117" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594785002426" />
-    <state x="638" y="309" key="git4idea.merge.GitPullDialog" timestamp="1594868537293">
+    <state x="638" y="309" key="git4idea.merge.GitPullDialog" timestamp="1594951364421">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="638" y="309" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594868537293" />
+    <state x="638" y="309" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594951364421" />
     <state x="716" y="419" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1594785198043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
