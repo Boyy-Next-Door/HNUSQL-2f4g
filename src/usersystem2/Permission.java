@@ -58,14 +58,4 @@ public class Permission {
         this.grantType = grantType;
     }
 
-    /**
-     * 校验当前权限能否下发目标权限
-     *
-     * @param currentPerm
-     * @param targetPerm
-     */
-    public boolean isGrantable(Permission currentPerm, byte targetPerm) {
-        //TODO 需要实现
-        return false;
-    }
 }

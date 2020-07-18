@@ -1,9 +1,24 @@
 package usersystem2;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.sqlmagic.tinysql.DatabaseMapper;
+import usersystem.UserTree;
+
+import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class UserManager2 {
+    //ÓÃ»§´æ´¢ÎÄ¼şÂ·¾¶
+    private static final String fileDir = "src/usersystem2/user_file.dbuf";
+
     private static HashMap<String, User> users;
+
+    static {
+        readUsersFromFile();
+    }
 
     public static HashMap<String, User> getUsers() {
         return users;
@@ -14,37 +29,123 @@ public class UserManager2 {
     }
 
     public static void addUser(User user) {
+        //¼ì²éÓÃ»§ÃûÊÇ·ñÒÑ´æÔÚ
+        if (users.containsKey(user.getUsername())) {
+            System.err.println("ÓÃ»§" + user.getUsername() + "ÒÑ´æÔÚ,Ìí¼ÓÊ§°Ü");
+            return;
+        }
         users.put(user.getUsername(), user);
+        writeUsersToFile();
     }
 
     public static void deleteUser(String username) {
+        if (!users.containsKey(username)) {
+            System.err.println("ÓÃ»§" + username + "²»´æÔÚ,É¾³ıÊ§°Ü");
+            return;
+        }
         users.remove(username);
+        writeUsersToFile();
     }
 
-    public static User getUserByName(String username){
+    /**
+     * ĞŞ¸ÄÓÃ»§ĞÅÏ¢
+     * @param username Ô­ÓÃ»§Ãû
+     * @param newname ĞÂÓÃ»§Ãû
+     * @param newPaswrd ĞÂÃÜÂë
+     */
+    public static void modifyName(String username, String newname, String newPaswrd){
+        User user = getUserByName(username);
+        user.setUsername(newname);
+        user.setPassword(newPaswrd);
+        writeUsersToFile();
+    }
+
+    public static User getUserByName(String username) {
         return users.get(username);
     }
+
     public static boolean grant(String granterName, String granteeName, String database, String table, byte permission, int grantType) throws Exception {
         if (!(users.containsKey(granterName) && users.containsKey(granteeName))) {
-            System.err.println("å‚æ•°ç”¨æˆ·ä¸å­˜åœ¨");
+            System.err.println("²ÎÊıÓÃ»§²»´æÔÚ");
             return false;
         }
 
         User granter = users.get(granterName);
         User grantee = users.get(granteeName);
 
-        //æ£€æŸ¥æˆæƒè€…æ˜¯å¦æ‹¥æœ‰æƒé™ä¸”å¯ä»¥ä¸‹å‘
-        if (granter.isGrantable(database, table, permission)) {
-            //æˆæƒè€…æ‹¥æœ‰å¯¹è¯¥è¡¨çš„æƒé™ï¼Œé‚£ä¹ˆå¯ä»¥ä¸‹å‘
+        //¼ì²éÊÚÈ¨ÕßÊÇ·ñÓµÓĞÈ¨ÏŞÇÒ¿ÉÒÔÏÂ·¢
+        if (granter.isGrantable(database, table, permission) && grantee.canBeAuthorized(database, table, permission)) {
+            //ÊÚÈ¨ÕßÓµÓĞ¶Ô¸Ã±íµÄÈ¨ÏŞ£¬ÄÇÃ´¿ÉÒÔÏÂ·¢
             grantee.acquirePermission(granterName, database, table, permission, grantType);
             return true;
         } else {
-            //æˆæƒè€…ä¸èƒ½ä¸‹å‘
-            System.err.println("æˆæƒè€…æ— æƒä¸‹å‘ç›®æ ‡æƒé™");
+            //ÊÚÈ¨Õß²»ÄÜÏÂ·¢
+            System.err.println("ÊÚÈ¨ÕßÎŞÈ¨ÏÂ·¢Ä¿±êÈ¨ÏŞ");
             return false;
         }
+    }
 
+
+    //´ÓdbufÎÄ¼şÖĞ¶ÁÈ¡userList
+    private static void readUsersFromFile()  {
+        BufferedReader bfr = null;
+        users = new HashMap<>();
+        try {
+            File file = new File(fileDir);
+            if(!file.exists()){
+                throw new IOException("ÓÃ»§ÁĞ±íÎÄ¼şÎ´ÕÒµ½£¬½«´´½¨Ò»¸öĞÂµÄ");
+            }
+            bfr = new BufferedReader(new FileReader(file));
+            while (bfr.ready()) {
+                String[] split = bfr.readLine().split("<====>");
+                if (split.length != 2) continue;
+                users.put(split[0], JSONObject.parseObject(split[1], User.class));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            //´ÓÎÄ¼ş¶ÁÈ¡usersÊ§°Ü  ´´½¨Ò»¸öĞÂµÄusers¼¯ºÏ ²¢Ğ´ÈëÎÄ¼ş
+            users = new HashMap<String, User>();
+            writeUsersToFile();
+        } finally {
+            try {
+                if (bfr != null)
+                    bfr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
+    //½«ÄÚ´æÖĞµÄuserListĞ´ÈëÎÄ¼ş
+    private static synchronized void writeUsersToFile() {
+        BufferedWriter bfw = null;
+        try {
+            //¸²¸ÇÖ®Ç°´æ´¢µÄusersÄÚÈİ
+            bfw = new BufferedWriter(new FileWriter(new File(fileDir), false));
+            for (Map.Entry<String, User> entry : users.entrySet()) {
+                bfw.write(entry.getKey());
+                bfw.write("<====>");
+                bfw.write(JSON.toJSONString(entry.getValue()));
+                bfw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bfw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //
+    // public static void main(String[] args) {
+    //     User user = new User();
+    //     user.setUsername("yjz");
+    //     user.setPassword("123");
+    //     user.setPermissions(new HashMap<>());
+    //     addUser(user);
+    //
+    // }
 }
