@@ -21,11 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="7.17">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/UserManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/UserManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +203,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594955711627</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="7.17">
+      <created>1594958319794</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1594958319794</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,31 +276,31 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="724" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1594023647448" />
-    <state width="938" height="284" key="GridCell.Tab.0.bottom" timestamp="1594737597030">
+    <state width="1877" height="284" key="GridCell.Tab.0.bottom" timestamp="1594958346468">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="284" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594737597030" />
+    <state width="1877" height="284" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594958346468" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1594114452716" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.723@0.23.1280.723" timestamp="1594195265090" />
     <state width="1238" height="169" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
-    <state width="938" height="284" key="GridCell.Tab.0.center" timestamp="1594737597029">
+    <state width="1877" height="284" key="GridCell.Tab.0.center" timestamp="1594958346468">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="284" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594737597029" />
+    <state width="1877" height="284" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594958346468" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
     <state width="1238" height="169" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="938" height="284" key="GridCell.Tab.0.left" timestamp="1594737597029">
+    <state width="1877" height="284" key="GridCell.Tab.0.left" timestamp="1594958346468">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="284" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594737597029" />
+    <state width="1877" height="284" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594958346468" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.723@0.23.1280.723" timestamp="1594195265086" />
     <state width="1238" height="169" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="938" height="284" key="GridCell.Tab.0.right" timestamp="1594737597029">
+    <state width="1877" height="284" key="GridCell.Tab.0.right" timestamp="1594958346468">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="938" height="284" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594737597029" />
+    <state width="1877" height="284" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594958346468" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
     <state width="1238" height="169" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />

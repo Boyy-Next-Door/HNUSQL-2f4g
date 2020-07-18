@@ -129,7 +129,7 @@ public abstract class tinySQL {
       boolean useTinyParser=true,distinct=false;
       Vector actions,columns,columnDefs,values,columnContexts,columnAliases;
       String actionType,orderType,tableName,statementType,byteString;
-      String tableName1=null,dbName=null,userName=null;
+      String tableName1=null,dbName=null,userName=null,nowUserName=null;
       byte permission = 0b00000000;
       Hashtable h,selectTables;
       byte[] bStream;
@@ -316,11 +316,15 @@ public abstract class tinySQL {
                System.out.println(dbName);
                System.out.println(permission);
                System.out.println(userName);
+               System.out.println(nowUserName);
+               //grant(nowUserName,userName,dbName,permission,2);
 
             } else if ( actionType.equals("REVOKE") ) {
-
-            } else if( actionType.equals("GRANT_WITH") ){
-
+               //revoke(nowUserName,userName,dbName,permission,2)
+            } else if( actionType.equals("GRANT_WITH_LINK") ){
+               //grant(nowUserName,userName,dbName,permission,0)
+            } else if( actionType.equals("GRANT_WITH_ADMIN") ){
+               //grant(nowUserName,userName,dbName,permission,1)
             }
             else {
                System.out.println("Unrecognized action " + actionType);
