@@ -20,7 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="7.15">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem2/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem2/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem2/UserManager2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem2/UserManager2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -349,9 +350,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-150" y="117" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594785002426" />
-    <state x="510" y="257" key="git4idea.merge.GitPullDialog" timestamp="1594988025367">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state x="510" y="248" key="git4idea.merge.GitPullDialog" timestamp="1598864392171">
+      <screen x="0" y="0" width="1536" height="834" />
     </state>
+    <state x="510" y="248" key="git4idea.merge.GitPullDialog/0.0.1536.834@0.0.1536.834" timestamp="1598864392171" />
     <state x="510" y="257" key="git4idea.merge.GitPullDialog/0.0.1536.864@0.0.1536.864" timestamp="1594988025367" />
     <state x="638" y="309" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594801834343" />
     <state x="716" y="419" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1594785198043">
