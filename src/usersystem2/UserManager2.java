@@ -2,11 +2,8 @@ package usersystem2;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.sqlmagic.tinysql.DatabaseMapper;
-import usersystem.UserTree;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
