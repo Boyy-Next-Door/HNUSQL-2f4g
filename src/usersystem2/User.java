@@ -10,12 +10,33 @@ public class User {
     private String password;
     //用户的权限
     HashMap<Table, Permission> permissions;
-    //HashMap<Permission, List<User>> grantTo;
+    HashMap<Permission, List<User>> grantTo;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         permissions = new HashMap<Table, Permission>();
+        grantTo = new HashMap<Permission, List<User>>();
+    }
+
+    @Override
+    public int hashCode() {
+        return 17*username.hashCode()+password.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof User))
+            return false;
+
+        User userObj = (User) obj;
+        if (this == userObj)
+            return true;
+        if ((userObj.username.equals(this.username)) && (userObj.password.equals(this.password))){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public String getUsername() {
@@ -69,9 +90,6 @@ public class User {
 
         chars1 = zeroize(chars1,4);
         chars2 = zeroize(chars2,4);
-
-        // System.out.println(chars1);
-        // System.out.println(chars2);
 
         for(int i = 0; i < 4; i++){
             if (chars1[i] =='1' && chars2[i] != '1'){
@@ -219,29 +237,67 @@ public class User {
         return  canBeRevoke;
     }
 
+    public ArrayList<Byte> split(byte old){
+        char[] chars = byteToBit(old);
+        ArrayList<Byte> bytes = new ArrayList<>();
+
+        for(int i = 0; i < 4; i++){
+            if(chars[i] == '1'){
+                byte byte1 = 0;
+                if(i == 0){
+                    byte1 -= 128;
+                    Byte aByte = new Byte((byte) byte1);
+                    bytes.add(aByte);
+                }
+                else{
+                    byte1 += Math.pow(2,7-i);
+                    Byte aByte = new Byte((byte)byte1);
+                    bytes.add(aByte);
+                }
+            }
+        }
+        return bytes;
+    }
+
+
     public void acquirePermission(String granterName, String database, String table, byte permission, int grantType) {
-        // Table table1 = new Table(new Database(database), table, permission);
-        // Permission newPerm = new Permission();
-        // User granter = UserManager2.getUserByName(granterName);
-        // newPerm.setGrantedBy(granter);
-        // newPerm.setTarget(1);                   //默认目标为表
-        // newPerm.setTable(table1);               //记录目标表
-        // newPerm.setDatabase(table1.getDb());    //记录目标数据库
-        // newPerm.setPermission(permission);      //设置权限位
-        // newPerm.setGrantType(grantType);        //记录权限下发形式
-        // permissions.put(table1, newPerm);
+
         User granter = UserManager2.getUserByName(granterName);
+        Permission newPerm = new Permission();
 
         boolean add = true;   //是合并还是添加？
         for(Map.Entry<Table, Permission> entry: permissions.entrySet()){
             Table key = entry.getKey();
             if(key.getDb().getDatabaseName().equals(database) && key.getTableName().equals(table)) {
                 //可合并情况（授权人相同，且授权类型相同）
+
                 Permission perm1 = permissions.get(key);
+
                 if((perm1.getGrantedBy().equals(granter)) && (perm1.getGrantType() == grantType)){
                     byte former = perm1.getPermission();
                     byte latter = (byte)(former | permission);
-                    perm1.setPermission(latter);
+                    Permission temp = new Permission();
+                    temp.setDatabase(perm1.getDatabase());
+                    temp.setTable(perm1.getTable());
+                    temp.setTarget(perm1.getTarget());
+                    temp.setPermission(latter);
+                    temp.setGrantedBy(perm1.getGrantedBy());
+                    temp.setGrantType(perm1.getGrantType());
+
+                    // perm1.setPermission(latter);
+                    // newPerm = temp;
+
+                    //保证HashMap<Table,Permission>中Table对象中的permission与Permission中的permission一致
+                    Table newKey = new Table(key.getDb(), key.getTableName(), latter);
+                    permissions.put(newKey, temp);
+                    permissions.remove(key);
+
+                    newPerm.setDatabase(perm1.getDatabase());
+                    newPerm.setTable(perm1.getTable());
+                    newPerm.setTarget(perm1.getTarget());
+                    newPerm.setPermission(permission);
+                    newPerm.setGrantedBy(perm1.getGrantedBy());
+                    newPerm.setGrantType(perm1.getGrantType());
                     add = false;
                 }
             }
@@ -249,7 +305,7 @@ public class User {
 
         if(add){
             Table table1 = new Table(new Database(database), table, permission);
-            Permission newPerm = new Permission();
+
             newPerm.setGrantedBy(granter);
             newPerm.setTarget(1);                   //默认目标为表
             newPerm.setTable(table1);               //记录目标表
@@ -258,27 +314,84 @@ public class User {
             newPerm.setGrantType(grantType);        //记录权限下发形式
             permissions.put(table1, newPerm);
         }
-        //
-        //
-        // if(granter.grantTo.containsKey(newPerm)){
-        //     granter.grantTo.get(newPerm).add(this);
-        // }
-        // else{
-        //     List users = new ArrayList<User>();
-        //     users.add(this);
-        //     granter.grantTo.put(newPerm,users);
-        // }
+
+        //将传入的permission拆分，构建只有一位为1、其他与newPerm相同的Permission对象
+        ArrayList<Byte> split = split(newPerm.getPermission());
+
+        for(int i = 0; i < split.size(); i++){
+            // System.out.println(it.next());
+            Permission Perm2 = new Permission();
+            Perm2.setTarget(newPerm.getTarget());
+            Perm2.setDatabase(newPerm.getDatabase());
+            Perm2.setTable(newPerm.getTable());
+            Perm2.setGrantType(newPerm.getGrantType());
+            Perm2.setGrantedBy(newPerm.getGrantedBy());
+            Perm2.setPermission(split.get(i).byteValue());
+
+            // System.out.println("Perm2:" + Perm2.hashCode());
+            // for(Map.Entry<Permission, List<User>> entry: granter.grantTo.entrySet()) {
+            //     Permission Perm1 = entry.getKey();
+            //     System.out.println("Perm1:"+Perm1.getPermission() + Perm1.hashCode());
+            // }
+            //为什么不进入第一个if？？
+            if(granter.grantTo.containsKey(Perm2)){
+                if(!granter.grantTo.get(Perm2).contains(this))
+                    granter.grantTo.get(Perm2).add(this);
+            }
+            else{
+                List users = new ArrayList<User>();
+                users.add(this);
+                granter.grantTo.put(Perm2,users);
+            }
+        }
     }
 
+    //这里参数中的permission要保证高4位为1的是要撤销的权限，低4位为0（没有作用）
     public void revokePermission(String revokerName, String database, String table, byte permission, int revokeType){
+
+        User revoker = UserManager2.getUserByName(revokerName);
 
         for(Map.Entry<Table, Permission> entry:permissions.entrySet()){
             Table key = entry.getKey();
             if(key.getDb().getDatabaseName().equals(database) && key.getTableName().equals(table)) {
                 Permission perm1 = permissions.get(key);
-                byte and = (byte)(perm1.getPermission() & permission);
-                if(and != 0x00){
-                    // byte perm2 = modify(perm1.getPermission(), and);
+
+                //撤销者的校验
+                if((perm1.getGrantedBy().equals(revoker)) || revokerName.equals("admin")){
+                    byte and = (byte)(perm1.getPermission() & permission);
+
+                    //找到了应修改的Permission
+                    if(and != 0x00){
+                        byte permission2 = modify(perm1.getPermission(), and);
+                        perm1.setPermission(permission2);
+
+                        //这里Permission改了，Table要改吗？
+                        Table newKey = key;
+                        newKey.setPermission(permission2);
+                        permissions.put(newKey, perm1);
+                        permissions.remove(key);
+
+                        //级联撤销权限
+                        // if(perm1.getGrantType() == 1){
+                        //
+                        //     ArrayList<Byte> split = split(permission);
+                        //
+                        //     for(int i = 0; i < split.size(); i++) {
+                        //         // System.out.println(it.next());
+                        //         Permission Perm2 = perm1;
+                        //         Perm2.setPermission(split.get(i).byteValue());
+                        //         for(int j = 0; j < this.grantTo.get(Perm2).size(); j++){
+                        //             User next = this.grantTo.get(Perm2).get(j);
+                        //             Permission permission1 = next.permissions.get(key);
+                        //             //修改对应位的权限
+                        //
+                        //         }
+                        //     }
+                        // }
+                    }
+                }
+                else{
+                    System.err.println("您无权撤销此权限！");
                 }
             }
         }
@@ -298,7 +411,8 @@ public class User {
         }
         return chars;
     }
-    public void modify(byte old, byte token){
+
+    public byte modify(byte old, byte token){
         char[] chars1 = byteToBit(old);
         char[] chars2 = byteToBit(token);
         for(int i = 0; i < 8; i++){
@@ -324,5 +438,6 @@ public class User {
             System.out.print(chars3[i]);
         }
 
+        return newperm;
     }
 }
