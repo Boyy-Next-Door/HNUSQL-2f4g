@@ -20,8 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="7.17">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLParser.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +64,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.30095923" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
   <component name="RunManager" selected="Application.tinySQLCmd">
     <configuration name="tinySQLCmd (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -210,7 +214,14 @@
       <option name="project" value="LOCAL" />
       <updated>1594958319794</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="7.18">
+      <created>1595040828842</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1595040828842</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +246,8 @@
     <MESSAGE value="7.15" />
     <MESSAGE value="7.16" />
     <MESSAGE value="7.17" />
-    <option name="LAST_COMMIT_MESSAGE" value="7.17" />
+    <MESSAGE value="7.18" />
+    <option name="LAST_COMMIT_MESSAGE" value="7.18" />
   </component>
   <component name="WindowStateProjectService">
     <state x="256" y="0" key="#Project_Structure" timestamp="1594112043039">
@@ -276,54 +288,54 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="724" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1594023647448" />
-    <state width="1877" height="284" key="GridCell.Tab.0.bottom" timestamp="1594958346468">
+    <state width="1877" height="284" key="GridCell.Tab.0.bottom" timestamp="1595057259046">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="284" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594958346468" />
+    <state width="1877" height="284" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1595057259046" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1594114452716" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.723@0.23.1280.723" timestamp="1594195265090" />
     <state width="1238" height="169" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
-    <state width="1877" height="284" key="GridCell.Tab.0.center" timestamp="1594958346468">
+    <state width="1877" height="284" key="GridCell.Tab.0.center" timestamp="1595057259046">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="284" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594958346468" />
+    <state width="1877" height="284" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1595057259046" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
     <state width="1238" height="169" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1877" height="284" key="GridCell.Tab.0.left" timestamp="1594958346468">
+    <state width="1877" height="284" key="GridCell.Tab.0.left" timestamp="1595057259046">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="284" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594958346468" />
+    <state width="1877" height="284" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1595057259046" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.723@0.23.1280.723" timestamp="1594195265086" />
     <state width="1238" height="169" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1877" height="284" key="GridCell.Tab.0.right" timestamp="1594958346468">
+    <state width="1877" height="284" key="GridCell.Tab.0.right" timestamp="1595057259046">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="284" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594958346468" />
+    <state width="1877" height="284" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1595057259046" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
     <state width="1238" height="169" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
-    <state x="56" y="90" key="MergeDialog" timestamp="1594955730890">
+    <state x="232" y="158" key="MergeDialog" timestamp="1595040912409">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="56" y="90" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594955730890" />
-    <state x="717" y="390" key="MultipleFileMergeDialog" timestamp="1594955732848">
+    <state x="232" y="158" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1595040912409" />
+    <state x="717" y="390" key="MultipleFileMergeDialog" timestamp="1595040913424">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="717" y="390" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594955732848" />
+    <state x="717" y="390" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1595040913424" />
     <state x="698" y="221" key="RollbackChangesDialog" timestamp="1594784781580">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="698" y="221" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594784781580" />
-    <state x="427" y="99" key="SettingsEditor" timestamp="1594023819602">
+    <state x="340" y="101" key="SettingsEditor" timestamp="1595042775960">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="427" y="99" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1594023819602" />
-    <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1594783795582">
+    <state x="340" y="101" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1595042775960" />
+    <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1595040868661">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1920.1040@0.0.1920.1040" timestamp="1594783795582" />
+    <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1920.1040@0.0.1920.1040" timestamp="1595040868661" />
     <state x="360" y="145" key="Vcs.Push.Dialog.v2" timestamp="1594868564221">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -333,10 +345,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-150" y="117" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594785002426" />
-    <state x="638" y="309" key="git4idea.merge.GitPullDialog" timestamp="1594955717669">
+    <state x="638" y="309" key="git4idea.merge.GitPullDialog" timestamp="1595040842714">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="638" y="309" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594955717669" />
+    <state x="638" y="309" key="git4idea.merge.GitPullDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1595040842714" />
     <state x="716" y="419" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1594785198043">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

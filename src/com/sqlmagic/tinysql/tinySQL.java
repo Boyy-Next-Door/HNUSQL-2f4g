@@ -325,6 +325,10 @@ public abstract class tinySQL {
                //grant(nowUserName,userName,dbName,permission,0)
             } else if( actionType.equals("GRANT_WITH_ADMIN") ){
                //grant(nowUserName,userName,dbName,permission,1)
+            } else if( actionType.equals("REVOKE_WITH_LINK") ){
+               //revoke(nowUserName,userName,dbName,permission,0)
+            } else if( actionType.equals("REVOKE_WITH_ADMIN") ) {
+               //revoke(nowUserName,userName,dbName,permission,1)
             }
             else {
                System.out.println("Unrecognized action " + actionType);
