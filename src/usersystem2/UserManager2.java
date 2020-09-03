@@ -2,11 +2,8 @@ package usersystem2;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.sqlmagic.tinysql.DatabaseMapper;
-import usersystem.UserTree;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,11 +70,19 @@ public class UserManager2 {
         User granter = users.get(granterName);
         User grantee = users.get(granteeName);
 
-        //检查授权者是否拥有权限且可以下发
-        if (granter.isGrantable(database, table, permission) && grantee.canBeAuthorized(database, table, permission)) {
-            //授权者拥有对该表的权限，那么可以下发
-            grantee.acquirePermission(granterName, database, table, permission, grantType);
-            return true;
+        //检查授权者是否拥有权限
+        if (granter.isGrantable(database, table, permission)){
+
+            //检查被授权者是否没有此权限（没有才可以获得）
+            if (grantee.canBeAuthorized(database, table, permission)) {
+                grantee.acquirePermission(granterName, database, table, permission, grantType);
+                return true;
+            }
+            else {
+                System.err.println("被授权者已拥有其中权限");
+                return false;
+            }
+
         } else {
             //授权者不能下发
             System.err.println("授权者无权下发目标权限");
@@ -85,6 +90,23 @@ public class UserManager2 {
         }
     }
 
+    public static boolean revoke(String revokerName, String revokeeName, String database, String table, byte permission, int revokeType) throws Exception{
+        if (!(users.containsKey(revokerName) && users.containsKey(revokeeName))) {
+            System.err.println("参数用户不存在");
+            return false;
+        }
+
+        User revoker = users.get(revokerName);
+        User revokee = users.get(revokerName);
+
+        //检查revoker是否可以收回权限
+        if (revoker.isRevokable(database, table, permission) && revokee.canBeRevoked(database, table, permission)){
+            //可以进行权限撤销
+            revokee.revokePermission(revokerName, database, table, permission, revokeType);
+
+        }
+        return false;
+    }
 
     //从dbuf文件中读取userList
     private static void readUsersFromFile()  {

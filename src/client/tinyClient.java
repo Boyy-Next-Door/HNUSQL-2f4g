@@ -1,4 +1,4 @@
-package com.sqlmagic.tinysql;
+package client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,8 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.io.ObjectOutputStream;
+
 
 
 public class tinyClient {
@@ -20,6 +22,10 @@ public class tinyClient {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+    private ObjectOutputStream obout;
+
+    private String cookie;
+
 
     public void setHost(String host){this.host=host;}
     public void setPort(int port){this.port=port;}
@@ -31,6 +37,11 @@ public class tinyClient {
     public String getPassword(){return password;}
     public PrintWriter getOut(){return  out;}
     public BufferedReader getIn(){return  in;}
+
+
+
+
+
 
     /*
      * 与服务器进行连接
@@ -45,6 +56,7 @@ public class tinyClient {
             clientSocket = new Socket(ip, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            obout= new ObjectOutputStream(clientSocket.getOutputStream());
             System.out.println("Connection success");
             return true;
         }catch (Exception e){
@@ -70,6 +82,15 @@ public class tinyClient {
         }
         return respList;
         //return resp;
+    }
+
+    public void send(String msg) throws Exception {
+        out.println(msg);
+        //return resp;
+    }
+
+    public void sendWithCookie(String cookie,String msg)throws Exception{
+        obout.writeObject(new Info(cookie,msg));
     }
 
     /*
