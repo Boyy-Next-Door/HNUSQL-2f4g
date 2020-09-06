@@ -10,6 +10,35 @@ public class Permission {
     private User grantedBy;
     private int grantType;      // 0-link 1-admin
 
+    @Override
+    public int hashCode() {
+        int result = target;
+        result = 17*result + database.hashCode();
+        result = 17*result + table.hashCode();
+        result = 17*result + (int)permission;
+        result = 17*result + grantedBy.hashCode();
+        result = 17*result + grantType;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Permission))
+            return false;
+
+        Permission permObj = (Permission) obj;
+        if (this == permObj)
+            return true;
+        if ((permObj.database.equals(this.database)) && (permObj.table.equals(this.table)) &&
+                (permObj.target == this.target) && (permObj.permission == this.permission) &&
+                (permObj.grantedBy.equals(this.grantedBy)) && (permObj.grantType == this.grantType)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
     public int getTarget() {
         return target;
     }
@@ -58,14 +87,4 @@ public class Permission {
         this.grantType = grantType;
     }
 
-    /**
-     * 校验当前权限能否下发目标权限
-     *
-     * @param currentPerm
-     * @param targetPerm
-     */
-    public boolean isGrantable(Permission currentPerm, byte targetPerm) {
-        //TODO 需要实现
-        return false;
-    }
 }

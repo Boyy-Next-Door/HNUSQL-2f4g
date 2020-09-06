@@ -12,6 +12,31 @@ public class Table {
         this.permission = permission;
     }
 
+
+    @Override
+    public int hashCode() {
+        int result = db.hashCode();
+        result = 17*result + tableName.hashCode();
+        result = 17*result + (int)permission;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Table))
+            return false;
+
+        Table tableObj = (Table)obj;
+        if (this == tableObj)
+            return true;
+        if ((tableObj.db.equals(this.db)) && (tableObj.tableName.equals(this.tableName)) &&
+                (tableObj.permission == this.permission)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public byte getPermission() {
         return permission;
     }
