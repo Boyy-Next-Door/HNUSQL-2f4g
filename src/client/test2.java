@@ -20,64 +20,16 @@ public class test2 {
             } else{
                 System.out.println("login succeed");
 
+              // client.getDatabases("haha");
                 while (true) {
                     System.out.print("tinySql>");
                     String msg = null;
                     msg = sc.nextLine();
-                    client.send(msg);
+                    client.Select("aa","select * from Course;");
+                 //   client.getTables("aaa","bbb");
+                 //   client.getDatabases("haha");
+                //    client.send(msg);
                 }
-                /*
-                while(true){
-                    System.out.print("tinySql>");
-                    String msg = null;
-                    msg = sc.nextLine();
-                    client.getOut().println(msg);
-                    //ResultSet rs=(ResultSet)(client.getIn().readLine());
-                    String resp=client.getIn().readLine();
-                    System.out.println(resp);
-                }
-                 */
-
-                /*
-                while (true) {
-                    System.out.print("tinySql>");
-                    String msg = null;
-                    msg = sc.nextLine();
-                    List<String> resp=client.sendMessage(msg);
-                    Iterator<String> stringIterator = resp.iterator();
-                    System.out.println("=============================================");
-                    while (stringIterator.hasNext()) {
-                        System.out.println(stringIterator.next());
-                    }
-                    System.out.println("=============================================");
-                }
-                 */
-
-
-                /*
-                System.out.println("=============================================");
-                List<String[]> resp=client.getTableContent("aa","aa","Course");
-                Iterator<String[]> stringIterator = resp.iterator();
-                while (stringIterator.hasNext()) {
-                    for(String ss : stringIterator.next()){
-                        System.out.println(ss);
-                    }
-                }
-                System.out.println("=============================================");
-                 */
-
-
-                /*
-                System.out.println("=============================================");
-                List<String[]> resp=client.getTableField("aa","aa","Course");
-                Iterator<String[]> stringIterator = resp.iterator();
-                while (stringIterator.hasNext()) {
-                    for(String ss : stringIterator.next()){
-                        System.out.println(ss);
-                    }
-                }
-                System.out.println("=============================================");
-                 */
 
             }
             client.stopConnection();
