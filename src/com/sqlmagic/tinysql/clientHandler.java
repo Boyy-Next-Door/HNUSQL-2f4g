@@ -1,13 +1,22 @@
 package com.sqlmagic.tinysql;
 
 import client.Info;
+import com.alibaba.fastjson.JSON;
+import com.sqlmagic.tinysql.entities.BaseResponse;
+import com.sun.xml.internal.rngom.parse.host.Base;
 import usersystem.Admin;
 import usersystem.UserTree;
 
 import java.io.*;
 import java.net.Socket;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+
+import com.alibaba.fastjson.JSONObject;
+import com.sqlmagic.tinysql.utils.*;
+import com.sqlmagic.tinysql.DatabaseMapper.*;
 
 public class clientHandler extends Thread{
     static Vector tableList;
@@ -80,37 +89,160 @@ public class clientHandler extends Thread{
                     + dbVersion + " released March 15, 2007");
             System.out.println("Type HELP to get information on available commands.");
 
+
+
+
             Admin admin = Admin.getAdmin();
             UserTree tree = new UserTree(admin);
 
+            //读取从客户端发过来的用户名和密码
+            cmdString=in.readLine();
+            JSONObject jsonObject= JSON.parseObject(cmdString);
+            String username=jsonObject.getString("username");
+            String password=jsonObject.getString("password");
 
-            cmdString=in.readLine().trim();
-            System.out.println(cmdString);
-            out.println("success");
+            /*
+            对用户名和密码进行判断
+            暂时没有完成
+             */
+
+            //根据用户名生成cookie
+            String cookie=MD5Util.MD5Encode(username,"");
+            //返回给客户端
+            out.println(cookie);
+
+//            System.out.println("login success.");
+
+
+
 
             cmdString = "NULL";
             stmt = con.createStatement();
             inputString = (String) null;
 
+
+
+            while(true){
+                try {
+                    inputString = in.readLine().trim();
+                    if(inputString==(String)null)break;
+                    String clientCookie;
+                    String requestType;
+                    String rawSQL;
+                    JSONObject obj= JSON.parseObject(inputString);
+                    clientCookie=obj.getString("cookie");
+                    requestType=obj.getString("requestType");
+                    rawSQL=obj.getString("rawSQL");
+
+                    inputString=rawSQL;
+
+                    if (inputString.toUpperCase().startsWith("EXIT") |
+                            inputString.toUpperCase().startsWith("QUIT")) break;
+                    startAt = 0;
+
+                    while (startAt < inputString.length() - 1) {
+                        endAt = inputString.indexOf(";", startAt);
+                        if (endAt == -1)
+                            endAt = inputString.length();
+                        cmdString = inputString.substring(startAt, endAt);
+                        startAt = endAt + 1;
+
+                        if (cmdString.toUpperCase().equals("SHOW DATABASES")) {
+                            List<String> respList=new ArrayList<>();            //这里用list作为BaseResponse的data
+
+                            ArrayList<DatabaseMapper.MapperEntry> databases = getDatabaseList();
+                            MyTableUtil database_name = new MyTableUtil().addColumn("database_name");
+
+                            for (DatabaseMapper.MapperEntry entry : databases) {
+                                database_name.addRow(entry.getDatabaseName());
+                                respList.add(entry.getDatabaseName());
+                            }
+                            //System.out.println(database_name.generate());
+                            //System.out.println("----------------------------------");
+
+                            BaseResponse baseResponse =BaseResponse.ok(respList);
+                            String str=JSONObject.toJSONString(baseResponse);
+                            out.println(str);
+
+                        }
+
+                        else if (cmdString.toUpperCase().equals("SHOW TABLES")) {
+//                        for (i = 0; i < tableList.size(); i++)
+//                            System.out.println((String) tableList.elementAt(i));
+                            //从数据库连接重新读取元数据并返回表清单
+                            List<String> respList=new ArrayList<>();
+                            ResultSet tables = con.getMetaData().getTables(null, null, null, null);
+                            tableList = new Vector();
+                            MyTableUtil table = new MyTableUtil().addColumn("table_name");
+                            while (tables.next()) {
+                                tableName = tables.getString("TABLE_NAME");
+                                tableList.addElement(tableName);
+                                table.addRow(tableName);
+                                respList.add(tableName);
+                            }
+                            //System.out.println(table.generate());
+                            BaseResponse baseResponse =BaseResponse.ok(respList);
+                            String str=JSONObject.toJSONString(baseResponse);
+                            out.println(str);
+                        }
+                        else if (cmdString.toUpperCase().startsWith("SELECT")) {
+                            display_rs = stmt.executeQuery(cmdString);
+                            if (display_rs == (ResultSet) null) {
+                                // System.out.println("Null ResultSet returned from query");
+                                BaseResponse baseResponse=BaseResponse.ok(null,"Null ResultSet returned from query");
+                                String str=JSONObject.toJSONString(baseResponse);
+                                out.println(str);
+                                continue;
+                            }
+                            MyTableUtil myTableUtil=new MyTableUtil();
+                            myTableUtil=buildResults(display_rs);
+                            System.out.println("hahaha");
+                            System.out.println(myTableUtil.generate());
+                            BaseResponse baseResponse =BaseResponse.ok(myTableUtil.generate());
+                            String str=JSONObject.toJSONString(baseResponse);
+                            System.out.println(str);
+
+                        }
+
+
+                    }
+
+                } catch (Exception e) {
+                    System.out.println("into Exception e");
+                    System.out.println(e.getMessage());
+                    cmdString = "EXIT";
+                    break;
+                }
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
             while (!cmdString.toUpperCase().equals("EXIT")) {
-              //  System.out.println("hahaha");
                 try {
                     if (startReader != (BufferedReader) null) {
-                        /*
-                         *             Command START files can contain comments and can have
-                         *             commands broken over several lines.  However, they
-                         *             cannot have partial commands on a line.
-                         */
+                        System.out.println("aaaaaa");
                         inputBuffer = new StringBuffer();
                         inputString = (String) null;
                         while ((readString = startReader.readLine()) != null) {
                             if (readString.startsWith("--") |
                                     readString.startsWith("#")) continue;
                             inputBuffer.append(readString + " ");
-                            /*
-                             *                A field tokenizer must be used to avoid problems with
-                             *                semi-colons inside quoted strings.
-                             */
+
                             ft = new FieldTokenizer(inputBuffer.toString(), ';', true);
                             if (ft.countFields() > 1) {
                                 inputString = inputBuffer.toString();
@@ -118,32 +250,33 @@ public class clientHandler extends Thread{
                             }
                         }
                         if (inputString == (String) null) {
+                            System.out.println("bbbbbb");
                             startReader = (BufferedReader) null;
                             continue;
                         }
                     }
-              /*
-                    else if (args.length == 0) {
-                        System.out.print("tinySQL>");
-                        inputString = stdin.readLine().trim();
-                    }
-                */
+
                     else{
                         System.out.print("tinySQL>");
-                        //inputString = in.readLine().trim();
-                        //System.out.println((Info) obin.readObject());
-                        Info info=(Info) obin.readObject();
-                        inputString=info.getCommand().trim();
+                        inputString = in.readLine();
+                        System.out.println(inputString);
+                       // JSONObject obj= JSON.parseObject(inputString);
+                        //inputString=obj.getString("rawSQL");
+                        //System.out.println(inputString);
 
                     }
 
-                    if (inputString == (String) null) break;
+                    if (inputString == (String) null) {
+                        System.out.println("ccccc");
+                        break;
+                    }
 
                     if (inputString.toUpperCase().startsWith("EXIT") |
                             inputString.toUpperCase().startsWith("QUIT")) break;
 
                     startAt = 0;
                     while (startAt < inputString.length() - 1) {//输出的命令必须大于1。否则忽略不计
+                        System.out.println("zzzzzzz");
                         endAt = inputString.indexOf(";", startAt);
                         if (endAt == -1)
                             endAt = inputString.length();
@@ -159,9 +292,7 @@ public class clientHandler extends Thread{
                                 continue;
                             }
                             meta = display_rs.getMetaData();
-                            /*
-                             *                The actual number of columns retrieved has to be checked
-                             */
+
                             rsColCount = meta.getColumnCount();
                             lineOut = new StringBuffer(100);
                             int[] columnWidths = new int[rsColCount];
@@ -233,9 +364,7 @@ public class clientHandler extends Thread{
                             out.println("DONE");
                         }
                         else if (cmdString.toUpperCase().startsWith("SET ")) {
-                            /*
-                             *                Support for SET DEBUG ON/OFF and SET ECHO ON/OFF
-                             */
+
                             ft = new FieldTokenizer(cmdString.toUpperCase(), ' ', false);
                             fields = ft.getFields();
                             if (fields[1].equals("ECHO")) {
@@ -258,9 +387,7 @@ public class clientHandler extends Thread{
                                 else tinySQLGlobals.EX_DEBUG = false;
                             }
                         } else if (cmdString.toUpperCase().startsWith("SPOOL ")) {
-                            /*
-                             *                Spool output to a file.
-                             */
+
                             ft = new FieldTokenizer(cmdString, ' ', false);
                             fName = ft.getField(1);
                             if (fName.equals("OFF")) {
@@ -303,9 +430,8 @@ public class clientHandler extends Thread{
                             display_rs = stmt.executeQuery("SELECT * FROM " + tableName);
                             meta = display_rs.getMetaData();
                             rsColCount = meta.getColumnCount();
-                            /*
-                             *                Set up the PreparedStatement for the inserts
-                             */
+
+
                             prepareBuffer = new StringBuffer("INSERT INTO " + tableName);
                             valuesBuffer = new StringBuffer(" VALUES");
                             for (i = 0; i < rsColCount; i++) {
@@ -368,6 +494,7 @@ public class clientHandler extends Thread{
                                     pstmt.executeUpdate();
                             }
                         } else {
+                            System.out.println("hhhhhhh");
                             if (cmdString.indexOf("?") > -1) {
                                 pstmt = con.prepareStatement(cmdString);
                             } else {
@@ -385,17 +512,23 @@ public class clientHandler extends Thread{
                     }
                    // if (args.length > 1) cmdString = "EXIT";
                 } catch (SQLException te) {
+                    System.out.println("iiiiiii");
                     System.out.println(te.getMessage());
                     out.println(te.getMessage());
                     if (tinySQLGlobals.DEBUG) te.printStackTrace(System.out);
                     inputString = (String) null;
                 } catch (Exception e) {
+                    System.out.println("lllllllll");
                     System.out.println(e.getMessage());
                     out.println(e.getMessage());
                     cmdString = "EXIT";
                     break;
                 }
             }
+
+*/
+
+
 
 
             out.close();
@@ -406,10 +539,74 @@ public class clientHandler extends Thread{
         }
     }
 
+    public MyTableUtil buildResults(ResultSet rs) throws java.sql.SQLException {
+        System.out.println("======================================");
+        MyTableUtil myTableUtil=new MyTableUtil();
+        int numCols = 0, nameLength;
+        ResultSetMetaData meta = rs.getMetaData();
+        int cols = meta.getColumnCount();
+        int[] width = new int[cols];
+
+        boolean first = true;
+        StringBuffer head = new StringBuffer();
+
+        while (rs.next()) {
+
+            String text = new String();
+            List<String> textList=new ArrayList<>();
+
+            for (int ii = 0; ii < cols; ii++) {
+                String value = rs.getString(ii + 1);
+                if (first) {
+
+                    width[ii] = meta.getColumnDisplaySize(ii + 1);
+
+                    nameLength = meta.getColumnName(ii + 1).length();
+                    if (nameLength > width[ii]) width[ii] = nameLength;
+                    System.out.println(meta.getColumnName(ii + 1));
+                    myTableUtil.addColumn(meta.getColumnName(ii + 1));
+
+                }
+                text += padString(value, width[ii]);
+                System.out.println("value="+value);
+                textList.add(value);
+                text += " ";   // the gap between the columns
+            }
+            first = false;
+            //      System.out.println("print text");
+            //     System.out.println(text);
+            String[] strs=new String[textList.size()];
+            for(int i=0;i<textList.size();i++){
+                strs[i]=textList.get(i);
+            }
+            for(String s:strs){
+                System.out.println(s);
+            }
+            myTableUtil.addRow(strs);
+
+            numCols++;
+
+        }
+        //  myTableUtil.addColumn("id");myTableUtil.addColumn("name");
+        //  myTableUtil.addRow("1","1");
+        System.out.println(myTableUtil.generate());
+        System.out.println("======================================");
+        return myTableUtil;
+    }
+
+
+    private static ArrayList<DatabaseMapper.MapperEntry> getDatabaseList() {
+        return DatabaseMapper.getDatabaseList();
+    }
+
+
+
     private static String padString(int inputint, int padLength)
     {
         return padString(Integer.toString(inputint),padLength);
     }
+
+
     private static String padString(String inputString, int padLength)
     {
         StringBuffer outputBuffer;
@@ -423,95 +620,6 @@ public class clientHandler extends Thread{
         return outputBuffer.toString().substring(0,padLength);
     }
 
-    static int displayResults(ResultSet rs) throws SQLException
-    {
-        if (rs == null)
-        {
-            System.err.println("ERROR in displayResult(): No data in ResultSet");
-            out.println("ERROR in displayResult(): No data in ResultSet");
-            return 0;
-        }
-        Date testDate;
-        int numCols = 0,nameLength;
-        ResultSetMetaData meta = rs.getMetaData();
-        int cols = meta.getColumnCount();
-        int[] width = new int[cols];
-        String dashes = "=============================================";
-        /*
-         *    Display column headers
-         */
-        boolean first=true;
-        StringBuffer head = new StringBuffer();
-        StringBuffer line = new StringBuffer();
-        /*
-         *    Fetch each row
-         */
-        while (rs.next())
-        {
-            /*
-             *       Get the column, and see if it matches our expectations
-             */
-            String text = new String();
-            for (int ii=0; ii<cols; ii++)
-            {
-                String value = rs.getString(ii+1);
-
-                if (first)
-                {
-                    width[ii] = meta.getColumnDisplaySize(ii+1);
-
-                    if ( tinySQLGlobals.DEBUG &
-                            meta.getColumnType(ii+1) == Types.DATE )
-                    {
-                        testDate = rs.getDate(ii+1);
-                        System.out.println("Value " + value + ", Date "
-                                + testDate.toString());
-                        out.println("Value " + value + ", Date "
-                                + testDate.toString());
-                    }
-
-                    nameLength = meta.getColumnName(ii+1).length();
-                    if ( nameLength > width[ii] ) width[ii] = nameLength;
-                    head.append(padString(meta.getColumnName(ii+1), width[ii]));
-                    head.append(" ");
-                    line.append(padString(dashes+dashes,width[ii]));
-                    line.append(" ");
-                }
-                text += padString(value, width[ii]);
-                text += " ";   // the gap between the columns
-            }
-            try
-            {
-                if (first)
-                {
-                    if ( spoolFileWriter != (FileWriter)null )
-                    {
-                        spoolFileWriter.write(head.toString() + newLine);
-                        spoolFileWriter.write(head.toString() + newLine);
-                    } else {
-                        System.out.println(head.toString());
-                        out.println(head.toString());
-                        System.out.println(line.toString());
-                        out.println(line.toString());
-                    }
-                    first = false;
-                }
-                if ( spoolFileWriter != (FileWriter)null )
-                    spoolFileWriter.write(text + newLine);
-                else {
-                    System.out.println(text);
-                    out.println(text);
-                }
-                numCols++;
-            } catch ( Exception writeEx ) {
-                System.out.println("Exception writing to spool file "
-                        + writeEx.getMessage());
-                out.println("Exception writing to spool file "
-                        + writeEx.getMessage());
-            }
-        }
-        return numCols;
-    }
 
 
     private static Connection dbConnect(String tinySQLDir) throws SQLException {

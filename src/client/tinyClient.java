@@ -1,19 +1,16 @@
 package client;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.sqlmagic.tinysql.entities.BaseResponse;
+import com.sqlmagic.tinysql.protocol.Request;
+
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
-
-import com.alibaba.fastjson.JSON;
-import com.sqlmagic.tinysql.protocol.*;
-import com.sqlmagic.tinysql.entities.*;
-import com.alibaba.fastjson.JSONObject;
-
-
 
 
 public class tinyClient {
@@ -99,12 +96,12 @@ public class tinyClient {
     public BaseResponse getDatabases(String username)throws Exception{
         String rawSQL="show databases";
         String responseStr;
-        Request request=new Request(cookie,Request.SHOW_DATABASES,rawSQL);
-        String str=JSONObject.toJSONString(request);
+        Request request=new Request(cookie, Request.SHOW_DATABASES,rawSQL);
+        String str= JSONObject.toJSONString(request);
         out.println(str);
         responseStr=in.readLine();
         //System.out.println(responseStr);
-        JSONObject jsonObject=JSONObject.parseObject(responseStr);
+        JSONObject jsonObject= JSONObject.parseObject(responseStr);
         BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
         return  baseResponse;
     }
@@ -120,22 +117,22 @@ public class tinyClient {
     public BaseResponse getTables(String username, String databaseName)throws Exception{
         String rawSQL="show tables;";
         String responseStr;
-        Request request=new Request(cookie,Request.SHOW_TABLES,rawSQL);
-        String str=JSONObject.toJSONString(request);
+        Request request=new Request(cookie, Request.SHOW_TABLES,rawSQL);
+        String str= JSONObject.toJSONString(request);
         out.println(str);
         responseStr=in.readLine();
       //  System.out.println(responseStr);
-        JSONObject jsonObject=JSONObject.parseObject(responseStr);
+        JSONObject jsonObject= JSONObject.parseObject(responseStr);
         BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
         return baseResponse;
     }
 
 
 
-    public BaseResponse Select(String username,String rawSQL)throws Exception{
+    public BaseResponse Select(String username, String rawSQL)throws Exception{
         BaseResponse baseResponse=new BaseResponse();
-        Request request=new Request(cookie,Request.SELECT,rawSQL);
-        String str=JSONObject.toJSONString(request);
+        Request request=new Request(cookie, Request.SELECT,rawSQL);
+        String str= JSONObject.toJSONString(request);
         out.println(str);
         /*
         String responseStr=in.readLine();

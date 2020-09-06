@@ -1,7 +1,5 @@
 package client;
 
-import client.tinyClient;
-
 import java.util.Scanner;
 
 public class test2 {
