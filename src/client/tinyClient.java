@@ -4,27 +4,30 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.*;
+
+import com.alibaba.fastjson.JSON;
+import com.sqlmagic.tinysql.protocol.*;
+import com.sqlmagic.tinysql.entities.*;
+import com.alibaba.fastjson.JSONObject;
+
 
 
 
 public class tinyClient {
-    private String host;
-    private int port;
-    private String username;
-    private String password;
-    private Socket clientSocket;
+    private String host;                //主机ip地址
+    private int port;                   //主机端口号
+    private String username;            //登陆名
+    private String password;            //登陆密码
+    private Socket clientSocket;        //与服务端通信的socket
+    private String cookie;              //服务器返回给客户端的cookie
     private PrintWriter out;
     private BufferedReader in;
     private ObjectOutputStream obout;
 
-    private String cookie;
+
 
 
     public void setHost(String host){this.host=host;}
@@ -37,9 +40,6 @@ public class tinyClient {
     public String getPassword(){return password;}
     public PrintWriter getOut(){return  out;}
     public BufferedReader getIn(){return  in;}
-
-
-
 
 
 
@@ -57,13 +57,96 @@ public class tinyClient {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             obout= new ObjectOutputStream(clientSocket.getOutputStream());
-            System.out.println("Connection success");
+         //   System.out.println("Connection success");
             return true;
         }catch (Exception e){
-            System.out.println("Connection failed");
+        //    System.out.println("Connection failed");
             return false;
         }
     }
+
+
+    /*
+     * 登陆功能
+     * @param ip 服务器的ip地址
+     * @param port 服务器的端口号
+     * @param username 客户的用户名
+     * @param password 客户的登陆密码
+     * @return:true登陆成功，false登陆失败
+     */
+    public boolean login(String ip,int port,String username,String password)throws Exception{
+        if(startConnection(ip,port)==false)return false;
+        Map<String,String> map=new HashMap<String,String>();
+        map.put("username",username);
+        map.put("password",password);
+        String str= JSON.toJSONString(map);
+        out.println(str);
+        /*
+        需要根据客户端发送的信息判断是否登陆
+        暂时默认可以直接登陆
+         */
+        String resp=in.readLine();
+        cookie=resp;
+        return true;
+    }
+
+    /**
+     *
+     * @param username
+     * @return
+     * @throws Exception
+     */
+    public BaseResponse getDatabases(String username)throws Exception{
+        String rawSQL="show databases";
+        String responseStr;
+        Request request=new Request(cookie,Request.SHOW_DATABASES,rawSQL);
+        String str=JSONObject.toJSONString(request);
+        out.println(str);
+        responseStr=in.readLine();
+        //System.out.println(responseStr);
+        JSONObject jsonObject=JSONObject.parseObject(responseStr);
+        BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
+        return  baseResponse;
+    }
+
+
+    /**
+     *
+     * @param username
+     * @param databaseName
+     * @return
+     * @throws Exception
+     */
+    public BaseResponse getTables(String username, String databaseName)throws Exception{
+        String rawSQL="show tables;";
+        String responseStr;
+        Request request=new Request(cookie,Request.SHOW_TABLES,rawSQL);
+        String str=JSONObject.toJSONString(request);
+        out.println(str);
+        responseStr=in.readLine();
+      //  System.out.println(responseStr);
+        JSONObject jsonObject=JSONObject.parseObject(responseStr);
+        BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
+        return baseResponse;
+    }
+
+
+
+    public BaseResponse Select(String username,String rawSQL)throws Exception{
+        BaseResponse baseResponse=new BaseResponse();
+        Request request=new Request(cookie,Request.SELECT,rawSQL);
+        String str=JSONObject.toJSONString(request);
+        out.println(str);
+        /*
+        String responseStr=in.readLine();
+        System.out.println(responseStr);
+        JSONObject jsonObject=JSONObject.parseObject(responseStr);
+        BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
+         */
+        return baseResponse;
+    }
+
+
 
     /*
      * 向服务器发送msg，
@@ -93,29 +176,6 @@ public class tinyClient {
         obout.writeObject(new Info(cookie,msg));
     }
 
-    /*
-     * 登陆功能
-     * @param ip 服务器的ip地址
-     * @param port 服务器的端口号
-     * @param username 客户的用户名
-     * @param password 客户的登陆密码
-     * @return:true登陆成功，false登陆失败
-     */
-    public boolean login(String ip,int port,String username,String password)throws Exception{
-        if(startConnection(ip,port)==false)return false;
-        StringBuilder sb=new StringBuilder();
-        String msg=sb.append(username).append(":").append(password).toString();
-        //String resp=sendMessage(msg);
-        out.println(msg);
-        try {
-            String resp=in.readLine();
-            if("success".equals(resp)) return true;
-            else if("fail".equals(resp))return false;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
     /*
      * 测试服务器连通性
@@ -152,6 +212,7 @@ public class tinyClient {
      * @param databaseName 暂且省略
      * @return  用list的格式返回指定数据库的表清单，list中的每一项都代表一个表
      */
+    /*
     public List getTables(String username, String databaseName)throws Exception{
         List<String> respList=new ArrayList<>();
         String msg="show tables";
@@ -159,6 +220,8 @@ public class tinyClient {
         respList=sendMessage(msg);
         return respList;
     }
+
+     */
 
     /**
      * 获取指定表的内容
