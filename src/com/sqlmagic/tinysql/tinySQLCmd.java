@@ -266,6 +266,21 @@ public class tinySQLCmd {
                             System.out.println("linenum invalid");
                         }
                     }
+                    //备份当前数据库的所有表数据
+                    else if(cmdString.toUpperCase().startsWith("BACKUP")){
+                        try {
+                            logger.backupFull();
+                        } catch (Exception e) {
+                            System.out.println("backup failed");
+                        }
+                    }
+                    else if(cmdString.toUpperCase().startsWith("BURECOVER")){
+                        try {
+                            logger.recoverFull();
+                        } catch (Exception e) {
+                            System.out.println("recover failed");
+                        }
+                    }
 
                     else if (cmdString.toUpperCase().startsWith("HELP")) {
                         helpMsg(cmdString);
