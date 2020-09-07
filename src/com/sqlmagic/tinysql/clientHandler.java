@@ -7,6 +7,7 @@ import com.sqlmagic.tinysql.instruction.DdlDcl;
 import com.sqlmagic.tinysql.instruction.DqlDml;
 import com.sqlmagic.tinysql.instruction.Show;
 import com.sqlmagic.tinysql.protocol.Request;
+import com.sqlmagic.tinysql.utils.CryptoUtil;
 import com.sqlmagic.tinysql.utils.MD5Util;
 import com.sqlmagic.tinysql.utils.MyTableUtil;
 import usersystem2.UserManager2;
@@ -110,7 +111,7 @@ public class clientHandler extends Thread {
 
                         //如果校验通过
                         cookie = clientCookie;
-                        username = "通过cookie拿到username";
+                        username = CryptoUtil.decodeTarget(cookie);
 
                         //如果校验没有通过 说明请求用户身份非法
                         out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
@@ -152,8 +153,8 @@ public class clientHandler extends Thread {
 
                             //登陆成功 创建cookie
                             if (isSuccess) {
-                                //TODO 创建cookie
-                                cookie = MD5Util.MD5Encode(username, "");
+                                //创建cookie
+                                cookie = CryptoUtil.encodeSrc(username);
                                 //返回给客户端
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
                             } else {
@@ -198,7 +199,6 @@ public class clientHandler extends Thread {
                             ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString);
                             //无权执行
                             out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
-
                         }
 
                     }
