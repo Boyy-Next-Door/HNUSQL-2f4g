@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class test2 {
     public static void  main(String [] args){
-        tinyClient client =new tinyClient();
+        tinyClient client = tinyClient.getClient();
         try {
 
             client.startConnection("127.0.0.1",6666);
@@ -27,7 +27,7 @@ public class test2 {
                     msg = sc.nextLine();
 //                    client.Select("aa","select * from Course;");
                  //   client.getTables("aaa","bbb");
-                    BaseResponse haha = client.getDatabases("haha");
+                    BaseResponse haha = client.getDatabases();
                     //    client.send(msg);
                 }
 

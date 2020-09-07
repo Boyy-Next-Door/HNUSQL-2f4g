@@ -1,11 +1,14 @@
 package usersystem2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 2L;
+
     private String username;
     private String password;
     //用户的权限
@@ -62,11 +65,14 @@ public class User {
     public void setPermissions(HashMap<Table, Permission> permissions) {
         this.permissions = permissions;
     }
+
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", permissions=" + permissions +
+                ", grantTo=" + grantTo +
                 '}';
     }
 
