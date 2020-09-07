@@ -1,8 +1,10 @@
 package usersystem2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Database {
+public class Database  implements Serializable {
+    private static final long serialVersionUID = 3L;
     private String databaseName;
 
     @Override

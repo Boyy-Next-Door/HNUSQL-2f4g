@@ -11,6 +11,7 @@ public class MyTableUtil {
     private  ArrayList<Column> columns = new ArrayList<>();
     private  ArrayList<Row> rows = new ArrayList<>();
 
+
     public String generate() {
         //计算每一列的最大宽度
         for (int i = 0; i < columns.size(); i++) {

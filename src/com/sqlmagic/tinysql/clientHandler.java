@@ -116,16 +116,20 @@ public class clientHandler extends Thread{
             stmt = con.createStatement();
             inputString = (String) null;
 
+            Show show=Show.getInstance();
+            DqlDml dqlDml=DqlDml.getInstance();
+
             while(true){
                 try {
                     inputString = in.readLine().trim();
                     if(inputString==(String)null)break;
                     String clientCookie;
-                    String requestType;
+                    int requestType;
                     String rawSQL;
                     JSONObject obj= JSON.parseObject(inputString);
                     clientCookie=obj.getString("cookie");
-                    requestType=obj.getString("requestType");
+                    //requestType=obj.getString("requestType");
+                    requestType=obj.getInteger("requestType");
                     rawSQL=obj.getString("rawSQL");
 
                     inputString=rawSQL;
@@ -134,6 +138,7 @@ public class clientHandler extends Thread{
                             inputString.toUpperCase().startsWith("QUIT")) break;
                     startAt = 0;
 
+
                     while (startAt < inputString.length() - 1) {
                         endAt = inputString.indexOf(";", startAt);
                         if (endAt == -1)
@@ -141,101 +146,24 @@ public class clientHandler extends Thread{
                         cmdString = inputString.substring(startAt, endAt);
                         startAt = endAt + 1;
 
-                        if (cmdString.toUpperCase().equals("SHOW DATABASES")) {
-                            /*
-                            List<String> respList=new ArrayList<>();            //这里用list作为BaseResponse的data
-
-                            ArrayList<DatabaseMapper.MapperEntry> databases = getDatabaseList();
-                            MyTableUtil database_name = new MyTableUtil().addColumn("database_name");
-
-                            for (DatabaseMapper.MapperEntry entry : databases) {
-                                database_name.addRow(entry.getDatabaseName());
-                                respList.add(entry.getDatabaseName());
-                            }
-                            //System.out.println(database_name.generate());
-                            //System.out.println("----------------------------------");
-
-                            BaseResponse baseResponse =BaseResponse.ok(respList);
-                            String str=JSONObject.toJSONString(baseResponse);
-                            out.println(str);
-                             */
-                            //Show show=new Show();
-                           // show.whichShow(con,out, Request.SHOW_DATABASES);
+                        if(requestType==Request.SHOW_DATABASES){
+                            show.whichShow(con,out,Request.SHOW_DATABASES);
                         }
-                        else if (cmdString.toUpperCase().equals("SHOW TABLES")) {/*
-//                        for (i = 0; i < tableList.size(); i++)
-//                            System.out.println((String) tableList.elementAt(i));
-                            //从数据库连接重新读取元数据并返回表清单
-                            List<String> respList=new ArrayList<>();
-                            ResultSet tables = con.getMetaData().getTables(null, null, null, null);
-                            tableList = new Vector();
-                            MyTableUtil table = new MyTableUtil().addColumn("table_name");
-                            while (tables.next()) {
-                                tableName = tables.getString("TABLE_NAME");
-                                tableList.addElement(tableName);
-                                table.addRow(tableName);
-                                respList.add(tableName);
-                            }
-                            //System.out.println(table.generate());
-                            BaseResponse baseResponse =BaseResponse.ok(respList);
-                            String str=JSONObject.toJSONString(baseResponse);
-                            out.println(str);
-                            */
-                      //      Show show=new Show();
-                      //      show.whichShow(con,out, Request.SHOW_TABLES);
+                        else if(requestType==Request.SHOW_TABLES){
+                            show.whichShow(con,out,Request.SHOW_TABLES);
                         }
-
-                        else if (cmdString.toUpperCase().startsWith("SELECT")) {
-                            /*
-                            display_rs = stmt.executeQuery(cmdString);
-                            if (display_rs == (ResultSet) null) {
-                                BaseResponse baseResponse=BaseResponse.ok(null,"Null ResultSet returned from query");
-                                String str=JSONObject.toJSONString(baseResponse);
-                                out.println(str);
-                                continue;
-                            }
-                            MyTableUtil myTableUtil=new MyTableUtil();
-                            myTableUtil=buildResults(display_rs);
-                            System.out.println(myTableUtil.generate());
-                            BaseResponse baseResponse =BaseResponse.ok(myTableUtil);
-                            String str=JSONObject.toJSONString(baseResponse);
-                            out.println(str);
-
-                             */
-                            DqlDml dqlDml=new DqlDml();
+                        else if(requestType==Request.SELECT){
                             dqlDml.SelectInsertUpdateDelete(con,stmt,Request.SELECT,out,cmdString);
-
                         }
-                        else if(cmdString.toUpperCase().startsWith("INSERT")){
-                            /*
-                            if (cmdString.indexOf("?") > -1) {
-                                pstmt = con.prepareStatement(cmdString);
-                            } else {
-                                try {
-                                    stmt.executeUpdate(cmdString);
-                                    //logger记录
-                                    if(tinySQLGlobals.LOG) {
-                                        logger.logStatement(cmdString);
-                                    }
-                                    //System.out.println("DONE\n");
-                                    BaseResponse baseResponse =BaseResponse.ok(null);
-                                    String str=JSONObject.toJSONString(baseResponse);
-                                    out.println(str);
-                                } catch (Exception upex) {
-                                    System.out.println(upex.getMessage());
-                                    BaseResponse baseResponse =BaseResponse.fail(null);
-                                    String str=JSONObject.toJSONString(baseResponse);
-                                    out.println(str);
-                                    if (tinySQLGlobals.DEBUG) upex.printStackTrace();
-                                }
-                            }
-                            */
-                            DqlDml dqlDml=new DqlDml();
+                        else if(requestType==Request.INSERT){
                             dqlDml.SelectInsertUpdateDelete(con,stmt,Request.INSERT,out,cmdString);
-
                         }
-
-
+                        else if(requestType==Request.UPDATE){
+                            dqlDml.SelectInsertUpdateDelete(con,stmt,Request.UPDATE,out,cmdString);
+                        }
+                        else if(requestType==Request.DELETE){
+                            dqlDml.SelectInsertUpdateDelete(con,stmt,Request.DELETE,out,cmdString);
+                        }
 
                     }
 
@@ -259,6 +187,15 @@ public class clientHandler extends Thread{
             e.printStackTrace();
         }
     }
+
+
+
+
+
+
+
+
+
 
     public MyTableUtil buildResults(ResultSet rs) throws java.sql.SQLException {
         System.out.println("======================================");

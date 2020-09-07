@@ -2,14 +2,17 @@ package usersystem2;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import usersystem.UserTree;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserManager2 {
+
     //用户存储文件路径
     private static final String fileDir = "src/usersystem2/user_file.dbuf";
+    private static final String fileDir2 = "src/usersystem2/user_file2.dbuf";
 
     private static HashMap<String, User> users;
 
@@ -90,73 +93,113 @@ public class UserManager2 {
         }
     }
 
-    public static boolean revoke(String revokerName, String revokeeName, String database, String table, byte permission, int revokeType) throws Exception{
+    public static boolean revoke(String revokerName, String revokeeName, String database, String table, byte permission) throws Exception{
         if (!(users.containsKey(revokerName) && users.containsKey(revokeeName))) {
             System.err.println("参数用户不存在");
             return false;
         }
 
         User revoker = users.get(revokerName);
-        User revokee = users.get(revokerName);
+        User revokee = users.get(revokeeName);
 
-        //检查revoker是否可以收回权限
-        if (revoker.isRevokable(database, table, permission) && revokee.canBeRevoked(database, table, permission)){
-            //可以进行权限撤销
-            revokee.revokePermission(revokerName, database, table, permission, revokeType);
+        if(revoker.isRevokable(database,table,permission)){
 
+            if(revokee.canBeRevoked(database,table,permission)){
+                revokee.revokePermission(revokerName,database, table, permission,0);
+                return true;
+            }
+            else{
+                System.err.println("被撤销用户没有要撤销的权限");
+                return false;
+            }
+        }else {
+            System.err.println("撤销用户无权撤销此权限");
+            return false;
         }
-        return false;
     }
 
     //从dbuf文件中读取userList
     private static void readUsersFromFile()  {
-        BufferedReader bfr = null;
-        users = new HashMap<>();
+//        BufferedReader bfr = null;
+//        users = new HashMap<>();
+//        try {
+//            File file = new File(fileDir);
+//            if(!file.exists()){
+//                throw new IOException("用户列表文件未找到，将创建一个新的");
+//            }
+//            bfr = new BufferedReader(new FileReader(file));
+//            while (bfr.ready()) {
+//                String[] split = bfr.readLine().split("<====>");
+//                if (split.length != 2) continue;
+//                User value = JSONObject.parseObject(split[1],User.class);
+//                users.put(split[0], value);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            //从文件读取users失败  创建一个新的users集合 并写入文件
+//            users = new HashMap<String, User>();
+//            writeUsersToFile();
+//        } finally {
+//            try {
+//                if (bfr != null)
+//                    bfr.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         try {
-            File file = new File(fileDir);
+            File file = new File(fileDir2);
             if(!file.exists()){
-                throw new IOException("用户列表文件未找到，将创建一个新的");
+                file.createNewFile();
             }
-            bfr = new BufferedReader(new FileReader(file));
-            while (bfr.ready()) {
-                String[] split = bfr.readLine().split("<====>");
-                if (split.length != 2) continue;
-                users.put(split[0], JSONObject.parseObject(split[1], User.class));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            //从文件读取users失败  创建一个新的users集合 并写入文件
-            users = new HashMap<String, User>();
-            writeUsersToFile();
-        } finally {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
             try {
-                if (bfr != null)
-                    bfr.close();
-            } catch (IOException e) {
+                Object object = objectInputStream.readObject();
+                users = (HashMap<String, User>) object;
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        } catch (IOException e) {
+//            e.printStackTrace();
+            //用户文件尚未初始化过 这里初始化一个空的集合写进去
+            users= new HashMap<String, User>();
+            writeUsersToFile();
         }
-
     }
 
     //将内存中的userList写入文件
     private static synchronized void writeUsersToFile() {
-        BufferedWriter bfw = null;
+//        BufferedWriter bfw = null;
+//        try {
+//            //覆盖之前存储的users内容
+//            bfw = new BufferedWriter(new FileWriter(new File(fileDir), false));
+//            for (Map.Entry<String, User> entry : users.entrySet()) {
+//                bfw.write(entry.getKey());
+//                bfw.write("<====>");
+//                bfw.write(JSON.toJSONString(entry.getValue()));
+//                bfw.newLine();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                bfw.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        ObjectOutputStream objectOutputStream = null;
         try {
-            //覆盖之前存储的users内容
-            bfw = new BufferedWriter(new FileWriter(new File(fileDir), false));
-            for (Map.Entry<String, User> entry : users.entrySet()) {
-                bfw.write(entry.getKey());
-                bfw.write("<====>");
-                bfw.write(JSON.toJSONString(entry.getValue()));
-                bfw.newLine();
-            }
+            //覆盖之前的dbuf文件
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File(fileDir2),false));
+            objectOutputStream.writeObject(users);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                bfw.close();
-            } catch (IOException e) {
+            try{
+                objectOutputStream.close();
+            }catch (IOException e){
                 e.printStackTrace();
             }
         }

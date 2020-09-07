@@ -13,13 +13,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-/*
+
 public class Show {
     private static Show instance;
 
+    /*
     private Connection con;
     private PrintWriter out;
     private int requestType;
+
+     */
 
     public static Show getInstance(){
         if(instance==null){
@@ -28,15 +31,26 @@ public class Show {
         return instance;
     }
 
+    /*
     public static Show getInstance(Connection con, PrintWriter out,int requestType){
         if(instance==null){
-            instance=new Show(Connection con, PrintWriter out,int requestType);
+            instance=new Show(con,out,requestType);
         }
         return instance;
     }
 
+     */
+
     private Show(){}
 
+    /*
+    private Show(Connection con, PrintWriter out,int requestType){
+        this.con=con;
+        this.out=out;
+        this.requestType=requestType;
+    }
+
+     */
 
 
     public void whichShow(Connection con, PrintWriter out,int requestType) throws SQLException {
@@ -49,7 +63,7 @@ public class Show {
             }
             BaseResponse baseResponse =BaseResponse.ok(respList);
             String str= JSONObject.toJSONString(baseResponse);
-            //System.out.println(str);
+         //   System.out.println(str);
             out.println(str);
         }
         else if(requestType==Request.SHOW_DATABASES){
@@ -60,7 +74,7 @@ public class Show {
             }
             BaseResponse baseResponse =BaseResponse.ok(respList);
             String str=JSONObject.toJSONString(baseResponse);
-            System.out.println(str);
+          //  System.out.println(str);
             out.println(str);
         }
     }
@@ -71,4 +85,3 @@ public class Show {
 }
 
 
- */
