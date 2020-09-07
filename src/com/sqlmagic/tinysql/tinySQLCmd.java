@@ -240,11 +240,11 @@ public class tinySQLCmd {
 
                     }
                     //创建数据库
-                    else if(cmdString.toUpperCase().startsWith("CREATE DATABASE")){
+                    else if(cmdString.toUpperCase().startsWith("CREATE DATABASE")) {
                         boolean createSuccess = DatabaseMapper.createDatabase(cmdString.substring(16, cmdString.length()).trim());
-                        if(createSuccess){
+                        if (createSuccess) {
                             System.out.println("Create OK.");
-                        }else{
+                        } else {
                             System.out.println("Create failed.");
                         }
                     }

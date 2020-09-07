@@ -432,7 +432,7 @@ public class tinySQLParser
              }else if( ft2.countFields() == 1 ){
                  tableName = ft2.getField(0);
              }else{
-                throwException(1);
+                throwException(12);
              }
          }else if(inputKeyWord.equals("TO")){
              userName = nextField;     //获取用户名
