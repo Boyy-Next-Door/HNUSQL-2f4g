@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.sqlmagic.tinysql.entities.BaseResponse;
 import com.sqlmagic.tinysql.protocol.Request;
 import com.sqlmagic.tinysql.utils.MyTableUtil;
-import com.sun.xml.internal.rngom.parse.host.Base;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -27,7 +26,18 @@ public class tinyClient {
     private BufferedReader in;
     private ObjectOutputStream obout;
 
+    private static tinyClient client = null;
 
+    public static tinyClient getClient() {
+        if (client == null) {
+            client = new tinyClient();
+        }
+        return client;
+
+    }
+
+    private tinyClient() {
+    }
 
 
     public void setHost(String host){this.host=host;}

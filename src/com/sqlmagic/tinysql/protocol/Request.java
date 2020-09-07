@@ -21,6 +21,10 @@ public class Request {
     public static final int SHOW_DATABASES = 301;
     public static final int SHOW_TABLES = 302;
 
+    //共功能性接口
+    public static final int LOGIN = 401;            //登陆数据库
+    public static final int USER_DATABASE = 402;    //选择数据库
+
     //由服务器生成的cookie
     String cookie="";
 

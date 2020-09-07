@@ -19,21 +19,33 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Student.DBF" beforeDir="false" afterPath="$PROJECT_DIR$/Student.DBF" afterDir="false" />
+    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="7.15">
+      <change afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/utils/EnDecoderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/client/ClientTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/client/ClientTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/client/test2.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/client/test2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/client/tinyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/client/tinyClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/Logger.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/UtilString.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/UtilString.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil$Column.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil$Column.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil$Row.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil$Row.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFileTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFileTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/protocol/Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/protocol/Request.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tsColumn.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tsColumn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/UserTree.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem/UserTree.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/Database.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/MainTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/MainTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/Permission.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/Permission.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/Table.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/Table.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/UserManager2.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/UserManager2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/user_file.dbuf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/test2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/test2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/tinyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/tinyClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DqlDml.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DqlDml.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/Show.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/Show.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/utils/MyTableUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/utils/MyTableUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/protocol/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/protocol/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem2/UserManager2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem2/UserManager2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,12 +278,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="一点点注释" />

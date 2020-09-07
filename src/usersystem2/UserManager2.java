@@ -49,11 +49,12 @@ public class UserManager2 {
 
     /**
      * 修改用户信息
-     * @param username 原用户名
-     * @param newname 新用户名
+     *
+     * @param username  原用户名
+     * @param newname   新用户名
      * @param newPaswrd 新密码
      */
-    public static void modifyName(String username, String newname, String newPaswrd){
+    public static void modifyName(String username, String newname, String newPaswrd) {
         User user = getUserByName(username);
         user.setUsername(newname);
         user.setPassword(newPaswrd);
@@ -74,14 +75,13 @@ public class UserManager2 {
         User grantee = users.get(granteeName);
 
         //检查授权者是否拥有权限
-        if (granter.isGrantable(database, table, permission)){
+        if (granter.isGrantable(database, table, permission)) {
 
             //检查被授权者是否没有此权限（没有才可以获得）
             if (grantee.canBeAuthorized(database, table, permission)) {
                 grantee.acquirePermission(granterName, database, table, permission, grantType);
                 return true;
-            }
-            else {
+            } else {
                 System.err.println("被授权者已拥有其中权限");
                 return false;
             }
@@ -93,7 +93,7 @@ public class UserManager2 {
         }
     }
 
-    public static boolean revoke(String revokerName, String revokeeName, String database, String table, byte permission) throws Exception{
+    public static boolean revoke(String revokerName, String revokeeName, String database, String table, byte permission) throws Exception {
         if (!(users.containsKey(revokerName) && users.containsKey(revokeeName))) {
             System.err.println("参数用户不存在");
             return false;
@@ -102,24 +102,23 @@ public class UserManager2 {
         User revoker = users.get(revokerName);
         User revokee = users.get(revokeeName);
 
-        if(revoker.isRevokable(database,table,permission)){
+        if (revoker.isRevokable(database, table, permission)) {
 
-            if(revokee.canBeRevoked(database,table,permission)){
-                revokee.revokePermission(revokerName,database, table, permission,0);
+            if (revokee.canBeRevoked(database, table, permission)) {
+                revokee.revokePermission(revokerName, database, table, permission, 0);
                 return true;
-            }
-            else{
+            } else {
                 System.err.println("被撤销用户没有要撤销的权限");
                 return false;
             }
-        }else {
+        } else {
             System.err.println("撤销用户无权撤销此权限");
             return false;
         }
     }
 
     //从dbuf文件中读取userList
-    private static void readUsersFromFile()  {
+    private static void readUsersFromFile() {
 //        BufferedReader bfr = null;
 //        users = new HashMap<>();
 //        try {
@@ -149,7 +148,7 @@ public class UserManager2 {
 //        }
         try {
             File file = new File(fileDir2);
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.createNewFile();
             }
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
@@ -162,7 +161,7 @@ public class UserManager2 {
         } catch (IOException e) {
 //            e.printStackTrace();
             //用户文件尚未初始化过 这里初始化一个空的集合写进去
-            users= new HashMap<String, User>();
+            users = new HashMap<String, User>();
             writeUsersToFile();
         }
     }
@@ -192,17 +191,27 @@ public class UserManager2 {
         ObjectOutputStream objectOutputStream = null;
         try {
             //覆盖之前的dbuf文件
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File(fileDir2),false));
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File(fileDir2), false));
             objectOutputStream.writeObject(users);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try{
+            try {
                 objectOutputStream.close();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    //登陆
+    public static boolean login(String username, String password) {
+        User userByName = getUserByName(username);
+        if (userByName == null || !userByName.getPassword().equals(password)) {
+            return false;
+        }
+
+        return true;
     }
     //
     // public static void main(String[] args) {
