@@ -33,6 +33,8 @@
 
 package com.sqlmagic.tinysql;
 
+import usersystem2.UserManager2;
+
 import javax.print.DocFlavor;
 import java.util.*;
 import java.lang.*;
@@ -123,6 +125,8 @@ public abstract class tinySQL {
 /*
  *    Build the ResultSet  创建结果集
  */
+//      tinySQLStatement statement = (tinySQLStatement)s;
+//      String sql = statement.getSQLString();
       tsResultSet rs = null;
       tinySQLTable jtbl;
       tinySQLPreparedStatement pstmt=(tinySQLPreparedStatement)null;
@@ -258,7 +262,7 @@ public abstract class tinySQL {
             } else if ( actionType.equals("SELECT") ) {
 /*         
  *             SQL SELECT
- */            
+ */            //UserManager2.checkPermission(tableName,nowUserName);
                selectTables = (Hashtable) h.get("TABLES");
                columns = (Vector) h.get("COLUMNS");
                orderType = (String)h.get("ORDER_TYPE");
@@ -311,24 +315,17 @@ public abstract class tinySQL {
  */          
                DropTable( tableName );
             } else if ( actionType.equals("GRANT") ) {
-
-               System.out.println(tableName1);
-               System.out.println(dbName);
-               System.out.println(permission);
-               System.out.println(userName);
-               System.out.println(nowUserName);
-               //grant(nowUserName,userName,dbName,permission,2);
-
+               UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,0);
             } else if ( actionType.equals("REVOKE") ) {
-               //revoke(nowUserName,userName,dbName,permission,2)
+               UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,0);
             } else if( actionType.equals("GRANT_WITH_LINK") ){
-               //grant(nowUserName,userName,dbName,permission,0)
+               UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,1);
             } else if( actionType.equals("GRANT_WITH_ADMIN") ){
-               //grant(nowUserName,userName,dbName,permission,1)
+               UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,2);
             } else if( actionType.equals("REVOKE_WITH_LINK") ){
-               //revoke(nowUserName,userName,dbName,permission,0)
+               UserManager2.revoke(nowUserName,userName,dbName,tableName1,permission,1);
             } else if( actionType.equals("REVOKE_WITH_ADMIN") ) {
-               //revoke(nowUserName,userName,dbName,permission,1)
+               UserManager2.revoke(nowUserName,userName,dbName,tableName1,permission,2);
             }
             else {
                System.out.println("Unrecognized action " + actionType);

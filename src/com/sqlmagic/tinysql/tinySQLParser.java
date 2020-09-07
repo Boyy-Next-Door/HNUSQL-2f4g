@@ -462,6 +462,9 @@ public class tinySQLParser
             }
 
          }
+         else if(inputKeyWord.equals("EX")){
+            nowUserName=nextField;
+         }
          else if ( !inputKeyWord.equals("TABLE") ) {
             throwException(10);
          }
@@ -686,8 +689,8 @@ public class tinySQLParser
         {"CREATE","TABLE"},
         {"UPDATE","SET","WHERE"},
         {"ALTER","TABLE","DROP","MODIFY","ADD","RENAME"},
-        {"GRANT","ON","TO","WITH"},
-        {"REVOKE","ON","FROM","WITH"}};
+        {"GRANT","ON","TO","WITH","EX"},
+        {"REVOKE","ON","FROM","WITH","EX"}};
       int i,j;
       for ( i = 0; i < sqlSyntax.length; i++ )
       {

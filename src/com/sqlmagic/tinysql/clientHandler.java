@@ -116,7 +116,6 @@ public class clientHandler extends Thread{
             stmt = con.createStatement();
             inputString = (String) null;
 
-
             while(true){
                 try {
                     inputString = in.readLine().trim();
