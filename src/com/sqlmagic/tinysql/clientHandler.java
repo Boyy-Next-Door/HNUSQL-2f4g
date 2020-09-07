@@ -4,7 +4,6 @@ import client.Info;
 import com.alibaba.fastjson.JSON;
 import com.sqlmagic.tinysql.entities.BaseResponse;
 import com.sqlmagic.tinysql.protocol.Request;
-import com.sun.xml.internal.rngom.parse.host.Base;
 import usersystem.Admin;
 import usersystem.UserTree;
 
@@ -118,6 +117,7 @@ public class clientHandler extends Thread{
 
             Show show=Show.getInstance();
             DqlDml dqlDml=DqlDml.getInstance();
+            DdlDcl ddlDcl=DdlDcl.getInstance();
 
             while(true){
                 try {
@@ -163,6 +163,21 @@ public class clientHandler extends Thread{
                         }
                         else if(requestType==Request.DELETE){
                             dqlDml.SelectInsertUpdateDelete(con,stmt,Request.DELETE,out,cmdString);
+                        }
+                        else if(requestType==Request.CREATE){
+                            ddlDcl.ddlAndDcl(con,stmt,username,Request.CREATE, out,cmdString);
+                        }
+                        else if(requestType==Request.ALTER){
+                            ddlDcl.ddlAndDcl(con,stmt,username,Request.ALTER, out,cmdString);
+                        }
+                        else if(requestType==Request.DROP){
+                            ddlDcl.ddlAndDcl(con,stmt,username,Request.DROP, out,cmdString);
+                        }
+                        else if(requestType==Request.GRANT){
+                            ddlDcl.ddlAndDcl(con,stmt,username,Request.GRANT, out,cmdString);
+                        }
+                        else if(requestType==Request.REVOKE){
+                            ddlDcl.ddlAndDcl(con,stmt,username,Request.REVOKE, out,cmdString);
                         }
 
                     }

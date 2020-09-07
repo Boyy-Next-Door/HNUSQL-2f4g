@@ -20,20 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/PreParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Student.DBF" beforeDir="false" afterPath="$PROJECT_DIR$/Student.DBF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/client/test2.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/client/test2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/client/tinyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/client/tinyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil$Column.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil$Column.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil$Row.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil$Row.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/utils/MyTableUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/test2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/test2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/tinyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/tinyClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DqlDml.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DqlDml.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/Show.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/Show.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/utils/MyTableUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/utils/MyTableUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DdlDcl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DdlDcl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -394,9 +385,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1920.1040@0.0.1920.1040" timestamp="1594783795582" />
-    <state x="240" y="124" key="Vcs.Push.Dialog.v2" timestamp="1599441558253">
-      <screen x="0" y="23" width="1280" height="726" />
+    <state x="288" y="115" key="Vcs.Push.Dialog.v2" timestamp="1599459600342">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="288" y="115" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1599459600342" />
     <state x="360" y="145" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598949686850" />
     <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.723@0.23.1280.723" timestamp="1594170965651" />
     <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.726@0.23.1280.726" timestamp="1599441558253" />
@@ -434,7 +426,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/usersystem2/UserManager2.java</url>
-          <line>19</line>
+          <line>22</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

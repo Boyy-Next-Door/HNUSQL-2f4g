@@ -16,19 +16,8 @@ import java.util.ArrayList;
 
 public class DdlDcl {
     private static DdlDcl instance;
-    private Connection con;
-    private PrintWriter out;
-    private int requestType;
-    private String cmdString;
-    private String username;
-    private DdlDcl(){}
 
-    private DdlDcl(Connection con, PrintWriter out,int requestType,String username){
-        this.con=con;
-        this.out=out;
-        this.requestType=requestType;
-        this.username=username;
-    }
+    private DdlDcl(){}
 
     public static DdlDcl getInstance(){
         if(instance==null){
@@ -37,19 +26,8 @@ public class DdlDcl {
         return instance;
     }
 
-    public static DdlDcl getInstance(Connection con, PrintWriter out,int requestType,String username){
-        if(instance==null){
-            instance=new DdlDcl(con,out, requestType,username);
-        }
-        return instance;
-    }
-
-
-
-
-
-    public void ddlAndDcl(Connection con, Statement statement,String username,
-                          int requestType, PrintWriter out, String rawSQL)throws Exception{
+    public void ddlAndDcl(Connection con, Statement statement, String username,
+                                 int requestType, PrintWriter out, String rawSQL)throws Exception{
         if(requestType== Request.CREATE){
             try {
 
@@ -125,9 +103,6 @@ public class DdlDcl {
         }
     }
 
-    private static ArrayList<DatabaseMapper.MapperEntry> getDatabaseList() {
-        return DatabaseMapper.getDatabaseList();
-    }
 }
 
 
