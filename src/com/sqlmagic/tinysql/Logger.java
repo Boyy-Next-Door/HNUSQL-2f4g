@@ -96,7 +96,7 @@ public class Logger extends tinySQL {
             String newLine = System.getProperty("line.separator");
 
             fos.write(time.getBytes());
-            fos.write('=');
+            fos.write("====".getBytes());
             fos.write(sqlStatement.getBytes());
             fos.write(newLine.getBytes());
 
@@ -160,7 +160,7 @@ public class Logger extends tinySQL {
                     linenum--;
                 }
 
-                String[] part = line.split("=");
+                String[] part = line.split("====");
                 System.out.println("LogInfo:");
                 System.out.println("Time: " + part[0]);
                 System.out.println("SqlStatement: " + part[1]);
