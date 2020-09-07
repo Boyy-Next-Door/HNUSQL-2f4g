@@ -240,11 +240,11 @@ public class tinySQLCmd {
 
                     }
                     //创建数据库
-                    else if(cmdString.toUpperCase().startsWith("CREATE DATABASE")) {
+                    else if(cmdString.toUpperCase().startsWith("CREATE DATABASE")){
                         boolean createSuccess = DatabaseMapper.createDatabase(cmdString.substring(16, cmdString.length()).trim());
-                        if (createSuccess) {
+                        if(createSuccess){
                             System.out.println("Create OK.");
-                        } else {
+                        }else{
                             System.out.println("Create failed.");
                         }
                     }
@@ -264,6 +264,21 @@ public class tinySQLCmd {
                             logger.recoverDatabase(line,con);
                         } catch (Exception e) {
                             System.out.println("linenum invalid");
+                        }
+                    }
+                    //备份当前数据库的所有表数据
+                    else if(cmdString.toUpperCase().startsWith("BACKUP")){
+                        try {
+                            logger.backupFull();
+                        } catch (Exception e) {
+                            System.out.println("backup failed");
+                        }
+                    }
+                    else if(cmdString.toUpperCase().startsWith("BURECOVER")){
+                        try {
+                            logger.recoverFull();
+                        } catch (Exception e) {
+                            System.out.println("recover failed");
                         }
                     }
 
@@ -372,7 +387,6 @@ public class tinySQLCmd {
                             throw new tinySQLException("No such file: " + fName);
                         }
                     } else if (cmdString.toUpperCase().startsWith("LOAD")) {
-                        System.out.println("hahaha insert");
                         ft = new FieldTokenizer(cmdString, ' ', false);
                         fName = ft.getField(1);
                         tableName = ft.getField(3);
@@ -443,7 +457,6 @@ public class tinySQLCmd {
                                 pstmt.executeUpdate();
                         }
                     } else {
-                        System.out.println("lalaala");
                         if (cmdString.indexOf("?") > -1) {
                             pstmt = con.prepareStatement(cmdString);
                         } else {
