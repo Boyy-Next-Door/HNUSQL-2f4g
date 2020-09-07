@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
+import java.lang.String.*;
 
 
 public class tinyClient {
@@ -146,7 +147,101 @@ public class tinyClient {
         String responseStr=in.readLine();
        // System.out.println(responseStr);
         BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
-        return baseResponse;
+        String tempStr=(String)baseResponse.getData();
+       //System.out.println(tempStr);
+       // System.out.println(tempStr.length());
+
+        /*
+        解析字符串
+         */
+
+        MyTableUtil newTable=new MyTableUtil();
+        int flag1=0;
+        int flag2=0;
+        int flag3=0;
+        int flag4=0;
+        int len=0;
+        for(int i=0;i<tempStr.length();i++){
+            if(tempStr.charAt(i)!='\n'&&flag1==0){
+                continue;
+            }
+            else if(tempStr.charAt(i)=='\n'&&flag1==0){
+                flag1=1;
+                i=i+2;
+                continue;
+            }
+            else if(flag1==1&&flag2==0){
+                String temp="";
+                while(true){
+                    if(tempStr.charAt(i)==' '){
+                       i=i+1;
+                       continue;
+                    }
+                    else if(tempStr.charAt(i)=='|'){
+                        i=i+1;
+                        newTable.addColumn(temp);
+                        len=len+1;
+                        //System.out.println("temp="+temp);
+                        temp="";
+                        continue;
+                    }else if(tempStr.charAt(i)=='\n'){
+                        flag2=1;
+                        break;
+                    }
+                    else{
+                        temp=temp+tempStr.charAt(i);
+                        i=i+1;
+                    }
+                }
+            }
+            else if(flag2==1&&flag3==0){
+                if(tempStr.charAt(i)=='|'){
+                    flag3=1;
+                    i=i+1;
+                    continue;
+                }
+            }
+            else if(flag4==0){
+                String temp="";
+                String[] strs=new String[len];
+                int whichLen=0;
+                while(true){
+                    if(tempStr.charAt(i)==' '){
+                        i=i+1;
+                        continue;
+                    }
+                    else if(tempStr.charAt(i)=='|'){
+                        i=i+1;
+                        strs[whichLen++]=temp;
+                     //   System.out.println("temp="+temp);
+                        temp="";
+                        continue;
+                    }
+                    else if(tempStr.charAt(i)=='\n'){
+                        i=i+3;
+                    //    for(int j=0;j<len;j++){
+                     //       System.out.println(strs[j]);
+                      //  }
+                        newTable.addRow(strs);
+                        whichLen=0;
+                    }
+                    else if(tempStr.charAt(i)=='-'){
+                        flag4=1;
+                        break;
+                    }
+                    else{
+                        temp=temp+tempStr.charAt(i);
+                        i=i+1;
+                    }
+                }
+            }
+            else if (flag4==1)break;
+        }
+
+        BaseResponse returnResponse=BaseResponse.ok(newTable);
+        System.out.println(newTable.generate());
+      //  BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
+        return returnResponse;
     }
 
     /**
@@ -161,13 +256,13 @@ public class tinyClient {
         String str= JSONObject.toJSONString(request);
         out.println(str);
         String responseStr=in.readLine();
-        //System.out.println(responseStr);
+        System.out.println(responseStr);
         BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
         return baseResponse;
     }
 
     /*
-    CREATE = 201;
+    public static final int CREATE = 201;
     public static final int ALTER = 202;
     public static final int DROP = 203;
     public static final int GRANT = 204;
@@ -231,6 +326,28 @@ public class tinyClient {
         BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
         return baseResponse;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /*
