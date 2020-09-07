@@ -200,7 +200,7 @@ public class Logger extends tinySQL {
                 int count = 0;
                 Statement stmt = con.createStatement();
                 while (true) {
-                    String sql = line.substring(20, line.length());
+                    String sql = line.substring(23, line.length());
                     System.out.println("SqlStatement: " + sql);
                     stmt.executeUpdate(sql);
                     count++;
