@@ -41,10 +41,12 @@ public class tinySQLParser
 {
    Vector columnList,tableList,actionList,valueList,contextList,
    columnAliasList,columns,userList;
+   String nowUserName;//当前用户名（待获取）
    Hashtable tables,users;
    tinySQL dbEngine;
+   Byte Granting=0b00000000;
    tinySQLWhere whereClause;
-   String tableName,tableAlias,dataDir;
+   String tableName,tableAlias,dataDir,dbName;
    String userName,password;
    String statementType=(String)null;
    String lastKeyWord=(String)null,orderType=(String)null;
@@ -52,6 +54,9 @@ public class tinySQLParser
    String[] colTypeNames = {"INT","FLOAT","CHAR","DATE"};
    int[] colTypes = {Types.INTEGER,Types.FLOAT,Types.CHAR,Types.DATE};
    boolean distinct=false,defaultOrderBy=true;
+   public tinySQLParser(){
+
+   }
    public tinySQLParser(InputStream sqlInput,tinySQL inputEngine)
       throws tinySQLException
    {
@@ -145,11 +150,10 @@ public class tinySQLParser
    public void setPhrase(String inputKeyWord,String inputString)
       throws tinySQLException
    {
-      String tableName1,tableAlias,tableNameAndAlias,userName,dbName,password;
-      String nowUserName;//当前用户名（待获取）
-      Byte Granting=0b00000000;
+
+
       tinySQLTable changeTable;
-      String getKeyWord1,getKeyWord2;
+      String getKeyWord1=null,getKeyWord2=null;
       String[] getKeyWord;
       String nextField,upperField,colTypeStr,colTypeSpec,
       fieldString,syntaxErr,tempString,columnName,columnAlias;
@@ -393,6 +397,8 @@ public class tinySQLParser
                   Granting=(byte) (Granting | 0b00100000);
                } else if(getKeyWord1.toUpperCase().equals("SELECT")){
                   Granting=(byte) (Granting | 0b00010000);
+               } else{
+                  throwException(11);
                }
                //对该权限对用户进行操作
             }
@@ -411,6 +417,8 @@ public class tinySQLParser
                     Granting=(byte) (Granting | 0b00100000);
                  } else if(getKeyWord1.toUpperCase().equals("SELECT")){
                     Granting=(byte) (Granting | 0b00010000);
+                 } else{
+                    throwException(11);
                  }
                  //对该权限对用户进行操作
              }
@@ -419,10 +427,12 @@ public class tinySQLParser
              ft2 = new FieldTokenizer(nextField,'.',false);
              if ( ft2.countFields() == 2 ){
                  dbName = ft2.getField(0);
-                 tableName1 = ft2.getField(1);
+                 tableName = ft2.getField(1);
                  //System.out.println(dbName + "+" + tableName);
-             }else {
-                 tableName1=ft2.getField(0);
+             }else if( ft2.countFields() == 1 ){
+                 tableName = ft2.getField(0);
+             }else{
+                throwException(12);
              }
          }else if(inputKeyWord.equals("TO")){
              userName = nextField;     //获取用户名
@@ -431,24 +441,24 @@ public class tinySQLParser
              userName = nextField;    //获取用户名
              //processRevoke(nowUserName,username,Granting);
          } else if(inputKeyWord.equals("WITH")){
+            statementType = statementType + "_WITH";
             ft2 = new FieldTokenizer(nextField,' ',false); //获取后面两个字
 
-            Granting = (byte)(Granting << 4);
-            getKeyWord1 = ft2.getField(0);
-            getKeyWord2 = ft2.getField(1);
+            Granting = (byte)(Granting >>> 4 | Granting);
+            if(ft2.countFields()==2){
+               getKeyWord1 = ft2.getField(0);
+               getKeyWord2 = ft2.getField(1);
+            } else {
+               throwException(13);
+            }
+
 
             if(getKeyWord1.toUpperCase().equals("LINK") && getKeyWord2.toUpperCase().equals("OPTION")){
-               if(statementType.equals("GRANT")){
-                  //processGrantWith(nowUserName,username,Granting);
-               } else if(statementType.equals("REVOKE")){
-                  //processRevokeWith(nowUserName,username,Granting);
-               }
+               statementType = statementType  + "_LINK";
             }else if(getKeyWord1.toUpperCase().equals("ADMIN") && getKeyWord2.toUpperCase().equals("OPTION")){
-               if(statementType.equals("GRANT")){
-                  //processGrantWith(nowUserName,username,Granting);
-               } else if(statementType.equals("REVOKE")){
-                  //processRevokeWith(nowUserName,username,Granting);
-               }
+               statementType = statementType  + "_ADMIN";
+            }else {
+               throwException(13);
             }
 
          }
@@ -790,10 +800,20 @@ public class tinySQLParser
          exMsg = "Expecting SELECT, INSERT, ALTER, etc. in " + statementType;
       else if ( exceptionNumber == 10 )
          exMsg = "Unrecognized keyword ";
+      else if ( exceptionNumber == 11 )
+         exMsg = "HNUsql only support grant create,delete,update,select keyword ";
+      else if ( exceptionNumber == 12 )
+         exMsg = "Grant need database name and table name";
+      else if ( exceptionNumber == 13 )
+         exMsg = "WITH must be followed by LINK OPTION or ADMIN OPTION ";
       throw new tinySQLException(exMsg);
    }
    public Vector getActions()
    {
       return actionList;
+   }
+
+   public String getTableName(){
+      return tableName;
    }
 }

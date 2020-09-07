@@ -2,7 +2,10 @@ package usersystem2;
 
 import com.sun.org.apache.xml.internal.security.keys.keyresolver.implementations.PrivateKeyResolver;
 
-public class Permission {
+import java.io.Serializable;
+
+public class Permission implements Serializable {
+    private static final long serialVersionUID = 4L;
     private int target = 1;     //0--database  1--table（默认）
     private Database database;
     private Table table;
@@ -13,17 +16,17 @@ public class Permission {
     @Override
     public int hashCode() {
         int result = target;
-        result = 17*result + database.hashCode();
-        result = 17*result + table.hashCode();
-        result = 17*result + (int)permission;
-        result = 17*result + grantedBy.hashCode();
-        result = 17*result + grantType;
+        result = 17 * result + database.hashCode();
+        result = 17 * result + table.hashCode();
+        result = 17 * result + (int) permission;
+        result = 17 * result + grantedBy.hashCode();
+        result = 17 * result + grantType;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof Permission))
+        if (!(obj instanceof Permission))
             return false;
 
         Permission permObj = (Permission) obj;
@@ -31,9 +34,9 @@ public class Permission {
             return true;
         if ((permObj.database.equals(this.database)) && (permObj.table.equals(this.table)) &&
                 (permObj.target == this.target) && (permObj.permission == this.permission) &&
-                (permObj.grantedBy.equals(this.grantedBy)) && (permObj.grantType == this.grantType)){
+                (permObj.grantedBy.equals(this.grantedBy)) && (permObj.grantType == this.grantType)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

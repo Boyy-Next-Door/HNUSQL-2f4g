@@ -266,6 +266,21 @@ public class tinySQLCmd {
                             System.out.println("linenum invalid");
                         }
                     }
+                    //备份当前数据库的所有表数据
+                    else if(cmdString.toUpperCase().startsWith("BACKUP")){
+                        try {
+                            logger.backupFull();
+                        } catch (Exception e) {
+                            System.out.println("backup failed");
+                        }
+                    }
+                    else if(cmdString.toUpperCase().startsWith("BURECOVER")){
+                        try {
+                            logger.recoverFull();
+                        } catch (Exception e) {
+                            System.out.println("recover failed");
+                        }
+                    }
 
                     else if (cmdString.toUpperCase().startsWith("HELP")) {
                         helpMsg(cmdString);
@@ -372,7 +387,6 @@ public class tinySQLCmd {
                             throw new tinySQLException("No such file: " + fName);
                         }
                     } else if (cmdString.toUpperCase().startsWith("LOAD")) {
-                        System.out.println("hahaha insert");
                         ft = new FieldTokenizer(cmdString, ' ', false);
                         fName = ft.getField(1);
                         tableName = ft.getField(3);
@@ -443,7 +457,6 @@ public class tinySQLCmd {
                                 pstmt.executeUpdate();
                         }
                     } else {
-                        System.out.println("lalaala");
                         if (cmdString.indexOf("?") > -1) {
                             pstmt = con.prepareStatement(cmdString);
                         } else {

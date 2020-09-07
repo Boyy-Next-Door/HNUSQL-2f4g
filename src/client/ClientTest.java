@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ClientTest {
     public static void  main(String [] args){
-        tinyClient client =new tinyClient();
+        tinyClient client =tinyClient.getClient();
         try {
 
             //client.startConnection("127.0.0.1",6666);
