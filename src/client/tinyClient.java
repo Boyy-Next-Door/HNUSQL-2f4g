@@ -1,19 +1,18 @@
 package client;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.sqlmagic.tinysql.entities.BaseResponse;
+import com.sqlmagic.tinysql.protocol.Request;
+import com.sqlmagic.tinysql.utils.MyTableUtil;
+import com.sun.xml.internal.rngom.parse.host.Base;
+
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.*;
-
-import com.alibaba.fastjson.JSON;
-import com.sqlmagic.tinysql.protocol.*;
-import com.sqlmagic.tinysql.entities.*;
-import com.alibaba.fastjson.JSONObject;
-
-
 
 
 public class tinyClient {
@@ -99,12 +98,12 @@ public class tinyClient {
     public BaseResponse getDatabases(String username)throws Exception{
         String rawSQL="show databases";
         String responseStr;
-        Request request=new Request(cookie,Request.SHOW_DATABASES,rawSQL);
-        String str=JSONObject.toJSONString(request);
+        Request request=new Request(cookie, Request.SHOW_DATABASES,rawSQL);
+        String str= JSONObject.toJSONString(request);
         out.println(str);
         responseStr=in.readLine();
         //System.out.println(responseStr);
-        JSONObject jsonObject=JSONObject.parseObject(responseStr);
+        JSONObject jsonObject= JSONObject.parseObject(responseStr);
         BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
         return  baseResponse;
     }
@@ -120,32 +119,118 @@ public class tinyClient {
     public BaseResponse getTables(String username, String databaseName)throws Exception{
         String rawSQL="show tables;";
         String responseStr;
-        Request request=new Request(cookie,Request.SHOW_TABLES,rawSQL);
-        String str=JSONObject.toJSONString(request);
+        Request request=new Request(cookie, Request.SHOW_TABLES,rawSQL);
+        String str= JSONObject.toJSONString(request);
         out.println(str);
         responseStr=in.readLine();
-      //  System.out.println(responseStr);
-        JSONObject jsonObject=JSONObject.parseObject(responseStr);
-        BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
+        //System.out.println(responseStr);
+        //JSONObject jsonObject= JSONObject.parseObject(responseStr);
+       // BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
+        BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
         return baseResponse;
     }
 
 
-
-    public BaseResponse Select(String username,String rawSQL)throws Exception{
-        BaseResponse baseResponse=new BaseResponse();
-        Request request=new Request(cookie,Request.SELECT,rawSQL);
-        String str=JSONObject.toJSONString(request);
+    /**
+     *
+     * @param username
+     * @param rawSQL
+     * @return
+     * @throws Exception
+     */
+    public BaseResponse Select(String username, String rawSQL)throws Exception{
+        //BaseResponse baseResponse=new BaseResponse();
+        Request request=new Request(cookie, Request.SELECT,rawSQL);
+        String str= JSONObject.toJSONString(request);
         out.println(str);
-        /*
         String responseStr=in.readLine();
-        System.out.println(responseStr);
-        JSONObject jsonObject=JSONObject.parseObject(responseStr);
-        BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
-         */
+       // System.out.println(responseStr);
+        BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
         return baseResponse;
     }
 
+    /**
+     *
+     * @param username
+     * @param rawSQL
+     * @return
+     * @throws Exception
+     */
+    public BaseResponse Insert(String username,String rawSQL)throws Exception{
+        Request request=new Request(cookie, Request.INSERT,rawSQL);
+        String str= JSONObject.toJSONString(request);
+        out.println(str);
+        String responseStr=in.readLine();
+        //System.out.println(responseStr);
+        BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
+        return baseResponse;
+    }
+
+    /*
+    CREATE = 201;
+    public static final int ALTER = 202;
+    public static final int DROP = 203;
+    public static final int GRANT = 204;
+    public static final int REVOKE = 205;
+     */
+
+    public BaseResponse Create(String username,String rawSQL)throws Exception{
+        Request request=new Request(cookie, Request.CREATE,rawSQL);
+        String str= JSONObject.toJSONString(request);
+        out.println(str);
+        String responseStr=in.readLine();
+        //System.out.println(responseStr);
+        BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
+        return baseResponse;
+    }
+
+
+    /**
+     *
+     * @param username
+     * @param rawSQL
+     * @return
+     * @throws Exception
+     */
+    public BaseResponse Alter(String username,String rawSQL)throws Exception{
+        Request request=new Request(cookie, Request.ALTER,rawSQL);
+        String str= JSONObject.toJSONString(request);
+        out.println(str);
+        String responseStr=in.readLine();
+        //System.out.println(responseStr);
+        BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
+        return baseResponse;
+    }
+
+    public BaseResponse Drop(String username,String rawSQL)throws Exception{
+        Request request=new Request(cookie, Request.DROP,rawSQL);
+        String str= JSONObject.toJSONString(request);
+        out.println(str);
+        String responseStr=in.readLine();
+        //System.out.println(responseStr);
+        BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
+        return baseResponse;
+    }
+
+    public BaseResponse Grant(String username,String rawSQL)throws Exception{
+        Request request=new Request(cookie, Request.GRANT,rawSQL);
+        String str= JSONObject.toJSONString(request);
+        out.println(str);
+        String responseStr=in.readLine();
+        //System.out.println(responseStr);
+        BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
+        return baseResponse;
+    }
+
+    public BaseResponse Revoke(String username,String rawSQL)throws Exception{
+        Request request=new Request(cookie, Request.REVOKE,rawSQL);
+        String str= JSONObject.toJSONString(request);
+        out.println(str);
+        String responseStr=in.readLine();
+        //System.out.println(responseStr);
+        BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
+        return baseResponse;
+    }
 
 
     /*
