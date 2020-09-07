@@ -45,8 +45,7 @@ public class MainTest {
         User u1 = new User("u1", "123456");
         User u2 = new User("u2", "123456");
         User u3 = new User("u3", "123456");
-        User u4 = new User("u4", "123456");
-        User u5 = new User("u5", "123456");
+
 
         Database db1 = new Database("db1");
         Table table1 = new Table(db1,"table1", (byte)0xff);
@@ -66,38 +65,21 @@ public class MainTest {
         UserManager2.addUser(u1);
         UserManager2.addUser(u2);
         UserManager2.addUser(u3);
-        UserManager2.addUser(u4);
-        UserManager2.addUser(u5);
         boolean grant1 = false;
         boolean grant2 = false;
         boolean grant3 = false;
         boolean grant4 = false;
         boolean grant5 = false;
         boolean grant6 = false;
-        boolean grant7 = false;
-        boolean grant8 = false;
-        boolean revoke1 = false;
-        boolean revoke2 = false;
 
         try {
             // grant1 = UserManager2.grant("u1", "u2", "db1", "table1", (byte) 0x80, 0);
-            // grant2 = UserManager2.grant("u1", "u2", "db1","table1",(byte) 0x40, 0);
-            // grant3 = UserManager2.grant("u1", "u3", "db1","table1",(byte) 0x40, 0);
-            // grant4 = UserManager2.grant("u1", "u3", "db1","table1",(byte) 0x80, 0);
-            // grant5 = UserManager2.grant("u1", "u2", "db1","table1",(byte) 0x20, 0);
-            // grant6 = UserManager2.grant("u1", "u3", "db1","table1",(byte) 0x20, 0);
-            // grant7 = UserManager2.grant("u1", "u3", "db1","table1",(byte) 0x10, 0);
-            // grant8 = UserManager2.grant("u1", "u2", "db1","table1",(byte) 0x10, 0);
-            //为什么给两个用户先授权0x40后授权0x80时grantTo就没有问题，而反过来就有问题呢（grant1在前，u1的grantTo就有4个记录，而grant1在最后，u1的grantTo只有2个记录（正确的）？
-            //上面的已解决
-
+            grant2 = UserManager2.grant("u1", "u2", "db1","table1",(byte) 0x40, 0);
+            grant3 = UserManager2.grant("u1", "u3", "db1","table1",(byte) 0x40, 0);
+            grant4 = UserManager2.grant("u1", "u3", "db1","table1",(byte) 0x80, 0);
             grant1 = UserManager2.grant("u1", "u2", "db1", "table1", (byte) 0x80, 0);
-            grant2 = UserManager2.grant("u1", "u2", "db1","table1",(byte) 0x66, 1);
-            grant3 = UserManager2.grant("u2", "u3", "db1","table1",(byte) 0x22, 2);
-            grant4 = UserManager2.grant("u3", "u4", "db1","table1",(byte) 0x20, 0);
-            // grant5 = UserManager2.grant("u4", "u5", "db1","table1",(byte) 0x20, 0);
-            revoke1 = UserManager2.revoke("u1","u2","db1","table1",(byte) 0x20);
-            // revoke2 = UserManager2.revoke("u2","u3","db1","table1",(byte) 0x20);//成功
+
+            //为什么给两个用户先授权0x40后授权0x80时grantTo就没有问题，而反过来就有问题呢（grant1在前，u1的grantTo就有4个记录，而grant1在最后，u1的grantTo只有2个记录（正确的）？
 
             // grant5 = UserManager2.grant("u1", "u2", "db1","table1",(byte)0x60, 0);
             // grant5 = UserManager2.grant("u1", "u2", "db1", "table2", (byte)0x10, 0);
@@ -108,10 +90,6 @@ public class MainTest {
         System.out.println(grant2);
         System.out.println(grant3);
         System.out.println(grant4);
-        System.out.println(grant5);
-        System.out.println(grant6);
-        System.out.println(grant7);
-        System.out.println(grant8);
     }
 
     //测试modify函数（成功）

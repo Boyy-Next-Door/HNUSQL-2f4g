@@ -19,7 +19,26 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="9.6 usersystem2.0 验证了授权、单独撤销、级联撤销，测试用例没有问题，但是不能保证其他用例绝不出错（好歹进了一大步，俺就把它升为2.0了）" />
+    <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="7.15">
+      <change afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DdlDcl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DqlDml.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/Show.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Student.DBF" beforeDir="false" afterPath="$PROJECT_DIR$/Student.DBF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/client/test2.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/client/test2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/client/tinyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/client/tinyClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/DatabaseMapper$MapperEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/DatabaseMapper$MapperEntry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/DatabaseMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/DatabaseMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/protocol/Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/protocol/Request.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQLCmd.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/test2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/test2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/tinyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/tinyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/DatabaseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/DatabaseMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/protocol/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/protocol/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLCmd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLCmd.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +87,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.test2">
+  <component name="RunManager" selected="Application.tinySQLCmd">
     <configuration name="UserManager2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="usersystem2.UserManager2" />
       <module name="tinySQL-2" />
@@ -136,10 +155,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.tinySQLCmd" />
         <item itemvalue="Application.test2" />
         <item itemvalue="Application.tinyServer" />
         <item itemvalue="Application.UserManager2" />
-        <item itemvalue="Application.tinySQLCmd" />
         <item itemvalue="Application.tinySQLCmd (2)" />
       </list>
     </recent_temporary>
@@ -160,7 +179,8 @@
       <workItem from="1594170832456" duration="8125000" />
       <workItem from="1594259708637" duration="1384000" />
       <workItem from="1598837643753" duration="2499000" />
-      <workItem from="1599360022150" duration="659000" />
+      <workItem from="1599360022150" duration="12329000" />
+      <workItem from="1599439805540" duration="1399000" />
     </task>
     <task id="LOCAL-00001" summary="一点点注释">
       <created>1594170959320</created>
@@ -232,14 +252,7 @@
       <option name="project" value="LOCAL" />
       <updated>1594953234760</updated>
     </task>
-    <task id="LOCAL-00011" summary="9.6 usersystem2.0 验证了授权、单独撤销、级联撤销，测试用例没有问题，但是不能保证其他用例绝不出错（好歹进了一大步，俺就把它升为2.0了）">
-      <created>1599402701198</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1599402701198</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -263,8 +276,7 @@
     <MESSAGE value="增加权限的基本框架" />
     <MESSAGE value="7.15" />
     <MESSAGE value="修改了UserManager2中的部分设计" />
-    <MESSAGE value="9.6 usersystem2.0 验证了授权、单独撤销、级联撤销，测试用例没有问题，但是不能保证其他用例绝不出错（好歹进了一大步，俺就把它升为2.0了）" />
-    <option name="LAST_COMMIT_MESSAGE" value="9.6 usersystem2.0 验证了授权、单独撤销、级联撤销，测试用例没有问题，但是不能保证其他用例绝不出错（好歹进了一大步，俺就把它升为2.0了）" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改了UserManager2中的部分设计" />
   </component>
   <component name="WindowStateProjectService">
     <state x="539" y="183" key="#Project_Structure" timestamp="1594953207836">
@@ -301,46 +313,47 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="629" y="135" key="#tinySQLCmd_(2)/0.0.1920.1040@0.0.1920.1040" timestamp="1594697216124" />
-    <state x="149" y="0" key="CommitChangelistDialog2" timestamp="1599445893026">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="227" y="23" key="CommitChangelistDialog2" timestamp="1599361508358">
+      <screen x="0" y="23" width="1280" height="726" />
     </state>
-    <state x="149" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1599445893026" />
+    <state x="341" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1594953233359" />
     <state x="227" y="23" key="CommitChangelistDialog2/0.23.1280.723@0.23.1280.723" timestamp="1594170958918" />
+    <state x="227" y="23" key="CommitChangelistDialog2/0.23.1280.726@0.23.1280.726" timestamp="1599361508358" />
     <state x="724" y="265" key="FileChooserDialogImpl" timestamp="1594023647448">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="724" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1594023647448" />
-    <state width="1238" height="166" key="GridCell.Tab.0.bottom" timestamp="1599360416530">
+    <state width="1238" height="208" key="GridCell.Tab.0.bottom" timestamp="1599399038097">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state width="1877" height="231" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594956234657" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1594114452716" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.723@0.23.1280.723" timestamp="1594195265090" />
-    <state width="1238" height="166" key="GridCell.Tab.0.bottom/0.23.1280.726@0.23.1280.726" timestamp="1599360416530" />
+    <state width="1238" height="208" key="GridCell.Tab.0.bottom/0.23.1280.726@0.23.1280.726" timestamp="1599399038097" />
     <state width="1238" height="169" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
-    <state width="1238" height="166" key="GridCell.Tab.0.center" timestamp="1599360416529">
+    <state width="1238" height="208" key="GridCell.Tab.0.center" timestamp="1599399038096">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state width="1877" height="231" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594956234657" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
-    <state width="1238" height="166" key="GridCell.Tab.0.center/0.23.1280.726@0.23.1280.726" timestamp="1599360416529" />
+    <state width="1238" height="208" key="GridCell.Tab.0.center/0.23.1280.726@0.23.1280.726" timestamp="1599399038096" />
     <state width="1238" height="169" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1238" height="166" key="GridCell.Tab.0.left" timestamp="1599360416529">
+    <state width="1238" height="208" key="GridCell.Tab.0.left" timestamp="1599399038096">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state width="1877" height="231" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594956234656" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.723@0.23.1280.723" timestamp="1594195265086" />
-    <state width="1238" height="166" key="GridCell.Tab.0.left/0.23.1280.726@0.23.1280.726" timestamp="1599360416529" />
+    <state width="1238" height="208" key="GridCell.Tab.0.left/0.23.1280.726@0.23.1280.726" timestamp="1599399038096" />
     <state width="1238" height="169" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1238" height="166" key="GridCell.Tab.0.right" timestamp="1599360416530">
+    <state width="1238" height="208" key="GridCell.Tab.0.right" timestamp="1599399038096">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state width="1877" height="231" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594956234657" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
-    <state width="1238" height="166" key="GridCell.Tab.0.right/0.23.1280.726@0.23.1280.726" timestamp="1599360416530" />
+    <state width="1238" height="208" key="GridCell.Tab.0.right/0.23.1280.726@0.23.1280.726" timestamp="1599399038096" />
     <state width="1238" height="169" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
     <state width="1877" height="452" key="GridCell.Tab.1.bottom" timestamp="1594955503801">
       <screen x="0" y="0" width="1920" height="1040" />
