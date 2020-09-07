@@ -90,7 +90,7 @@ public class DatabaseMapper {
         return "DB_NOT_EXIST";
     }
 
-    static class MapperEntry {
+    public static class MapperEntry {
         private String databaseName;
         private String databaseDir;
 

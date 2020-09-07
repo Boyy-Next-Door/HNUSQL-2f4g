@@ -372,6 +372,7 @@ public class tinySQLCmd {
                             throw new tinySQLException("No such file: " + fName);
                         }
                     } else if (cmdString.toUpperCase().startsWith("LOAD")) {
+                        System.out.println("hahaha insert");
                         ft = new FieldTokenizer(cmdString, ' ', false);
                         fName = ft.getField(1);
                         tableName = ft.getField(3);
@@ -442,6 +443,7 @@ public class tinySQLCmd {
                                 pstmt.executeUpdate();
                         }
                     } else {
+                        System.out.println("lalaala");
                         if (cmdString.indexOf("?") > -1) {
                             pstmt = con.prepareStatement(cmdString);
                         } else {

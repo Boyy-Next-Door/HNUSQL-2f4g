@@ -11,11 +11,13 @@ public class Request {
     public static final int INSERT = 102;
     public static final int UPDATE = 103;
     public static final int DELETE = 104;
+
     public static final int CREATE = 201;
     public static final int ALTER = 202;
     public static final int DROP = 203;
     public static final int GRANT = 204;
     public static final int REVOKE = 205;
+
     public static final int SHOW_DATABASES = 301;
     public static final int SHOW_TABLES = 302;
 
