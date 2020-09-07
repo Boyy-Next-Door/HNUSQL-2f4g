@@ -24,20 +24,59 @@ public class tinyClient {
     private BufferedReader in;
     private ObjectOutputStream obout;
 
+    private static tinyClient client = null;
+
+    public static tinyClient getClient() {
+        if (client == null) {
+            client = new tinyClient();
+        }
+        return client;
+
+    }
+
+    private tinyClient() {
+    }
 
 
+    public void setHost(String host) {
+        this.host = host;
+    }
 
-    public void setHost(String host){this.host=host;}
-    public void setPort(int port){this.port=port;}
-    public void setUsername(String username){this.username=username;}
-    public void setPassword(String password){this.password=password;}
-    public String getHost(){return host;}
-    public int getPort(){return port;}
-    public String getUsername(){return username;}
-    public String getPassword(){return password;}
-    public PrintWriter getOut(){return  out;}
-    public BufferedReader getIn(){return  in;}
+    public void setPort(int port) {
+        this.port = port;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public PrintWriter getOut() {
+        return out;
+    }
+
+    public BufferedReader getIn() {
+        return in;
+    }
 
 
     /*
@@ -53,11 +92,11 @@ public class tinyClient {
             clientSocket = new Socket(ip, port);
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            obout= new ObjectOutputStream(clientSocket.getOutputStream());
-         //   System.out.println("Connection success");
+            obout = new ObjectOutputStream(clientSocket.getOutputStream());
+            //   System.out.println("Connection success");
             return true;
-        }catch (Exception e){
-        //    System.out.println("Connection failed");
+        } catch (Exception e) {
+            //    System.out.println("Connection failed");
             return false;
         }
     }
@@ -71,68 +110,72 @@ public class tinyClient {
      * @param password 客户的登陆密码
      * @return:true登陆成功，false登陆失败
      */
-    public boolean login(String ip,int port,String username,String password)throws Exception{
-        if(startConnection(ip,port)==false)return false;
-        Map<String,String> map=new HashMap<String,String>();
-        map.put("username",username);
-        map.put("password",password);
-        String str= JSON.toJSONString(map);
+    public boolean login(String ip, int port, String username, String password) throws Exception {
+        if (startConnection(ip, port) == false) return false;
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("username", username);
+        map.put("password", password);
+        String str = JSON.toJSONString(map);
         out.println(str);
         /*
         需要根据客户端发送的信息判断是否登陆
         暂时默认可以直接登陆
          */
-        String resp=in.readLine();
-        cookie=resp;
+        String resp = in.readLine();
+        cookie = resp;
         return true;
     }
 
-    /**
-     *
-     * @param username
-     * @return
-     * @throws Exception
-     */
-    public BaseResponse getDatabases(String username)throws Exception{
-        String rawSQL="show databases";
+
+    //    public BaseResponse getDatabases()throws Exception{
+//        String rawSQL="show databases";
+//        String responseStr;
+//        Request request=new Request(cookie, Request.SHOW_DATABASES,rawSQL);
+//        String str= JSONObject.toJSONString(request);
+//        out.println(str);
+//        responseStr=in.readLine();
+//        //System.out.println(responseStr);
+//        JSONObject jsonObject= JSONObject.parseObject(responseStr);
+//        BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
+//        return  baseResponse;
+//    }
+    public BaseResponse getDatabases() throws Exception {
+        String rawSQL = "show databases";
         String responseStr;
-        Request request=new Request(cookie, Request.SHOW_DATABASES,rawSQL);
-        String str= JSONObject.toJSONString(request);
+        Request request = new Request(cookie, Request.SHOW_DATABASES, rawSQL);
+        String str = JSONObject.toJSONString(request);
         out.println(str);
-        responseStr=in.readLine();
+        responseStr = in.readLine();
         //System.out.println(responseStr);
-        JSONObject jsonObject= JSONObject.parseObject(responseStr);
-        BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
-        return  baseResponse;
+        JSONObject jsonObject = JSONObject.parseObject(responseStr);
+        BaseResponse baseResponse = jsonObject.toJavaObject(BaseResponse.class);
+        return baseResponse;
     }
 
-
     /**
-     *
      * @param username
      * @param databaseName
      * @return
      * @throws Exception
      */
-    public BaseResponse getTables(String username, String databaseName)throws Exception{
-        String rawSQL="show tables;";
+    public BaseResponse getTables(String databaseName) throws Exception {
+        String rawSQL = "show tables;";
         String responseStr;
-        Request request=new Request(cookie, Request.SHOW_TABLES,rawSQL);
-        String str= JSONObject.toJSONString(request);
+        Request request = new Request(cookie, Request.SHOW_TABLES, rawSQL);
+        String str = JSONObject.toJSONString(request);
         out.println(str);
-        responseStr=in.readLine();
-      //  System.out.println(responseStr);
-        JSONObject jsonObject= JSONObject.parseObject(responseStr);
-        BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
+        responseStr = in.readLine();
+        //  System.out.println(responseStr);
+        JSONObject jsonObject = JSONObject.parseObject(responseStr);
+        BaseResponse baseResponse = jsonObject.toJavaObject(BaseResponse.class);
         return baseResponse;
     }
 
 
-
-    public BaseResponse Select(String username, String rawSQL)throws Exception{
-        BaseResponse baseResponse=new BaseResponse();
-        Request request=new Request(cookie, Request.SELECT,rawSQL);
-        String str= JSONObject.toJSONString(request);
+    public BaseResponse Select(String username, String rawSQL) throws Exception {
+        BaseResponse baseResponse = new BaseResponse();
+        Request request = new Request(cookie, Request.SELECT, rawSQL);
+        String str = JSONObject.toJSONString(request);
         out.println(str);
         /*
         String responseStr=in.readLine();
@@ -144,7 +187,6 @@ public class tinyClient {
     }
 
 
-
     /*
      * 向服务器发送msg，
      * @param msg 需要发送的字符串
@@ -153,11 +195,11 @@ public class tinyClient {
      */
     public List sendMessage(String msg) throws Exception {
         out.println(msg);
-        List<String> respList=new ArrayList<>();
-        while(true) {
+        List<String> respList = new ArrayList<>();
+        while (true) {
             String resp = in.readLine();
             // System.out.println(resp);
-            if("DONE".equals(resp))break;
+            if ("DONE".equals(resp)) break;
             respList.add(resp);
         }
         return respList;
@@ -169,8 +211,8 @@ public class tinyClient {
         //return resp;
     }
 
-    public void sendWithCookie(String cookie,String msg)throws Exception{
-        obout.writeObject(new Info(cookie,msg));
+    public void sendWithCookie(String cookie, String msg) throws Exception {
+        obout.writeObject(new Info(cookie, msg));
     }
 
 
@@ -180,7 +222,7 @@ public class tinyClient {
      * @param port
      * @return true客户端成功和服务器连接，false客户端和服务器未连接
      */
-    public boolean testConnect(String host,int port){
+    public boolean testConnect(String host, int port) {
         return clientSocket.isConnected();
     }
 
@@ -207,7 +249,7 @@ public class tinyClient {
      * 获取指定数据库的表清单
      * @param username 暂且省略
      * @param databaseName 暂且省略
-     * @return  用list的格式返回指定数据库的表清单，list中的每一项都代表一个表
+     * @return 用list的格式返回指定数据库的表清单，list中的每一项都代表一个表
      */
     /*
     public List getTables(String username, String databaseName)throws Exception{
@@ -222,37 +264,35 @@ public class tinyClient {
 
     /**
      * 获取指定表的内容
-     * @param username 暂且省略
+     *
+     * @param username     暂且省略
      * @param databaseName 暂且省略
-     * @param tableName 暂且省略
+     * @param tableName    暂且省略
      * @return
      */
-    public List getTableContent(String username, String databaseName, String tableName)throws Exception{
-        List<String> respList=new ArrayList<>();
-        List<String[]> listStr=new ArrayList<>();
-        String msg="select * from "+tableName;
-        respList=sendMessage(msg);
-        if(respList.size()==0){
+    public List getTableContent(String username, String databaseName, String tableName) throws Exception {
+        List<String> respList = new ArrayList<>();
+        List<String[]> listStr = new ArrayList<>();
+        String msg = "select * from " + tableName;
+        respList = sendMessage(msg);
+        if (respList.size() == 0) {
             return respList;
-        }
-        else {
+        } else {
             Iterator<String> stringIterator = respList.iterator();
             String[] colName;
-            int col=0;
+            int col = 0;
             while (stringIterator.hasNext()) {
-                if(col==0){
-                    colName=stringIterator.next().split("\\s+");
+                if (col == 0) {
+                    colName = stringIterator.next().split("\\s+");
                     listStr.add(colName);
-                    col=col+1;
+                    col = col + 1;
                     continue;
-                }
-                else if(col==1){
-                    String[] arr=stringIterator.next().split("\\s+");
-                    col=col+1;
+                } else if (col == 1) {
+                    String[] arr = stringIterator.next().split("\\s+");
+                    col = col + 1;
                     continue;
-                }
-                else{
-                    String[] arr=stringIterator.next().split("\\s+");
+                } else {
+                    String[] arr = stringIterator.next().split("\\s+");
                     listStr.add(arr);
                 }
             }
@@ -262,20 +302,21 @@ public class tinyClient {
 
     /**
      * 获取指定表的字段
-     * @param username 暂且省略
+     *
+     * @param username     暂且省略
      * @param databaseName 暂且省略
-     * @param tableName 暂且省略
+     * @param tableName    暂且省略
      * @return
      */
-    public List getTableField(String username, String databaseName, String tableName)throws Exception{
-        List<String> respList=new ArrayList<>();
-        List<String[]> listStr=new ArrayList<>();
-        String msg="describe "+tableName;
-        respList=sendMessage(msg);
+    public List getTableField(String username, String databaseName, String tableName) throws Exception {
+        List<String> respList = new ArrayList<>();
+        List<String[]> listStr = new ArrayList<>();
+        String msg = "describe " + tableName;
+        respList = sendMessage(msg);
         Iterator<String> stringIterator = respList.iterator();
         String[] arr;
         while (stringIterator.hasNext()) {
-            arr=stringIterator.next().split("\\s+");
+            arr = stringIterator.next().split("\\s+");
             listStr.add(arr);
         }
         return listStr;
@@ -286,6 +327,5 @@ public class tinyClient {
         out.close();
         clientSocket.close();
     }
-
 
 }

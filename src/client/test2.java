@@ -1,5 +1,7 @@
 package client;
 
+import com.sqlmagic.tinysql.entities.BaseResponse;
+
 import java.util.Scanner;
 
 public class test2 {
@@ -7,7 +9,7 @@ public class test2 {
         tinyClient client =new tinyClient();
         try {
 
-            //client.startConnection("127.0.0.1",6666);
+            client.startConnection("127.0.0.1",6666);
             String uname, pword;
             Scanner sc = new Scanner(System.in);
             uname = sc.nextLine();
@@ -23,10 +25,10 @@ public class test2 {
                     System.out.print("tinySql>");
                     String msg = null;
                     msg = sc.nextLine();
-                    client.Select("aa","select * from Course;");
+//                    client.Select("aa","select * from Course;");
                  //   client.getTables("aaa","bbb");
-                 //   client.getDatabases("haha");
-                //    client.send(msg);
+                    BaseResponse haha = client.getDatabases("haha");
+                    //    client.send(msg);
                 }
 
             }
