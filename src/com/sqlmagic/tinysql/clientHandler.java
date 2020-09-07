@@ -1,11 +1,15 @@
 package com.sqlmagic.tinysql;
 
-import client.Info;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.sqlmagic.tinysql.entities.BaseResponse;
+import com.sqlmagic.tinysql.instruction.DdlDcl;
+import com.sqlmagic.tinysql.instruction.DqlDml;
+import com.sqlmagic.tinysql.instruction.Show;
 import com.sqlmagic.tinysql.protocol.Request;
-import usersystem.Admin;
-import usersystem.UserTree;
+import com.sqlmagic.tinysql.utils.MD5Util;
+import com.sqlmagic.tinysql.utils.MyTableUtil;
+import usersystem2.UserManager2;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,12 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import com.alibaba.fastjson.JSONObject;
-import com.sqlmagic.tinysql.utils.*;
-import com.sqlmagic.tinysql.DatabaseMapper.*;
-import com.sqlmagic.tinysql.instruction.*;
-
-public class clientHandler extends Thread{
+public class clientHandler extends Thread {
     static Vector tableList;
     static String dbVersion;
     static FileWriter spoolFileWriter = (FileWriter) null;
@@ -31,40 +30,42 @@ public class clientHandler extends Thread{
     private static BufferedReader in;
     private static ObjectInputStream obin;
 
-    public clientHandler(Socket clientSocket){
-        this.clientSocket=clientSocket;
+    public clientHandler(Socket clientSocket) {
+        this.clientSocket = clientSocket;
     }
 
-    public void run(){
+    public void run() {
         try {
+            String cookie;
+            String username = "";
+            String password = "";
             out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in=new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            obin=new ObjectInputStream(clientSocket.getInputStream());
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            obin = new ObjectInputStream(clientSocket.getInputStream());
 
             DatabaseMetaData dbMeta;
             ResultSetMetaData meta;
-            ResultSet display_rs,typesRS;
+            ResultSet display_rs, typesRS;
             BufferedReader loadFileReader;
 
-            BufferedReader startReader=(BufferedReader)null;
+            BufferedReader startReader = (BufferedReader) null;
             String[] fields;
             Connection con;
             Statement stmt;
             FieldTokenizer ft;
-            PreparedStatement pstmt=(PreparedStatement)null;
+            PreparedStatement pstmt = (PreparedStatement) null;
 
             Logger logger = new Logger();
-            int i,rsColCount,endAt,colWidth,colScale,colPrecision,typeCount,
-                    colType,parameterIndex,b1,b2,parameterInt,startAt,columnIndex,valueIndex;
-            String fName,tableName=null,inputString,cmdString,colTypeName,dbType,
-                    parameterString,loadString,fieldString,readString;
+            int i, rsColCount, endAt, colWidth, colScale, colPrecision, typeCount,
+                    colType, parameterIndex, b1, b2, parameterInt, startAt, columnIndex, valueIndex;
+            String fName, tableName = null, inputString, cmdString, colTypeName, dbType,
+                    parameterString, loadString, fieldString, readString;
 
-            StringBuffer lineOut,prepareBuffer,valuesBuffer,inputBuffer;
+            StringBuffer lineOut, prepareBuffer, valuesBuffer, inputBuffer;
 
-            boolean echo=false;
+            boolean echo = false;
 
-            try
-            {
+            try {
                 /*
                  *       Register the JDBC driver for dBase
                  */
@@ -72,112 +73,132 @@ public class clientHandler extends Thread{
             } catch (ClassNotFoundException e) {
                 System.err.println(
                         "JDBC Driver could not be registered!!\n");
-                if ( tinySQLGlobals.DEBUG ) e.printStackTrace();
+                if (tinySQLGlobals.DEBUG) e.printStackTrace();
             }
             fName = ".";
 
             con = dbConnect(fName);
-            if ( con == (Connection)null )
-            {
-                fName = ".";
-                con = dbConnect(fName);
-            }
+
             dbMeta = con.getMetaData();
 
             dbType = dbMeta.getDatabaseProductName();
             dbVersion = dbMeta.getDatabaseProductVersion();
-            System.out.println("===================================================");
-            System.out.println(dbType + " Command line interface version "
-                    + dbVersion + " released March 15, 2007");
-            System.out.println("Type HELP to get information on available commands.");
 
-
-            Admin admin = Admin.getAdmin();
-            UserTree tree = new UserTree(admin);
-
-            //读取从客户端发过来的用户名和密码
-            cmdString=in.readLine();
-            JSONObject jsonObject= JSON.parseObject(cmdString);
-            String username=jsonObject.getString("username");
-            String password=jsonObject.getString("password");
-
-            /*
-            对用户名和密码进行判断
-            暂时没有完成
-             */
-
-            //根据用户名生成cookie
-            String cookie=MD5Util.MD5Encode(username,"");
-            //返回给客户端
-            out.println(cookie);
 
             cmdString = "NULL";
             stmt = con.createStatement();
             inputString = (String) null;
 
-            Show show=Show.getInstance();
-            DqlDml dqlDml=DqlDml.getInstance();
-            DdlDcl ddlDcl=DdlDcl.getInstance();
-
-            while(true){
+            Show show = Show.getInstance();
+            DqlDml dqlDml = DqlDml.getInstance();
+            DdlDcl ddlDcl = DdlDcl.getInstance();
+            while (true) {
                 try {
+                    //获取客户端发来的请求
                     inputString = in.readLine().trim();
-                    if(inputString==(String)null)break;
-                    String clientCookie;
-                    int requestType;
-                    String rawSQL;
-                    JSONObject obj= JSON.parseObject(inputString);
-                    clientCookie=obj.getString("cookie");
-                    //requestType=obj.getString("requestType");
-                    requestType=obj.getInteger("requestType");
-                    rawSQL=obj.getString("rawSQL");
+                    //空串则忽略
+                    if (inputString == (String) null || inputString.isEmpty()) continue;
+                    //解析请求
+                    String clientCookie;        //用户身份cookie
+                    int requestType;            //请求接口类型
+                    String rawSQL;              //原始SQL语句
+                    JSONObject obj = JSON.parseObject(inputString);
+                    clientCookie = obj.getString("cookie");
+                    //请求携带了cookie
+                    if(clientCookie!=null && !clientCookie.isEmpty()){
+                        //TODO 校验cookie
 
-                    inputString=rawSQL;
+                        //如果校验通过
+                        cookie = clientCookie;
+                        username = "通过cookie拿到username";
 
-                    if (inputString.toUpperCase().startsWith("EXIT") |
-                            inputString.toUpperCase().startsWith("QUIT")) break;
+                        //如果校验没有通过 说明请求用户身份非法
+                        out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
+
+                    }else{
+                        //没有携带cookie 这个要按照具体功能接口做处理
+                    }
+                    requestType = obj.getInteger("requestType");
+                    rawSQL = obj.getString("rawSQL");
+
+                    inputString = rawSQL;
+
                     startAt = 0;
 
 
                     while (startAt < inputString.length() - 1) {
                         endAt = inputString.indexOf(";", startAt);
-                        if (endAt == -1)
+                        //这里是在处理多个以分号结尾的独立语句  实际上我们不允许这样操作 一次发送的指令指挥包含一条独立语句
+                        if (endAt == -1)                                //没有以;结尾  认为字符串的末尾就是指令的结尾
                             endAt = inputString.length();
                         cmdString = inputString.substring(startAt, endAt);
                         startAt = endAt + 1;
 
-                        if(requestType==Request.SHOW_DATABASES){
-                            show.whichShow(con,out,Request.SHOW_DATABASES);
-                        }
-                        else if(requestType==Request.SHOW_TABLES){
-                            show.whichShow(con,out,Request.SHOW_TABLES);
-                        }
-                        else if(requestType==Request.SELECT){
-                            dqlDml.SelectInsertUpdateDelete(con,stmt,Request.SELECT,out,cmdString);
-                        }
-                        else if(requestType==Request.INSERT){
-                            dqlDml.SelectInsertUpdateDelete(con,stmt,Request.INSERT,out,cmdString);
-                        }
-                        else if(requestType==Request.UPDATE){
-                            dqlDml.SelectInsertUpdateDelete(con,stmt,Request.UPDATE,out,cmdString);
-                        }
-                        else if(requestType==Request.DELETE){
-                            dqlDml.SelectInsertUpdateDelete(con,stmt,Request.DELETE,out,cmdString);
-                        }
-                        else if(requestType==Request.CREATE){
-                            ddlDcl.ddlAndDcl(con,stmt,username,Request.CREATE, out,cmdString);
-                        }
-                        else if(requestType==Request.ALTER){
-                            ddlDcl.ddlAndDcl(con,stmt,username,Request.ALTER, out,cmdString);
-                        }
-                        else if(requestType==Request.DROP){
-                            ddlDcl.ddlAndDcl(con,stmt,username,Request.DROP, out,cmdString);
-                        }
-                        else if(requestType==Request.GRANT){
-                            ddlDcl.ddlAndDcl(con,stmt,username,Request.GRANT, out,cmdString);
-                        }
-                        else if(requestType==Request.REVOKE){
-                            ddlDcl.ddlAndDcl(con,stmt,username,Request.REVOKE, out,cmdString);
+
+                        if (requestType == Request.LOGIN) {     /*登陆*/
+                            //读取从客户端发过来的用户名和密码
+                            JSONObject jsonObject = JSON.parseObject(cmdString);
+                            username = jsonObject.getString("username");
+                            password = jsonObject.getString("password");
+
+                            //校验参数
+                            if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+                                //参数不正确
+                                out.println(JSON.toJSONString(BaseResponse.fail("Parameter error.")));
+                                continue;
+                            }
+                            //对用户名和密码进行判断
+                            boolean isSuccess = UserManager2.login(username, password);
+
+                            //登陆成功 创建cookie
+                            if (isSuccess) {
+                                //TODO 创建cookie
+                                cookie = MD5Util.MD5Encode(username, "");
+                                //返回给客户端
+                                out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
+                            } else {
+                                out.println(JSON.toJSONString(BaseResponse.fail("Username or password error.")));
+                            }
+
+                        } else if (requestType == Request.USER_DATABASE) { /*选择数据库*/
+                            String url = DatabaseMapper.getURL(cmdString.substring(4, cmdString.indexOf(";")));
+                            //数据库不存在
+                            if (url.equals("DB_NOT_EXIST")) {
+                                out.println(JSON.toJSONString(BaseResponse.fail("Database doesn't exist.")));
+                            } else {
+                                con = dbConnect(url);
+                            }
+
+                            //若成功 为logger设置url 并返回结果
+                            if (!"DB_NOT_EXIST".equals(url) && con != null) {
+                                logger.setDataDir(url);
+                                //返回结果给客户端
+                                out.println(JSON.toJSONString(BaseResponse.ok("ok", null)));
+                            }
+                        } else if (requestType == Request.SHOW_DATABASES || requestType == Request.SHOW_TABLES) { /*show类操作*/
+
+
+                            show.whichShow(con, out, requestType);
+                        } else if (requestType == Request.SELECT || requestType == Request.INSERT
+                                || requestType == Request.UPDATE || requestType == Request.DELETE) { /*增删改查*/
+                            //TODO   首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
+
+                            //如果有权执行 在内部返回结果
+                            dqlDml.SelectInsertUpdateDelete(con, stmt, requestType, out, cmdString);
+
+                            //无权执行
+                            out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
+
+                        } else if (requestType == Request.CREATE || requestType == Request.ALTER
+                                || requestType == Request.DROP || requestType == Request.GRANT
+                                || requestType == Request.REVOKE) { /*数据定义语言、数据控制语言*/
+
+                            //TODO   首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
+                            //如果有权执行 在内部返回结果
+                            ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString);
+                            //无权执行
+                            out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
+
                         }
 
                     }
@@ -193,28 +214,18 @@ public class clientHandler extends Thread{
             }
 
 
-
-
             out.close();
             in.close();
             clientSocket.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-
-
-
-
-
-
-
-
     public MyTableUtil buildResults(ResultSet rs) throws java.sql.SQLException {
         System.out.println("======================================");
-        MyTableUtil myTableUtil=new MyTableUtil();
+        MyTableUtil myTableUtil = new MyTableUtil();
         int numCols = 0, nameLength;
         ResultSetMetaData meta = rs.getMetaData();
         int cols = meta.getColumnCount();
@@ -226,7 +237,7 @@ public class clientHandler extends Thread{
         while (rs.next()) {
 
             String text = new String();
-            List<String> textList=new ArrayList<>();
+            List<String> textList = new ArrayList<>();
 
             for (int ii = 0; ii < cols; ii++) {
                 String value = rs.getString(ii + 1);
@@ -241,18 +252,18 @@ public class clientHandler extends Thread{
 
                 }
                 text += padString(value, width[ii]);
-                System.out.println("value="+value);
+                System.out.println("value=" + value);
                 textList.add(value);
                 text += " ";   // the gap between the columns
             }
             first = false;
             //      System.out.println("print text");
             //     System.out.println(text);
-            String[] strs=new String[textList.size()];
-            for(int i=0;i<textList.size();i++){
-                strs[i]=textList.get(i);
+            String[] strs = new String[textList.size()];
+            for (int i = 0; i < textList.size(); i++) {
+                strs[i] = textList.get(i);
             }
-            for(String s:strs){
+            for (String s : strs) {
                 System.out.println(s);
             }
             myTableUtil.addRow(strs);
@@ -273,26 +284,22 @@ public class clientHandler extends Thread{
     }
 
 
-
-    private static String padString(int inputint, int padLength)
-    {
-        return padString(Integer.toString(inputint),padLength);
+    private static String padString(int inputint, int padLength) {
+        return padString(Integer.toString(inputint), padLength);
     }
 
 
-    private static String padString(String inputString, int padLength)
-    {
+    private static String padString(String inputString, int padLength) {
         StringBuffer outputBuffer;
         String blanks = "                                        ";
-        if ( inputString != (String)null )
+        if (inputString != (String) null)
             outputBuffer = new StringBuffer(inputString);
         else
             outputBuffer = new StringBuffer(blanks);
-        while ( outputBuffer.length() < padLength )
+        while (outputBuffer.length() < padLength)
             outputBuffer.append(blanks);
-        return outputBuffer.toString().substring(0,padLength);
+        return outputBuffer.toString().substring(0, padLength);
     }
-
 
 
     private static Connection dbConnect(String tinySQLDir) throws SQLException {
@@ -329,7 +336,6 @@ public class clientHandler extends Thread{
         System.out.println("There are " + tableList.size() + (tableList.size() > 0 ? " tables" : " table") + " in this database.");
         return con;
     }
-
 
 
 }

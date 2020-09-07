@@ -317,11 +317,15 @@ public abstract class tinySQL {
             } else if ( actionType.equals("GRANT") ) {
                UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,0);
             } else if ( actionType.equals("REVOKE") ) {
-               UserManager2.revoke(nowUserName,userName,dbName,tableName1,permission);
+               UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,0);
             } else if( actionType.equals("GRANT_WITH_LINK") ){
                UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,1);
             } else if( actionType.equals("GRANT_WITH_ADMIN") ){
                UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,2);
+            } else if( actionType.equals("REVOKE_WITH_LINK") ){
+               UserManager2.revoke(nowUserName,userName,dbName,tableName1,permission);
+            } else if( actionType.equals("REVOKE_WITH_ADMIN") ) {
+               UserManager2.revoke(nowUserName,userName,dbName,tableName1,permission);
             }
             else {
                System.out.println("Unrecognized action " + actionType);
