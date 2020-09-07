@@ -1,7 +1,6 @@
 package com.sqlmagic.tinysql;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -97,7 +96,7 @@ public class Logger extends tinySQL {
             String newLine = System.getProperty("line.separator");
 
             fos.write(time.getBytes());
-            fos.write("====".getBytes());
+            fos.write('=');
             fos.write(sqlStatement.getBytes());
             fos.write(newLine.getBytes());
 
@@ -161,7 +160,7 @@ public class Logger extends tinySQL {
                     linenum--;
                 }
 
-                String[] part = line.split("====");
+                String[] part = line.split("=");
                 System.out.println("LogInfo:");
                 System.out.println("Time: " + part[0]);
                 System.out.println("SqlStatement: " + part[1]);
@@ -218,78 +217,7 @@ public class Logger extends tinySQL {
         }
     }
 
-    /**
-     * 全量备份 饿啊
-     * @throws IOException
-     */
-    public void backupFull() throws IOException {
-        File Dir;
-        if (dataDir == null)
-            Dir = new File("." + File.separator);
-        else
-            Dir = new File(dataDir + File.separator);
 
-        File[] files = Dir.listFiles();
-        for(File f : files) {
-            if (f.getName().endsWith(".DBF")) {
-                backupTable(f.getName());
-            }
-        }
-    }
-
-    public void recoverFull() throws IOException {
-        File backupDir = loadBackupDir();
-        if(!backupDir.exists()) {
-            System.out.println("backup dose not exists");
-            return;
-        }
-        File[] files = backupDir.listFiles();
-        for(File f : files) {
-            if(f.getName().endsWith(".DBF")) {
-                recoverTable(f.getName(),f);
-            }
-        }
-
-    }
-
-    private void backupTable(String tableName) throws IOException {
-        File tableFile;
-        if (dataDir == null)
-            tableFile = new File('.' + File.separator + tableName);
-        else
-            tableFile = new File(dataDir + File.separator + tableName);
-        if(!tableFile.exists()) {
-            System.out.println("this table dose not exists!!!");
-            return;
-        }
-
-        File backupDir = loadBackupDir();
-        if(!backupDir.exists())
-            backupDir.mkdir();
-        File backupFile = new File(backupDir.getPath() + File.separator + tableName);
-
-        if(backupFile.exists())
-            backupFile.delete();
-
-        Files.copy(tableFile.toPath(),backupFile.toPath());
-
-    }
-
-    private void recoverTable(String tableName,File src) throws IOException {
-        File Dir;
-        if (dataDir == null)
-            Dir = new File("." + File.separator);
-        else
-            Dir = new File(dataDir + File.separator);
-
-        File tar = new File(Dir + File.separator + tableName);
-
-        Files.copy(src.toPath(),tar.toPath());
-    }
-
-
-
-    //获取日志路径
     private File loadFile() {
         File toOpen;
         //若没有连接数据库，默认为项目目录下
@@ -300,18 +228,6 @@ public class Logger extends tinySQL {
                     "log" + File.separator + "log.txt");
         return toOpen;
     }
-
-    private File loadBackupDir() {
-        File toOpen;
-        //若没有连接数据库，默认为项目目录下
-        if (dataDir == null)
-            toOpen = new File('.' + File.separator + "backup" + File.separator);
-        else
-            toOpen = new File(dataDir + File.separator + "backup" + File.separator);
-        return toOpen;
-    }
-
-
 
     @Override
     void CreateTable(String tableName, Vector v) throws IOException, tinySQLException {

@@ -23,8 +23,10 @@ public class test2 {
                     System.out.print("tinySql>");
                     String msg = null;
                     msg = sc.nextLine();
-                    client.Select("aa","select * from Course;");
-                 //   client.getTables("aaa","bbb");
+                    client.Revoke("ddd","aa");
+                   // client.Insert("aa","insert into Student ( Sno ) values ( 2 )");
+                  //  client.Select("aa","select * from Course;");
+                  //  client.getTables("aaa","bbb");
                  //   client.getDatabases("haha");
                 //    client.send(msg);
                 }

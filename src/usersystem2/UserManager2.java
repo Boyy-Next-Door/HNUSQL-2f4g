@@ -90,29 +90,22 @@ public class UserManager2 {
         }
     }
 
-    public static boolean revoke(String revokerName, String revokeeName, String database, String table, byte permission) throws Exception{
+    public static boolean revoke(String revokerName, String revokeeName, String database, String table, byte permission, int revokeType) throws Exception{
         if (!(users.containsKey(revokerName) && users.containsKey(revokeeName))) {
             System.err.println("参数用户不存在");
             return false;
         }
 
         User revoker = users.get(revokerName);
-        User revokee = users.get(revokeeName);
+        User revokee = users.get(revokerName);
 
-        if(revoker.isRevokable(database,table,permission)){
+        //检查revoker是否可以收回权限
+        if (revoker.isRevokable(database, table, permission) && revokee.canBeRevoked(database, table, permission)){
+            //可以进行权限撤销
+            revokee.revokePermission(revokerName, database, table, permission, revokeType);
 
-            if(revokee.canBeRevoked(database,table,permission)){
-                revokee.revokePermission(revokerName,database, table, permission,0);
-                return true;
-            }
-            else{
-                System.err.println("被撤销用户没有要撤销的权限");
-                return false;
-            }
-        }else {
-            System.err.println("撤销用户无权撤销此权限");
-            return false;
         }
+        return false;
     }
 
     //从dbuf文件中读取userList
