@@ -3,6 +3,7 @@ package com.sqlmagic.tinysql;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sqlmagic.tinysql.entities.BaseResponse;
+import com.sqlmagic.tinysql.instruction.DdlDcl;
 import com.sqlmagic.tinysql.instruction.DqlDml;
 import com.sqlmagic.tinysql.instruction.Show;
 import com.sqlmagic.tinysql.protocol.Request;
@@ -35,6 +36,9 @@ public class clientHandler extends Thread {
 
     public void run() {
         try {
+            String cookie;
+            String username = "";
+            String password = "";
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             obin = new ObjectInputStream(clientSocket.getInputStream());
@@ -87,7 +91,7 @@ public class clientHandler extends Thread {
 
             Show show = Show.getInstance();
             DqlDml dqlDml = DqlDml.getInstance();
-
+            DdlDcl ddlDcl = DdlDcl.getInstance();
             while (true) {
                 try {
                     //获取客户端发来的请求
@@ -100,13 +104,25 @@ public class clientHandler extends Thread {
                     String rawSQL;              //原始SQL语句
                     JSONObject obj = JSON.parseObject(inputString);
                     clientCookie = obj.getString("cookie");
+                    //请求携带了cookie
+                    if(clientCookie!=null && !clientCookie.isEmpty()){
+                        //TODO 校验cookie
+
+                        //如果校验通过
+                        cookie = clientCookie;
+                        username = "通过cookie拿到username";
+
+                        //如果校验没有通过 说明请求用户身份非法
+                        out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
+
+                    }else{
+                        //没有携带cookie 这个要按照具体功能接口做处理
+                    }
                     requestType = obj.getInteger("requestType");
                     rawSQL = obj.getString("rawSQL");
 
                     inputString = rawSQL;
 
-                    if (inputString.toUpperCase().startsWith("EXIT") |
-                            inputString.toUpperCase().startsWith("QUIT")) break;
                     startAt = 0;
 
 
@@ -122,8 +138,8 @@ public class clientHandler extends Thread {
                         if (requestType == Request.LOGIN) {     /*登陆*/
                             //读取从客户端发过来的用户名和密码
                             JSONObject jsonObject = JSON.parseObject(cmdString);
-                            String username = jsonObject.getString("username");
-                            String password = jsonObject.getString("password");
+                            username = jsonObject.getString("username");
+                            password = jsonObject.getString("password");
 
                             //校验参数
                             if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
@@ -132,42 +148,57 @@ public class clientHandler extends Thread {
                                 continue;
                             }
                             //对用户名和密码进行判断
-                            boolean isSuccess = UserManager2.login(username,password);
+                            boolean isSuccess = UserManager2.login(username, password);
 
                             //登陆成功 创建cookie
-                            if(isSuccess){
+                            if (isSuccess) {
                                 //TODO 创建cookie
-                                String cookie = MD5Util.MD5Encode(username, "");
+                                cookie = MD5Util.MD5Encode(username, "");
                                 //返回给客户端
-                                out.println(JSON.toJSONString(BaseResponse.ok("ok",cookie)));
-                            }else{
+                                out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
+                            } else {
                                 out.println(JSON.toJSONString(BaseResponse.fail("Username or password error.")));
                             }
 
                         } else if (requestType == Request.USER_DATABASE) { /*选择数据库*/
                             String url = DatabaseMapper.getURL(cmdString.substring(4, cmdString.indexOf(";")));
                             //数据库不存在
-                            if(url.equals("DB_NOT_EXIST")){
+                            if (url.equals("DB_NOT_EXIST")) {
                                 out.println(JSON.toJSONString(BaseResponse.fail("Database doesn't exist.")));
-                            }else{
+                            } else {
                                 con = dbConnect(url);
                             }
 
                             //若成功 为logger设置url 并返回结果
-                            if(!"DB_NOT_EXIST".equals(url) && con != null) {
+                            if (!"DB_NOT_EXIST".equals(url) && con != null) {
                                 logger.setDataDir(url);
                                 //返回结果给客户端
-                                out.println(JSON.toJSONString(BaseResponse.ok("ok",null)));
+                                out.println(JSON.toJSONString(BaseResponse.ok("ok", null)));
                             }
                         } else if (requestType == Request.SHOW_DATABASES || requestType == Request.SHOW_TABLES) { /*show类操作*/
+
+
                             show.whichShow(con, out, requestType);
                         } else if (requestType == Request.SELECT || requestType == Request.INSERT
                                 || requestType == Request.UPDATE || requestType == Request.DELETE) { /*增删改查*/
+                            //TODO   首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
+
+                            //如果有权执行 在内部返回结果
                             dqlDml.SelectInsertUpdateDelete(con, stmt, requestType, out, cmdString);
+
+                            //无权执行
+                            out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
+
                         } else if (requestType == Request.CREATE || requestType == Request.ALTER
                                 || requestType == Request.DROP || requestType == Request.GRANT
                                 || requestType == Request.REVOKE) { /*数据定义语言、数据控制语言*/
-                            //TODO 处理这五个指令
+
+                            //TODO   首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
+                            //如果有权执行 在内部返回结果
+                            ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString);
+                            //无权执行
+                            out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
+
                         }
 
                     }
