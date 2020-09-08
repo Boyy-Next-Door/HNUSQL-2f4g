@@ -119,17 +119,19 @@ public class clientHandler extends Thread {
                         else out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
 
                     } else {
+                        System.out.println("cookie is null.");
                         //没有携带cookie 这个要按照具体功能接口做处理
                     }
                     requestType = obj.getInteger("requestType");
                     rawSQL = obj.getString("rawSQL");
-
+                    System.out.println("hahaha1");
                     inputString = rawSQL;
 
                     startAt = 0;
 
 
                     while (startAt < inputString.length() - 1) {
+                        System.out.println("hahaha2");
                         endAt = inputString.indexOf(";", startAt);
                         //这里是在处理多个以分号结尾的独立语句  实际上我们不允许这样操作 一次发送的指令指挥包含一条独立语句
                         if (endAt == -1)                                //没有以;结尾  认为字符串的末尾就是指令的结尾
@@ -140,10 +142,11 @@ public class clientHandler extends Thread {
 
                         if (requestType == Request.LOGIN) {     /*登陆*/
                             //读取从客户端发过来的用户名和密码
-                            JSONObject jsonObject = JSON.parseObject(cmdString);
-                            username = jsonObject.getString("username");
-                            password = jsonObject.getString("password");
-
+                            //JSONObject jsonObject = JSON.parseObject(cmdString);
+                            username = obj.getString("username");
+                            password = obj.getString("password");
+                            System.out.println("username="+username);
+                            System.out.println("password="+password);
                             //校验参数
                             if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
                                 //参数不正确

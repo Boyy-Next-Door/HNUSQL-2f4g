@@ -86,10 +86,12 @@ public class tinyClient {
      */
     public boolean login(String ip,int port,String username,String password)throws Exception{
         if(startConnection(ip,port)==false)return false;
-        Map<String,String> map=new HashMap<String,String>();
-        map.put("username",username);
-        map.put("password",password);
-        String str= JSON.toJSONString(map);
+        //Map<String,String> map=new HashMap<String,String>();
+        //map.put("username",username);
+        //map.put("password",password);
+        //String str= JSON.toJSONString(map);
+        Request request=new Request(null, Request.LOGIN,null,username,password);
+        String str= JSONObject.toJSONString(request);
         out.println(str);
         /*
         需要根据客户端发送的信息判断是否登陆
@@ -98,6 +100,7 @@ public class tinyClient {
         String resp=in.readLine();
         JSONObject jsonObject= JSONObject.parseObject(resp);
         cookie= jsonObject.getString("cookie");
+        System.out.println("cookie="+cookie);
         return true;
     }
 
@@ -135,7 +138,7 @@ public class tinyClient {
         String str= JSONObject.toJSONString(request);
         out.println(str);
         responseStr=in.readLine();
-        //System.out.println(responseStr);
+        System.out.println(responseStr);
         //JSONObject jsonObject= JSONObject.parseObject(responseStr);
        // BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
         BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
