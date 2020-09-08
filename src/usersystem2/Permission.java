@@ -16,10 +16,10 @@ public class Permission implements Serializable {
     @Override
     public int hashCode() {
         int result = target;
-        result = 17 * result + database.hashCode();
-        result = 17 * result + table.hashCode();
+        result = 17 * result + (database == null ? 0 : database.hashCode());
+        result = 17 * result + (table == null ? 0 : table.hashCode());
         result = 17 * result + (int) permission;
-        result = 17 * result + grantedBy.hashCode();
+        result = 17 * result + (grantedBy == null ? 0 : grantedBy.hashCode());
         result = 17 * result + grantType;
         return result;
     }
@@ -32,7 +32,10 @@ public class Permission implements Serializable {
         Permission permObj = (Permission) obj;
         if (this == permObj)
             return true;
-        if ((permObj.database.equals(this.database)) && (permObj.table.equals(this.table)) &&
+        if(database==null||table==null||grantedBy==null){
+            return false;
+        }
+        else if ((permObj.database.equals(this.database)) && (permObj.table.equals(this.table)) &&
                 (permObj.target == this.target) && (permObj.permission == this.permission) &&
                 (permObj.grantedBy.equals(this.grantedBy)) && (permObj.grantType == this.grantType)) {
             return true;

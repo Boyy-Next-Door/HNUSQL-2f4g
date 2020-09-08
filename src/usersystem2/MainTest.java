@@ -1,14 +1,73 @@
 package usersystem2;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         //test1();
-        test2();
+//        test2();
         // test3();
         // test4();
+        test5();
+
+//        test6();
+    }
+
+    private static void test6() {
+        try {
+            File file = new File("src/usersystem2/user_file2.dbuf");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
+            try {
+                Object object = objectInputStream.readObject();
+                HashMap<String, User> users = (HashMap<String, User>) object;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+//            e.printStackTrace();
+        }
+    }
+
+    public static void test5() throws Exception {
+//        User u1 = new User("admin", "123456");
+//        User u2 = new User("u2", "123456");
+//
+//        Database db1 = new Database("db1");
+//        Table table1 = new Table(db1,"table1", (byte)0xff);
+//        HashMap<Table, Permission> map = new HashMap<>();
+//        Permission permission = new Permission();
+//
+//        permission.setDatabase(db1);
+//        permission.setTable(table1);
+//        permission.setGrantedBy(u1);
+//        permission.setGrantType(2);
+//        permission.setTarget(1);
+//        permission.setPermission((byte)0xff);
+//        map.put(table1,permission);
+//
+//        u1.setPermissions(map);
+//
+//        UserManager2.addUser(u1);
+//        UserManager2.addUser(u2);
+
+
+//
+//        User u22 = UserManager2.getUserByName("admin");
+//        boolean grant1 = UserManager2.grant("admin", "u2", "db1", "table1", (byte) 0x80, 0);
+//        System.out.println(grant1);
+        User admin = UserManager2.getUserByName("admin");
+        User u2 = UserManager2.getUserByName("u2");
+        System.out.println(admin);
+        System.out.println(u2);
+
     }
     //测试用户的创建和删除、用户信息的修改（成功）
     public static void test1(){

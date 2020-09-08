@@ -3,7 +3,7 @@ package usersystem2;
 
 import java.io.Serializable;
 
-public class Table  implements Serializable {
+public class Table implements Serializable {
     private static final long serialVersionUID = 1L;
     private Database db;
     private String tableName;
@@ -19,23 +19,26 @@ public class Table  implements Serializable {
     @Override
     public int hashCode() {
         int result = db.hashCode();
-        result = 17*result + tableName.hashCode();
-        result = 17*result + (int)permission;
+        result = 17 * result + (tableName == null ? 0 : tableName.hashCode());
+        result = 17 * result + (int) permission;
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(!(obj instanceof Table))
+        if (!(obj instanceof Table))
             return false;
 
-        Table tableObj = (Table)obj;
+        Table tableObj = (Table) obj;
         if (this == tableObj)
             return true;
-        if ((tableObj.db.equals(this.db)) && (tableObj.tableName.equals(this.tableName)) &&
-                (tableObj.permission == this.permission)){
+        if(db==null || tableName==null){
+            return false;
+        }
+        else if ((tableObj.db.equals(this.db)) && (tableObj.tableName.equals(this.tableName)) &&
+                (tableObj.permission == this.permission)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

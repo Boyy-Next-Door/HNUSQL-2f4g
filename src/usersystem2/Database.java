@@ -9,7 +9,7 @@ public class Database  implements Serializable {
 
     @Override
     public int hashCode() {
-        return databaseName.hashCode();
+        return (databaseName == null ? 0 : databaseName.hashCode());
     }
 
     @Override
@@ -20,7 +20,10 @@ public class Database  implements Serializable {
         Database dbObj = (Database)obj;
         if (this == dbObj)
             return true;
-        if (dbObj.databaseName.equals(this.databaseName)){
+        if(databaseName==null){
+            return false;
+        }
+        else if (dbObj.databaseName.equals(this.databaseName)){
             return true;
         }else{
             return false;
