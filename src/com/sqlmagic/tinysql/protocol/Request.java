@@ -23,7 +23,7 @@ public class Request {
 
     //共功能性接口
     public static final int LOGIN = 401;            //登陆数据库
-    public static final int USER_DATABASE = 402;    //选择数据库
+    public static final int USE_DATABASE = 402;    //选择数据库
 
     //由服务器生成的cookie
     String cookie="";
@@ -79,4 +79,20 @@ public class Request {
     public String getCookie() { return cookie; }
 
     public void setCookie(String cookie) { this.cookie = cookie; }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
