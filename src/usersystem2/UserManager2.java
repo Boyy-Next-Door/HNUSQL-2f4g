@@ -80,6 +80,7 @@ public class UserManager2 {
             //检查被授权者是否没有此权限（没有才可以获得）
             if (grantee.canBeAuthorized(database, table, permission)) {
                 grantee.acquirePermission(granterName, database, table, permission, grantType);
+                writeUsersToFile();
                 return true;
             } else {
                 System.err.println("被授权者已拥有其中权限");
@@ -106,6 +107,7 @@ public class UserManager2 {
 
             if (revokee.canBeRevoked(database, table, permission)) {
                 revokee.revokePermission(revokerName, database, table, permission, 0);
+                writeUsersToFile();
                 return true;
             } else {
                 System.err.println("被撤销用户没有要撤销的权限");
@@ -193,6 +195,7 @@ public class UserManager2 {
             //覆盖之前的dbuf文件
             objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File(fileDir2), false));
             objectOutputStream.writeObject(users);
+            objectOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

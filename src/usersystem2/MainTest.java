@@ -5,20 +5,21 @@ import java.util.HashMap;
 
 public class MainTest {
     public static void main(String[] args) throws Exception {
-        // test1();
+//        test1();
 //         test2();
         // test3();
         // test4();
-       test5();
- //       test6();
+       //test5();
+       test6();
     }
 
     private static void test6() throws Exception {
-//        User admin = UserManager2.getUserByName("admin");
-//        boolean grant1 = UserManager2.grant("admin", "u2", "db1", "table1", (byte) 0x80, 0);
+     //   User admin = UserManager2.getUserByName("admin");
+     //   boolean grant1 = UserManager2.grant("admin", "u2", "db1", "table1", (byte) 0x80, 0);
         User u2 = UserManager2.getUserByName("u2");
-
- //       System.out.println(admin);
+        User u3 = UserManager2.getUserByName("uu");
+        System.out.println(u3);
+    //    System.out.println(admin);
         System.out.println(u2);
 
     }
@@ -53,9 +54,9 @@ public class MainTest {
 
     //测试用户的创建和删除、用户信息的修改（成功）
     public static void test1() {
-        UserManager2.deleteUser("u1");
-        UserManager2.deleteUser("u2");
-        UserManager2.deleteUser("u3");
+//        UserManager2.deleteUser("u1");
+//        UserManager2.deleteUser("u2");
+ //       UserManager2.deleteUser("u3");
 
         User u1 = new User("u1", "123456");
         User u2 = new User("u2", "123456");
