@@ -124,14 +124,10 @@ public class clientHandler extends Thread {
                     }
                     requestType = obj.getInteger("requestType");
                     rawSQL = obj.getString("rawSQL");
-                    System.out.println("hahaha1");
                     inputString = rawSQL;
-
                     startAt = 0;
 
-
                     while (startAt < inputString.length() - 1) {
-                        System.out.println("hahaha2");
                         endAt = inputString.indexOf(";", startAt);
                         //这里是在处理多个以分号结尾的独立语句  实际上我们不允许这样操作 一次发送的指令指挥包含一条独立语句
                         if (endAt == -1)                                //没有以;结尾  认为字符串的末尾就是指令的结尾
@@ -145,8 +141,6 @@ public class clientHandler extends Thread {
                             //JSONObject jsonObject = JSON.parseObject(cmdString);
                             username = obj.getString("username");
                             password = obj.getString("password");
-                            System.out.println("username="+username);
-                            System.out.println("password="+password);
                             //校验参数
                             if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
                                 //参数不正确
@@ -166,7 +160,7 @@ public class clientHandler extends Thread {
                                 out.println(JSON.toJSONString(BaseResponse.fail("Username or password error.")));
                             }
 
-                        } else if (requestType == Request.USER_DATABASE) { /*选择数据库*/
+                        } else if (requestType == Request.USE_DATABASE) { /*选择数据库*/
                             String databaseName = cmdString.substring(4, cmdString.indexOf(";"));
                             String url = DatabaseMapper.getURL(databaseName);
                             //数据库不存在
