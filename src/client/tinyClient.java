@@ -86,25 +86,14 @@ public class tinyClient {
      */
     public boolean login(String ip,int port,String username,String password)throws Exception{
         if(startConnection(ip,port)==false)return false;
-        //Map<String,String> map=new HashMap<String,String>();
-        //map.put("username",username);
-        //map.put("password",password);
-        //String str= JSON.toJSONString(map);
         Request request=new Request(null, Request.LOGIN,"login",username,password);
         String str= JSONObject.toJSONString(request);
         out.println(str);
-        //System.out.println(str);
-        /*
-        需要根据客户端发送的信息判断是否登陆
-        暂时默认可以直接登陆
-         */
         String resp=in.readLine();
-        //System.out.println(resp);
         JSONObject jsonObject= JSONObject.parseObject(resp);
         int status=jsonObject.getInteger("status");
         if(status==0) {
             cookie = jsonObject.getString("cookie");
-            //System.out.println("cookie=" + cookie);
             return true;
         }
         else if(status==1){
@@ -119,8 +108,7 @@ public class tinyClient {
      * @return
      * @throws Exception
      */
-    public BaseResponse useDatabase(String databaseName)throws Exception{
-        String rawSQL="use "+databaseName;
+    public BaseResponse useDatabase(String rawSQL)throws Exception{
         Request request=new Request(cookie, Request.USE_DATABASE,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);
