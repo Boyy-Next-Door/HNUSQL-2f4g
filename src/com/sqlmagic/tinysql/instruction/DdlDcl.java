@@ -101,6 +101,11 @@ public class DdlDcl {
                 out.println(str);
             }
         }
+        else{
+            BaseResponse baseResponse = BaseResponse.fail("Can't find requestType");
+            String str=JSONObject.toJSONString(baseResponse);
+            out.println(str);
+        }
     }
 
 }
