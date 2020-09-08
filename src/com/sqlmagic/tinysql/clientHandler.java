@@ -186,10 +186,10 @@ public class clientHandler extends Thread {
                             // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
 
-                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
+                            BaseResponse isQualified = preParser.verifyPermission(cmdString, username, fName,con);
 
                             if (isQualified) {
-                                //如果有权执行 在内部返回结果
+                                //如2果有权执行 在内部返回结果
                                 dqlDml.SelectInsertUpdateDelete(con, stmt, requestType, out, cmdString);
                             } else {
                                 //无权执行
@@ -204,7 +204,7 @@ public class clientHandler extends Thread {
                             //首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
 
-                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
+                            BaseResponse isQualified = preParser.verifyPermission(cmdString, username, fName,con);
 
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
