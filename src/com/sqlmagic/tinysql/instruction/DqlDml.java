@@ -39,7 +39,7 @@ public class DqlDml {
             ResultSet display_rs;
             display_rs = statement.executeQuery(rawSQL);
             if (display_rs == (ResultSet) null) {
-                BaseResponse baseResponse=BaseResponse.ok(null,"Null ResultSet returned from query");
+                BaseResponse baseResponse=BaseResponse.ok("Null ResultSet returned from query",null);
                 String str= JSONObject.toJSONString(baseResponse);
                 out.println(str);
                 return;

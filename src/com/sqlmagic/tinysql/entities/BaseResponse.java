@@ -7,7 +7,7 @@ public class BaseResponse {
     public String msg;
     public Object data;
 
-    public static BaseResponse ok(Object data,String msg){
+    public static BaseResponse ok(String msg,Object data){
         BaseResponse baseResponse = new BaseResponse();
         baseResponse.setStatus(0);
         baseResponse.setData(data);

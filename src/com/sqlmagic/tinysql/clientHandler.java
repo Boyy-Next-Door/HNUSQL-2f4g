@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sqlmagic.tinysql.entities.BaseResponse;
 import com.sqlmagic.tinysql.instruction.DdlDcl;
 import com.sqlmagic.tinysql.instruction.DqlDml;
+import com.sqlmagic.tinysql.instruction.PreParser;
 import com.sqlmagic.tinysql.instruction.Show;
 import com.sqlmagic.tinysql.protocol.Request;
 import com.sqlmagic.tinysql.utils.CryptoUtil;
@@ -106,7 +107,7 @@ public class clientHandler extends Thread {
                     JSONObject obj = JSON.parseObject(inputString);
                     clientCookie = obj.getString("cookie");
                     //请求携带了cookie
-                    if(clientCookie!=null && !clientCookie.isEmpty()){
+                    if (clientCookie != null && !clientCookie.isEmpty()) {
                         //TODO 校验cookie
 
                         //如果校验通过
@@ -116,7 +117,7 @@ public class clientHandler extends Thread {
                         //如果校验没有通过 说明请求用户身份非法
                         out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
 
-                    }else{
+                    } else {
                         //没有携带cookie 这个要按照具体功能接口做处理
                     }
                     requestType = obj.getInteger("requestType");
@@ -162,11 +163,13 @@ public class clientHandler extends Thread {
                             }
 
                         } else if (requestType == Request.USER_DATABASE) { /*选择数据库*/
-                            String url = DatabaseMapper.getURL(cmdString.substring(4, cmdString.indexOf(";")));
+                            String databaseName = cmdString.substring(4, cmdString.indexOf(";"));
+                            String url = DatabaseMapper.getURL(databaseName);
                             //数据库不存在
                             if (url.equals("DB_NOT_EXIST")) {
                                 out.println(JSON.toJSONString(BaseResponse.fail("Database doesn't exist.")));
                             } else {
+                                fName = databaseName;
                                 con = dbConnect(url);
                             }
 
@@ -177,28 +180,35 @@ public class clientHandler extends Thread {
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", null)));
                             }
                         } else if (requestType == Request.SHOW_DATABASES || requestType == Request.SHOW_TABLES) { /*show类操作*/
-
-
                             show.whichShow(con, out, requestType);
                         } else if (requestType == Request.SELECT || requestType == Request.INSERT
                                 || requestType == Request.UPDATE || requestType == Request.DELETE) { /*增删改查*/
-                            //TODO   首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
+                            // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
+                            PreParser preParser = new PreParser();
+                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
 
-                            //如果有权执行 在内部返回结果
-                            dqlDml.SelectInsertUpdateDelete(con, stmt, requestType, out, cmdString);
-
-                            //无权执行
-                            out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
-
+                            if (isQualified) {
+                                //如果有权执行 在内部返回结果
+                                dqlDml.SelectInsertUpdateDelete(con, stmt, requestType, out, cmdString);
+                            } else {
+                                //无权执行
+                                out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
+                            }
                         } else if (requestType == Request.CREATE || requestType == Request.ALTER
                                 || requestType == Request.DROP || requestType == Request.GRANT
                                 || requestType == Request.REVOKE) { /*数据定义语言、数据控制语言*/
 
-                            //TODO   首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
-                            //如果有权执行 在内部返回结果
-                            ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString);
-                            //无权执行
-                            out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
+                            //首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
+                            PreParser preParser = new PreParser();
+                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
+
+                            if (isQualified) {
+                                //如果有权执行 在内部返回结果
+                                ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString);
+                            } else {
+                                //无权执行
+                                out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
+                            }
                         }
 
                     }
