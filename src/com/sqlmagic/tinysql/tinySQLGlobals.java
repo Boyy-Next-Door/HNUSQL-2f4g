@@ -34,20 +34,20 @@ import java.text.*;
 
 public class tinySQLGlobals
 {
-   static String dataDir = (String)null;
-   static Vector longColumnNames;
-   static String fileSep = System.getProperty("file.separator");
-   static String newLine = System.getProperty("line.separator");
-   static Hashtable DB_INDEX = new Hashtable();
-   static String VERSION = "2.26h";
-   static boolean DEBUG = false;
-   static boolean PARSER_DEBUG = true;
-   static boolean WHERE_DEBUG = false;
-   static boolean EX_DEBUG = false;
-   static int longNamesInFileCount;
-   static boolean debug = false;
+   public static String dataDir = (String)null;
+   public static Vector longColumnNames;
+   public static String fileSep = System.getProperty("file.separator");
+   public static String newLine = System.getProperty("line.separator");
+   public static Hashtable DB_INDEX = new Hashtable();
+   public static String VERSION = "2.26h";
+   public static boolean DEBUG = false;
+   public static boolean PARSER_DEBUG = true;
+   public static boolean WHERE_DEBUG = false;
+   public static boolean EX_DEBUG = false;
+   public static int longNamesInFileCount;
+   public static boolean debug = false;
    //日志功能标志位
-   static boolean LOG = true;
+   public static boolean LOG = true;
    //
    public static void readLongNames(String inputDataDir)
    {

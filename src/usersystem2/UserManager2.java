@@ -29,14 +29,15 @@ public class UserManager2 {
         UserManager2.users = users;
     }
 
-    public static void addUser(User user) {
+    public static boolean addUser(User user) {
         //检查用户名是否已存在
         if (users.containsKey(user.getUsername())) {
             System.err.println("用户" + user.getUsername() + "已存在,添加失败");
-            return;
+            return false;
         }
         users.put(user.getUsername(), user);
         writeUsersToFile();
+        return true;
     }
 
     public static void deleteUser(String username) {
@@ -236,6 +237,10 @@ public class UserManager2 {
         }
 
         return true;
+    }
+
+    public static boolean register(String username, String password) {
+        return addUser(new User(username, password));
     }
     //
     // public static void main(String[] args) {

@@ -30,7 +30,8 @@ import com.sqlmagic.tinysql.utils.MyTableUtil;
 
 import java.io.*;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class tinySQLCmd {
     static Vector tableList;

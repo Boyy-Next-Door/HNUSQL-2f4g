@@ -1,6 +1,6 @@
 package com.sqlmagic.tinysql.utils;
 
-import java.nio.charset.Charset;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,8 +8,8 @@ import java.util.Arrays;
  * 用来绘制命令行表格的工具类
  */
 public class MyTableUtil {
-    private  ArrayList<Column> columns = new ArrayList<>();
-    private  ArrayList<Row> rows = new ArrayList<>();
+    private ArrayList<Column> columns = new ArrayList<>();
+    private ArrayList<Row> rows = new ArrayList<>();
 
 
     public String generate() {
@@ -17,7 +17,9 @@ public class MyTableUtil {
         for (int i = 0; i < columns.size(); i++) {
             int maxLength = 0;
             for (int j = 0; j < rows.size(); j++) {
-                int length = getLength(rows.get(j).values.get(i));
+                Row row = rows.get(j);
+                //这里有可能某一行某一列的值为null 不处理会有空指针
+                int length = row.values.get(i) == null ? 4 : getLength(row.values.get(i));
                 if (length > maxLength) {
                     maxLength = length;
                 }
@@ -70,7 +72,8 @@ public class MyTableUtil {
             for (int j = 0; j < columns.size(); j++) {
                 sb.append(" ");
                 sb.append(rows.get(i).values.get(j));
-                for (int k = 0; k + 1 + getLength(rows.get(i).values.get(j)) <= columns.get(j).maxLength; k++) {
+                int length = rows.get(i).values.get(j) == null ? 4 : getLength(rows.get(i).values.get(j));
+                for (int k = 0; k + 1 + length <= columns.get(j).maxLength; k++) {
                     sb.append(' ');
                 }
                 sb.append(" |");
@@ -133,13 +136,35 @@ public class MyTableUtil {
     }
 
     public static void main(String[] args) {
-        String generate = new MyTableUtil().
+        MyTableUtil myTableUtil = new MyTableUtil();
+        String generate = myTableUtil.
                 addColumn("id").addColumn("name").addColumn("phone").addColumn("address").
                 addRow("1", "George Yang", "18890072933", "Yuanzhou  District Yichun Jiangxi ").
                 addRow("2", "Tony Wong", "188900", "Yuanzhou  District Yichun Jiangxi Province 0").
                 addRow("3", "IronEgg Li", "190072933", "Yuanzhou  District Yichun Jiangxi Province 111").
                 generate();
         System.out.println(generate);
+    }
+
+    public int getColumnCount() {
+        return columns.size();
+    }
+
+    public int getRowCount() {
+        return rows.size();
+    }
+
+    public String[] getColumnNames() {
+        String[] strings = new String[this.getColumnCount()];
+        for (int i = 0; i < columns.size(); i++) {
+            strings[i] = columns.get(i).name;
+        }
+        return strings;
+    }
+
+    //返回表格中i行j列元素
+    public String get(int i, int j) {
+        return rows.get(i).values.get(j);
     }
 
     static class Column {

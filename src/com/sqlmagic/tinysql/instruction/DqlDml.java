@@ -34,7 +34,7 @@ public class DqlDml {
     private DqlDml(){}
 
     public void SelectInsertUpdateDelete(Connection con, Statement statement,
-                                         int requestType, PrintWriter out, String rawSQL)throws Exception{
+                                         int requestType, PrintWriter out, String rawSQL,Logger logger)throws Exception{
         if(requestType== Request.SELECT){
             ResultSet display_rs;
             display_rs = statement.executeQuery(rawSQL);
@@ -48,7 +48,8 @@ public class DqlDml {
             myTableUtil=buildResults(display_rs);
            // String s=JSONObject.toJSONString(myTableUtil);
            // System.out.println(s);
-            System.out.println(myTableUtil.generate());
+            String generate = myTableUtil.generate();
+            System.out.println(generate);
             BaseResponse baseResponse =BaseResponse.ok(myTableUtil.generate());
             String str=JSONObject.toJSONString(baseResponse);
             out.println(str);
@@ -57,6 +58,9 @@ public class DqlDml {
             try {
                 statement.executeUpdate(rawSQL);
                 //logger记录
+                if(tinySQLGlobals.LOG) {
+                    logger.logStatement(rawSQL);
+                }
                 BaseResponse baseResponse =BaseResponse.ok(null);
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
@@ -71,6 +75,9 @@ public class DqlDml {
             try {
                 statement.executeUpdate(rawSQL);
                 //logger记录
+                if(tinySQLGlobals.LOG) {
+                    logger.logStatement(rawSQL);
+                }
                 BaseResponse baseResponse =BaseResponse.ok(null);
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
@@ -85,6 +92,9 @@ public class DqlDml {
             try {
                 statement.executeUpdate(rawSQL);
                 //logger记录
+                if(tinySQLGlobals.LOG) {
+                    logger.logStatement(rawSQL);
+                }
                 BaseResponse baseResponse =BaseResponse.ok(null);
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
