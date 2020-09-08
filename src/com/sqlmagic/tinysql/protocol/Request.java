@@ -34,6 +34,8 @@ public class Request {
     //原生sql语句
     String rawSQL = "";
 
+    String username="";
+    String password="";
 
     public Request(int requestType, String rawSQL) {
         this.requestType = requestType;
@@ -44,6 +46,14 @@ public class Request {
         this.cookie=cookie;
         this.requestType = requestType;
         this.rawSQL = rawSQL;
+    }
+
+    public Request(String cookie,int requestType, String rawSQL,String username,String password) {
+        this.cookie=cookie;
+        this.requestType = requestType;
+        this.rawSQL = rawSQL;
+        this.username=username;
+        this.password=password;
     }
 
     public String toString() {
