@@ -17,6 +17,7 @@ import java.lang.*;
 import java.io.*;
 
 
+
 /**
 dBase read/write access <br> 
 @author Brian Jepson <bjepson@home.com>
@@ -307,11 +308,17 @@ public class dbfFileTable extends tinySQLTable
       else if ( row.length() == 0 ) System.out.println("Row has 0 length");
       if (coldef == null)
          return row.substring (0,1);
-      return row.substring(coldef.position, coldef.position + coldef.size);
+      char[] tempRow = row.toCharArray();
+      char[] tempRow2 = new char[tempRow.length];
+      for(int i = coldef.position;i<tempRow.length;i++){
+         tempRow2[i-coldef.position] = tempRow[i];
+      }
+      return new String(tempRow2);
+//      return row.substring(coldef.position, coldef.position + coldef.size);
    }
 /*
  * Retrieve a column's string value from the given row and given colName
- * @param ff the file handle
+ * @params ff the file handle
  * @param colName the column name
  * @param the wanted record (starts with 1)
  * @see tinySQLTable#GetCol
