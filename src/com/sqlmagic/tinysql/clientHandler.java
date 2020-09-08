@@ -109,8 +109,8 @@ public class clientHandler extends Thread {
                     //请求携带了cookie
                     if (clientCookie != null && !clientCookie.isEmpty()) {
                         //TODO 校验cookie
-                        String temp=CryptoUtil.decodeTarget(clientCookie);
-                        if(temp.charAt(0)=='{'&&temp.charAt(temp.length()-1)=='}') {
+                        String temp = CryptoUtil.decodeTarget(clientCookie);
+                        if (temp.charAt(0) == '{' && temp.charAt(temp.length() - 1) == '}') {
                             //如果校验通过
                             cookie = clientCookie;
                             username = CryptoUtil.decodeTarget(cookie);
@@ -149,12 +149,12 @@ public class clientHandler extends Thread {
                             }
                             //对用户名和密码进行判断
                             boolean isSuccess = UserManager2.login(username, password);
-                            isSuccess=true;
+                            isSuccess = true;
 
                             //登陆成功 创建cookie
                             if (isSuccess) {
                                 //创建cookie
-                                cookie = CryptoUtil.encodeSrc("{"+username+"}");
+                                cookie = CryptoUtil.encodeSrc("{" + username + "}");
                                 //System.out.println(cookie);
                                 //返回给客户端
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
@@ -186,7 +186,7 @@ public class clientHandler extends Thread {
                             // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
 
-                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
+                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
 
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
@@ -204,7 +204,7 @@ public class clientHandler extends Thread {
                             //首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
 
-                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
+                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
 
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
