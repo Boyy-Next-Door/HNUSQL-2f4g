@@ -109,13 +109,14 @@ public class clientHandler extends Thread {
                     //请求携带了cookie
                     if (clientCookie != null && !clientCookie.isEmpty()) {
                         //TODO 校验cookie
-
-                        //如果校验通过
-                        cookie = clientCookie;
-                        username = CryptoUtil.decodeTarget(cookie);
-
+                        String temp=CryptoUtil.decodeTarget(clientCookie);
+                        if(temp.charAt(0)=='{'&&temp.charAt(temp.length()-1)=='}') {
+                            //如果校验通过
+                            cookie = clientCookie;
+                            username = CryptoUtil.decodeTarget(cookie);
+                        }
                         //如果校验没有通过 说明请求用户身份非法
-                        out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
+                        else out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
 
                     } else {
                         //没有携带cookie 这个要按照具体功能接口做处理
@@ -155,7 +156,7 @@ public class clientHandler extends Thread {
                             //登陆成功 创建cookie
                             if (isSuccess) {
                                 //创建cookie
-                                cookie = CryptoUtil.encodeSrc(username);
+                                cookie = CryptoUtil.encodeSrc("{"+username+"}");
                                 //返回给客户端
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
                             } else {
