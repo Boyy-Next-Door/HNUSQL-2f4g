@@ -27,7 +27,7 @@ public class Utils
   // "Cp850"  = 8 bit MS-DOS, Multilingual Latin 1,   &auml; = 0x83 = 131
   // "Cp1252" = 8 bit Windows Multilingual,           &auml; = 0xe4 = 228
   // In future the code page should be passed at connection time using the URL
-  final static String encode = "Cp1252"; // dBase encoding
+  final static String encode = "GBK"; // dBase encoding
 
   /**
    * Converts a long to a little-endian four-byte array

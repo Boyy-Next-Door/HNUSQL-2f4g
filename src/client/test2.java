@@ -25,7 +25,7 @@ public class test2 {
                     msg = sc.nextLine();
                  //   client.Revoke("ddd","aa");
                  //   client.Insert("aa","insert into Student ( Sno ) values ( 2 )");
-                    client.Select("select * from Course;");
+                      client.Select("select * from Course;");
                  //   client.getTables("bbb");
                 //    client.getDatabases("haha");
                 //    client.send(msg);

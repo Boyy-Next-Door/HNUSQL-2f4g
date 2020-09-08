@@ -216,6 +216,7 @@ public class UserManager2 {
             //覆盖之前的dbuf文件
             objectOutputStream = new ObjectOutputStream(new FileOutputStream(new File(fileDir2), false));
             objectOutputStream.writeObject(users);
+            objectOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
