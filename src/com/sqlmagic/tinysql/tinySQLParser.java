@@ -150,9 +150,6 @@ public class tinySQLParser
    public void setPhrase(String inputKeyWord,String inputString)
       throws tinySQLException
    {
-
-
-      tinySQLTable changeTable;
       String getKeyWord1=null,getKeyWord2=null;
       String[] getKeyWord;
       String nextField,upperField,colTypeStr,colTypeSpec,
@@ -436,10 +433,8 @@ public class tinySQLParser
              }
          }else if(inputKeyWord.equals("TO")){
              userName = nextField;     //获取用户名
-             //processGrant(nowUserName,username,Granting);
          }else if(inputKeyWord.equals("FROM")) {
              userName = nextField;    //获取用户名
-             //processRevoke(nowUserName,username,Granting);
          } else if(inputKeyWord.equals("WITH")){
             statementType = statementType + "_WITH";
             ft2 = new FieldTokenizer(nextField,' ',false); //获取后面两个字
