@@ -153,9 +153,6 @@ public class tinyClient {
         String str= JSONObject.toJSONString(request);
         out.println(str);
         responseStr=in.readLine();
-       // System.out.println(responseStr);
-        //JSONObject jsonObject= JSONObject.parseObject(responseStr);
-       // BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
         BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
         return baseResponse;
     }
@@ -169,21 +166,23 @@ public class tinyClient {
      * @throws Exception
      */
     public BaseResponse Select(String rawSQL)throws Exception{
-        //BaseResponse baseResponse=new BaseResponse();
         Request request=new Request(cookie, Request.SELECT,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);
         String responseStr=in.readLine();
-       // System.out.println(responseStr);
         BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
-        String tempStr=(String)baseResponse.getData();
-       //System.out.println(tempStr);
-       // System.out.println(tempStr.length());
 
+        //服务器请求失败，直接返回
+        if(baseResponse.getStatus()==1){
+        //    System.out.println(1);
+            return baseResponse;
+        }
+
+        //如果请求成功，则会对传回来的表格进行解析
+        String tempStr=(String)baseResponse.getData();
         /*
         解析字符串
          */
-
         MyTableUtil newTable=new MyTableUtil();
         int flag1=0;
         int flag2=0;
@@ -268,7 +267,7 @@ public class tinyClient {
         }
 
         BaseResponse returnResponse=BaseResponse.ok(newTable);
-        System.out.println(newTable.generate());
+       // System.out.println(newTable.generate());
       //  BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
         return returnResponse;
     }
@@ -311,7 +310,7 @@ public class tinyClient {
 
     /**
      *
-     * @param username
+     *
      * @param rawSQL
      * @return
      * @throws Exception
@@ -359,55 +358,6 @@ public class tinyClient {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-     * 向服务器发送msg，
-     * @param msg 需要发送的字符串
-     * @return：返回一个list代表数据库执行msg的结果，list每一行都是一行string
-     * 因为数据库返回的结果可能包含多行，例如select语句
-     */
-    public List sendMessage(String msg) throws Exception {
-        out.println(msg);
-        List<String> respList=new ArrayList<>();
-        while(true) {
-            String resp = in.readLine();
-            // System.out.println(resp);
-            if("DONE".equals(resp))break;
-            respList.add(resp);
-        }
-        return respList;
-        //return resp;
-    }
-
-    public void send(String msg) throws Exception {
-        out.println(msg);
-        //return resp;
-    }
-
-    public void sendWithCookie(String cookie,String msg)throws Exception{
-        obout.writeObject(new Info(cookie,msg));
-    }
-
-
     /*
      * 测试服务器连通性
      * @param host
@@ -418,102 +368,6 @@ public class tinyClient {
         return clientSocket.isConnected();
     }
 
-
-    /*
-     * 由于user和database之间的联系还没有完全实现，
-     * 所以接下来的的函数中暂且省略username和databasename，待以后补全
-     */
-
-
-    /*
-     * 返回数据库清单
-     * @param 用户名
-     * @return 用list的格式返回数据库清单
-     */
-    /*
-    public List getDatabases(String username){
-
-    }
-     */
-
-
-    /**
-     * 获取指定数据库的表清单
-     * @param username 暂且省略
-     * @param databaseName 暂且省略
-     * @return  用list的格式返回指定数据库的表清单，list中的每一项都代表一个表
-     */
-    /*
-    public List getTables(String username, String databaseName)throws Exception{
-        List<String> respList=new ArrayList<>();
-        String msg="show tables";
-        //out.println(msg);
-        respList=sendMessage(msg);
-        return respList;
-    }
-
-     */
-
-    /**
-     * 获取指定表的内容
-     * @param username 暂且省略
-     * @param databaseName 暂且省略
-     * @param tableName 暂且省略
-     * @return
-     */
-    public List getTableContent(String username, String databaseName, String tableName)throws Exception{
-        List<String> respList=new ArrayList<>();
-        List<String[]> listStr=new ArrayList<>();
-        String msg="select * from "+tableName;
-        respList=sendMessage(msg);
-        if(respList.size()==0){
-            return respList;
-        }
-        else {
-            Iterator<String> stringIterator = respList.iterator();
-            String[] colName;
-            int col=0;
-            while (stringIterator.hasNext()) {
-                if(col==0){
-                    colName=stringIterator.next().split("\\s+");
-                    listStr.add(colName);
-                    col=col+1;
-                    continue;
-                }
-                else if(col==1){
-                    String[] arr=stringIterator.next().split("\\s+");
-                    col=col+1;
-                    continue;
-                }
-                else{
-                    String[] arr=stringIterator.next().split("\\s+");
-                    listStr.add(arr);
-                }
-            }
-        }
-        return listStr;
-    }
-
-    /**
-     * 获取指定表的字段
-     * @param username 暂且省略
-     * @param databaseName 暂且省略
-     * @param tableName 暂且省略
-     * @return
-     */
-    public List getTableField(String username, String databaseName, String tableName)throws Exception{
-        List<String> respList=new ArrayList<>();
-        List<String[]> listStr=new ArrayList<>();
-        String msg="describe "+tableName;
-        respList=sendMessage(msg);
-        Iterator<String> stringIterator = respList.iterator();
-        String[] arr;
-        while (stringIterator.hasNext()) {
-            arr=stringIterator.next().split("\\s+");
-            listStr.add(arr);
-        }
-        return listStr;
-    }
 
     public void stopConnection() throws Exception {
         in.close();

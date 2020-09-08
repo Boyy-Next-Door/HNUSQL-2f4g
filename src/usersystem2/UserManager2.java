@@ -2,6 +2,7 @@ package usersystem2;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import usersystem.UserTree;
 
 import java.io.*;
@@ -166,6 +167,30 @@ public class UserManager2 {
             users = new HashMap<String, User>();
             writeUsersToFile();
         }
+//
+//        BufferedReader bfr = null;
+//        users = null;
+//        try {
+//            File file = new File(fileDir);
+//            if (!file.exists()) {
+//                throw new IOException("用户列表文件未找到，将创建一个新的");
+//            }
+//            bfr = new BufferedReader(new FileReader(file));
+//            String s = bfr.readLine();
+//            users = JSON.parseObject(s, new TypeReference<HashMap<String, User>>() {});
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            //从文件读取users失败  创建一个新的users集合 并写入文件
+//            users = new HashMap<String, User>();
+//            writeUsersToFile();
+//        } finally {
+//            try {
+//                if (bfr != null)
+//                    bfr.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     //将内存中的userList写入文件
@@ -174,12 +199,7 @@ public class UserManager2 {
 //        try {
 //            //覆盖之前存储的users内容
 //            bfw = new BufferedWriter(new FileWriter(new File(fileDir), false));
-//            for (Map.Entry<String, User> entry : users.entrySet()) {
-//                bfw.write(entry.getKey());
-//                bfw.write("<====>");
-//                bfw.write(JSON.toJSONString(entry.getValue()));
-//                bfw.newLine();
-//            }
+//            bfw.write(JSON.toJSONString(users));
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        } finally {
@@ -205,6 +225,8 @@ public class UserManager2 {
                 e.printStackTrace();
             }
         }
+
+
     }
 
     //登陆
