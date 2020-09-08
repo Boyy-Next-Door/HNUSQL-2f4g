@@ -308,14 +308,14 @@ public class User implements Serializable {
 
         for (int i = 0; i < split.size(); i++) {
             // System.out.println(it.next());
-            Permission Perm2 = new Permission();
-            Perm2.setTarget(newPerm.getTarget());
-            Perm2.setDatabase(newPerm.getDatabase());
+            Permission perm2 = new Permission();
+            perm2.setTarget(newPerm.getTarget());
+            perm2.setDatabase(newPerm.getDatabase());
             Table table2 = new Table(newPerm.getDatabase(), newPerm.getTable().getTableName(), split.get(i).byteValue());
-            Perm2.setTable(table2);
-            Perm2.setGrantType(newPerm.getGrantType());
-            Perm2.setGrantedBy(newPerm.getGrantedBy());
-            Perm2.setPermission(split.get(i).byteValue());
+            perm2.setTable(table2);
+            perm2.setGrantType(newPerm.getGrantType());
+            perm2.setGrantedBy(newPerm.getGrantedBy());
+            perm2.setPermission(split.get(i).byteValue());
 
             //查看hashCode所用的代码
             // System.out.println("Perm2:" + Perm2.hashCode());
@@ -326,13 +326,13 @@ public class User implements Serializable {
 
 
             //为什么不进入第一个if？？（已解决）
-            if (granter.grantTo.containsKey(Perm2)) {
-                if (!granter.grantTo.get(Perm2).contains(this))
-                    granter.grantTo.get(Perm2).add(this);
+            if (granter.grantTo.containsKey(perm2)) {
+                if (!granter.grantTo.get(perm2).contains(this))
+                    granter.grantTo.get(perm2).add(this);
             } else {
                 List users = new ArrayList<User>();
                 users.add(this);
-                granter.grantTo.put(Perm2, users);
+                granter.grantTo.put(perm2, users);
             }
         }
     }
@@ -467,7 +467,8 @@ public class User implements Serializable {
                                         if (!this.grantTo.containsKey(perm3))
                                             break;
                                     }
-                                } else if (this.grantTo.containsKey(perm4)) {
+                                }
+                                if (this.grantTo.containsKey(perm4)) {
                                     for (int j = 0; j < this.grantTo.get(perm4).size(); j++) {
                                         User next = this.grantTo.get(perm4).get(j);
                                         //修改对应位的权限
@@ -475,7 +476,8 @@ public class User implements Serializable {
                                         if (!this.grantTo.containsKey(perm4))
                                             break;
                                     }
-                                } else if (this.grantTo.containsKey(perm5)) {
+                                }
+                                if (this.grantTo.containsKey(perm5)) {
                                     for (int j = 0; j < this.grantTo.get(perm5).size(); j++) {
                                         User next = this.grantTo.get(perm5).get(j);
                                         //修改对应位的权限
@@ -483,8 +485,10 @@ public class User implements Serializable {
                                         if (!this.grantTo.containsKey(perm5))
                                             break;
                                     }
-                                } else {
-                                    System.out.println("此级联撤销链上最后一个user是：" + this.username);
+                                }
+                                else {
+                                    // System.out.println("此级联撤销链上最后一个user是：" + this.username);
+                                    return;
                                 }
 
                             }
