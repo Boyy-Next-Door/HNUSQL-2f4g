@@ -24,7 +24,7 @@ public class PreParser {
         User user = UserManager2.getUserByName(nowUsername);
         if (user == null) {
             //用户不存在
-            return BaseResponse.fail("user not exist");
+            return BaseResponse.fail("User not exist");
         }
         ResultSet tables = con.getMetaData().getTables(null, null, null, null);
         while (tables.next()) {
@@ -32,18 +32,18 @@ public class PreParser {
                 isQualified = true;
             }
         }
-        if(isQualified == false) return BaseResponse.fail("table not exist");
+        if(isQualified == false) return BaseResponse.fail("Table not exist");
         for (Map.Entry<Table, Permission> entry : user.getPermissions().entrySet()) {
             Table key = entry.getKey();
             if (key.getDb().getDatabaseName().equals(databaseName) && key.getTableName().equals(tableName)) {
                 Permission permission = user.getPermissions().get(key);
                 byte perm1 = permission.getPermission();
                 if (( perm & perm1) != 0) {
-                    return BaseResponse.ok("verify permission ok");
+                    return BaseResponse.ok(null);
                 }
             }
         }
-        return BaseResponse.fail("verify permission failed");
+        return BaseResponse.fail("Verify permission failed");
     }
 
     public void setParser(String inputString) {
@@ -59,7 +59,7 @@ public class PreParser {
                     break;
                 }
                 if(!ft.hasMoreFields()){
-                    System.err.println("can't find keyword TABLE");
+                    System.err.println("Can't find keyword TABLE");
                 }
             }
             perm = (byte) 0b10000000;
@@ -72,7 +72,7 @@ public class PreParser {
                     break;
                 }
                 if(!ft.hasMoreFields()){
-                    System.err.println("can't find keyword FROM");
+                    System.err.println("Can't find keyword FROM");
                 }
             }
             perm = (byte) 0b01000000;
@@ -89,7 +89,7 @@ public class PreParser {
                     break;
                 }
                 if(!ft.hasMoreFields()){
-                    System.err.println("can't find keyword FROM");
+                    System.err.println("Can't find keyword FROM");
                 }
             }
             perm = (byte) 0b00010000;

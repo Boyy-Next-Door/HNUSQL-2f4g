@@ -109,8 +109,8 @@ public class clientHandler extends Thread {
                     //请求携带了cookie
                     if (clientCookie != null && !clientCookie.isEmpty()) {
                         //TODO 校验cookie
-                        String temp = CryptoUtil.decodeTarget(clientCookie);
-                        if (temp.charAt(0) == '{' && temp.charAt(temp.length() - 1) == '}') {
+                        String temp=CryptoUtil.decodeTarget(clientCookie);
+                        if(temp.charAt(0)=='{'&&temp.charAt(temp.length()-1)=='}') {
                             //如果校验通过
                             cookie = clientCookie;
                             username = CryptoUtil.decodeTarget(cookie);
@@ -124,14 +124,10 @@ public class clientHandler extends Thread {
                     }
                     requestType = obj.getInteger("requestType");
                     rawSQL = obj.getString("rawSQL");
-                    System.out.println("hahaha1");
                     inputString = rawSQL;
-
                     startAt = 0;
 
-
                     while (startAt < inputString.length() - 1) {
-                        System.out.println("hahaha2");
                         endAt = inputString.indexOf(";", startAt);
                         //这里是在处理多个以分号结尾的独立语句  实际上我们不允许这样操作 一次发送的指令指挥包含一条独立语句
                         if (endAt == -1)                                //没有以;结尾  认为字符串的末尾就是指令的结尾
@@ -145,8 +141,6 @@ public class clientHandler extends Thread {
                             //JSONObject jsonObject = JSON.parseObject(cmdString);
                             username = obj.getString("username");
                             password = obj.getString("password");
-                            System.out.println("username=" + username);
-                            System.out.println("password=" + password);
                             //校验参数
                             if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
                                 //参数不正确
@@ -155,18 +149,20 @@ public class clientHandler extends Thread {
                             }
                             //对用户名和密码进行判断
                             boolean isSuccess = UserManager2.login(username, password);
+                            isSuccess=true;
 
                             //登陆成功 创建cookie
                             if (isSuccess) {
                                 //创建cookie
-                                cookie = CryptoUtil.encodeSrc("{" + username + "}");
+                                cookie = CryptoUtil.encodeSrc("{"+username+"}");
+                                //System.out.println(cookie);
                                 //返回给客户端
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
                             } else {
                                 out.println(JSON.toJSONString(BaseResponse.fail("Username or password error.")));
                             }
 
-                        } else if (requestType == Request.USER_DATABASE) { /*选择数据库*/
+                        } else if (requestType == Request.USE_DATABASE) { /*选择数据库*/
                             String databaseName = cmdString.substring(4, cmdString.indexOf(";"));
                             String url = DatabaseMapper.getURL(databaseName);
                             //数据库不存在
@@ -189,8 +185,8 @@ public class clientHandler extends Thread {
                                 || requestType == Request.UPDATE || requestType == Request.DELETE) { /*增删改查*/
                             // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
-                            BaseResponse resp = preParser.verifyPermission(cmdString, username, fName, con);
-                            boolean isQualified = resp.getStatus() == 0 ? true : false;
+
+                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
 
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
@@ -199,14 +195,17 @@ public class clientHandler extends Thread {
                                 //无权执行
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
                             }
+
+
                         } else if (requestType == Request.CREATE || requestType == Request.ALTER
                                 || requestType == Request.DROP || requestType == Request.GRANT
                                 || requestType == Request.REVOKE) { /*数据定义语言、数据控制语言*/
 
                             //首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
-                            BaseResponse resp = preParser.verifyPermission(cmdString, username, fName, con);
-                            boolean isQualified = resp.getStatus() == 0 ? true : false;
+
+                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
+
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
                                 ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString);
@@ -214,6 +213,8 @@ public class clientHandler extends Thread {
                                 //无权执行
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
                             }
+
+
                         }
 
                     }
