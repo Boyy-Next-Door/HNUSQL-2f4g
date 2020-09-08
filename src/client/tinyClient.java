@@ -86,27 +86,31 @@ public class tinyClient {
      */
     public boolean login(String ip,int port,String username,String password)throws Exception{
         if(startConnection(ip,port)==false)return false;
-        Map<String,String> map=new HashMap<String,String>();
-        map.put("username",username);
-        map.put("password",password);
-        String str= JSON.toJSONString(map);
+        //Map<String,String> map=new HashMap<String,String>();
+        //map.put("username",username);
+        //map.put("password",password);
+        //String str= JSON.toJSONString(map);
+        Request request=new Request(null, Request.LOGIN,null,username,password);
+        String str= JSONObject.toJSONString(request);
         out.println(str);
         /*
         需要根据客户端发送的信息判断是否登陆
         暂时默认可以直接登陆
          */
         String resp=in.readLine();
-        cookie=resp;
+        JSONObject jsonObject= JSONObject.parseObject(resp);
+        cookie= jsonObject.getString("cookie");
+        System.out.println("cookie="+cookie);
         return true;
     }
 
     /**
      *
-     * @param username
+     *
      * @return
      * @throws Exception
      */
-    public BaseResponse getDatabases(String username)throws Exception{
+    public BaseResponse getDatabases()throws Exception{
         String rawSQL="show databases";
         String responseStr;
         Request request=new Request(cookie, Request.SHOW_DATABASES,rawSQL);
@@ -122,19 +126,19 @@ public class tinyClient {
 
     /**
      *
-     * @param username
+     *
      * @param databaseName
      * @return
      * @throws Exception
      */
-    public BaseResponse getTables(String username, String databaseName)throws Exception{
+    public BaseResponse getTables(String databaseName)throws Exception{
         String rawSQL="show tables;";
         String responseStr;
         Request request=new Request(cookie, Request.SHOW_TABLES,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);
         responseStr=in.readLine();
-        //System.out.println(responseStr);
+        System.out.println(responseStr);
         //JSONObject jsonObject= JSONObject.parseObject(responseStr);
        // BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
         BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
@@ -144,12 +148,12 @@ public class tinyClient {
 
     /**
      *
-     * @param username
+     *
      * @param rawSQL
      * @return
      * @throws Exception
      */
-    public BaseResponse Select(String username, String rawSQL)throws Exception{
+    public BaseResponse Select(String rawSQL)throws Exception{
         //BaseResponse baseResponse=new BaseResponse();
         Request request=new Request(cookie, Request.SELECT,rawSQL);
         String str= JSONObject.toJSONString(request);
@@ -256,12 +260,12 @@ public class tinyClient {
 
     /**
      *
-     * @param username
+     *
      * @param rawSQL
      * @return
      * @throws Exception
      */
-    public BaseResponse Insert(String username,String rawSQL)throws Exception{
+    public BaseResponse Insert(String rawSQL)throws Exception{
         Request request=new Request(cookie, Request.INSERT,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);
@@ -279,7 +283,7 @@ public class tinyClient {
     public static final int REVOKE = 205;
      */
 
-    public BaseResponse Create(String username,String rawSQL)throws Exception{
+    public BaseResponse Create(String rawSQL)throws Exception{
         Request request=new Request(cookie, Request.CREATE,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);
@@ -297,7 +301,7 @@ public class tinyClient {
      * @return
      * @throws Exception
      */
-    public BaseResponse Alter(String username,String rawSQL)throws Exception{
+    public BaseResponse Alter(String rawSQL)throws Exception{
         Request request=new Request(cookie, Request.ALTER,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);
@@ -307,7 +311,7 @@ public class tinyClient {
         return baseResponse;
     }
 
-    public BaseResponse Drop(String username,String rawSQL)throws Exception{
+    public BaseResponse Drop(String rawSQL)throws Exception{
         Request request=new Request(cookie, Request.DROP,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);
@@ -317,7 +321,7 @@ public class tinyClient {
         return baseResponse;
     }
 
-    public BaseResponse Grant(String username,String rawSQL)throws Exception{
+    public BaseResponse Grant(String rawSQL)throws Exception{
         Request request=new Request(cookie, Request.GRANT,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);
@@ -327,7 +331,7 @@ public class tinyClient {
         return baseResponse;
     }
 
-    public BaseResponse Revoke(String username,String rawSQL)throws Exception{
+    public BaseResponse Revoke(String rawSQL)throws Exception{
         Request request=new Request(cookie, Request.REVOKE,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);

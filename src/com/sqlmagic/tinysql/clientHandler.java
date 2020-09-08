@@ -109,26 +109,29 @@ public class clientHandler extends Thread {
                     //请求携带了cookie
                     if (clientCookie != null && !clientCookie.isEmpty()) {
                         //TODO 校验cookie
-
-                        //如果校验通过
-                        cookie = clientCookie;
-                        username = CryptoUtil.decodeTarget(cookie);
-
+                        String temp=CryptoUtil.decodeTarget(clientCookie);
+                        if(temp.charAt(0)=='{'&&temp.charAt(temp.length()-1)=='}') {
+                            //如果校验通过
+                            cookie = clientCookie;
+                            username = CryptoUtil.decodeTarget(cookie);
+                        }
                         //如果校验没有通过 说明请求用户身份非法
-                        out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
+                        else out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
 
                     } else {
+                        System.out.println("cookie is null.");
                         //没有携带cookie 这个要按照具体功能接口做处理
                     }
                     requestType = obj.getInteger("requestType");
                     rawSQL = obj.getString("rawSQL");
-
+                    System.out.println("hahaha1");
                     inputString = rawSQL;
 
                     startAt = 0;
 
 
                     while (startAt < inputString.length() - 1) {
+                        System.out.println("hahaha2");
                         endAt = inputString.indexOf(";", startAt);
                         //这里是在处理多个以分号结尾的独立语句  实际上我们不允许这样操作 一次发送的指令指挥包含一条独立语句
                         if (endAt == -1)                                //没有以;结尾  认为字符串的末尾就是指令的结尾
@@ -139,10 +142,11 @@ public class clientHandler extends Thread {
 
                         if (requestType == Request.LOGIN) {     /*登陆*/
                             //读取从客户端发过来的用户名和密码
-                            JSONObject jsonObject = JSON.parseObject(cmdString);
-                            username = jsonObject.getString("username");
-                            password = jsonObject.getString("password");
-
+                            //JSONObject jsonObject = JSON.parseObject(cmdString);
+                            username = obj.getString("username");
+                            password = obj.getString("password");
+                            System.out.println("username="+username);
+                            System.out.println("password="+password);
                             //校验参数
                             if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
                                 //参数不正确
@@ -155,7 +159,7 @@ public class clientHandler extends Thread {
                             //登陆成功 创建cookie
                             if (isSuccess) {
                                 //创建cookie
-                                cookie = CryptoUtil.encodeSrc(username);
+                                cookie = CryptoUtil.encodeSrc("{"+username+"}");
                                 //返回给客户端
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
                             } else {
