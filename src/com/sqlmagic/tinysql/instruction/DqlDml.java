@@ -48,7 +48,7 @@ public class DqlDml {
             myTableUtil=buildResults(display_rs);
            // String s=JSONObject.toJSONString(myTableUtil);
            // System.out.println(s);
-            System.out.println(myTableUtil.generate());
+           // System.out.println(myTableUtil.generate());
             BaseResponse baseResponse =BaseResponse.ok(myTableUtil.generate());
             String str=JSONObject.toJSONString(baseResponse);
             out.println(str);

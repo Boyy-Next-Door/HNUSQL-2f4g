@@ -21,9 +21,12 @@
   <component name="ChangeListManager">
     <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/test2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/test2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/client/test2.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/client/test2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/tinyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/tinyClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DqlDml.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DqlDml.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/Show.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/Show.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +76,7 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.test2">
+  <component name="RunManager" selected="Application.tinySQLCmd">
     <configuration name="UserManager2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="usersystem2.UserManager2" />
       <module name="tinySQL-2" />
@@ -141,9 +144,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.tinySQLCmd" />
         <item itemvalue="Application.test2" />
         <item itemvalue="Application.tinyServer" />
-        <item itemvalue="Application.tinySQLCmd" />
         <item itemvalue="Application.UserManager2" />
         <item itemvalue="Application.tinySQLCmd (2)" />
       </list>
@@ -168,7 +171,7 @@
       <workItem from="1599360022150" duration="12329000" />
       <workItem from="1599439805540" duration="1399000" />
       <workItem from="1599526002748" duration="9246000" />
-      <workItem from="1599545357891" duration="860000" />
+      <workItem from="1599545357891" duration="3518000" />
     </task>
     <task id="LOCAL-00001" summary="一点点注释">
       <created>1594170959320</created>
@@ -289,7 +292,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599533415082</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="封装login">
+      <created>1599546789488</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1599546789488</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,7 +326,8 @@
     <MESSAGE value="7.15 更改接口参数" />
     <MESSAGE value=" 修改接口错误" />
     <MESSAGE value="增加一个简单的正则表达式" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加一个简单的正则表达式" />
+    <MESSAGE value="封装login" />
+    <option name="LAST_COMMIT_MESSAGE" value="封装login" />
   </component>
   <component name="WindowStateProjectService">
     <state x="539" y="183" key="#Project_Structure" timestamp="1594953207836">
@@ -353,12 +364,12 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="629" y="135" key="#tinySQLCmd_(2)/0.0.1920.1040@0.0.1920.1040" timestamp="1594697216124" />
-    <state x="227" y="23" key="CommitChangelistDialog2" timestamp="1599533414867">
+    <state x="227" y="23" key="CommitChangelistDialog2" timestamp="1599546789143">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state x="341" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1594953233359" />
     <state x="227" y="23" key="CommitChangelistDialog2/0.23.1280.723@0.23.1280.723" timestamp="1594170958918" />
-    <state x="227" y="23" key="CommitChangelistDialog2/0.23.1280.726@0.23.1280.726" timestamp="1599533414867" />
+    <state x="227" y="23" key="CommitChangelistDialog2/0.23.1280.726@0.23.1280.726" timestamp="1599546789143" />
     <state x="128" y="85" key="DiffContextDialog" timestamp="1599531919517">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
@@ -367,37 +378,37 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="724" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1594023647448" />
-    <state width="1238" height="157" key="GridCell.Tab.0.bottom" timestamp="1599546519643">
+    <state width="1238" height="267" key="GridCell.Tab.0.bottom" timestamp="1599550641197">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state width="1877" height="231" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1594956234657" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1594114452716" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.723@0.23.1280.723" timestamp="1594195265090" />
-    <state width="1238" height="157" key="GridCell.Tab.0.bottom/0.23.1280.726@0.23.1280.726" timestamp="1599546519643" />
+    <state width="1238" height="267" key="GridCell.Tab.0.bottom/0.23.1280.726@0.23.1280.726" timestamp="1599550641197" />
     <state width="1238" height="169" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
-    <state width="1238" height="157" key="GridCell.Tab.0.center" timestamp="1599546519642">
+    <state width="1238" height="267" key="GridCell.Tab.0.center" timestamp="1599550641197">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state width="1877" height="231" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1594956234657" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
-    <state width="1238" height="157" key="GridCell.Tab.0.center/0.23.1280.726@0.23.1280.726" timestamp="1599546519642" />
+    <state width="1238" height="267" key="GridCell.Tab.0.center/0.23.1280.726@0.23.1280.726" timestamp="1599550641197" />
     <state width="1238" height="169" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1238" height="157" key="GridCell.Tab.0.left" timestamp="1599546519642">
+    <state width="1238" height="267" key="GridCell.Tab.0.left" timestamp="1599550641196">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state width="1877" height="231" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1594956234656" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.723@0.23.1280.723" timestamp="1594195265086" />
-    <state width="1238" height="157" key="GridCell.Tab.0.left/0.23.1280.726@0.23.1280.726" timestamp="1599546519642" />
+    <state width="1238" height="267" key="GridCell.Tab.0.left/0.23.1280.726@0.23.1280.726" timestamp="1599550641196" />
     <state width="1238" height="169" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1238" height="157" key="GridCell.Tab.0.right" timestamp="1599546519643">
+    <state width="1238" height="267" key="GridCell.Tab.0.right" timestamp="1599550641197">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state width="1877" height="231" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1594956234657" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
-    <state width="1238" height="157" key="GridCell.Tab.0.right/0.23.1280.726@0.23.1280.726" timestamp="1599546519643" />
+    <state width="1238" height="267" key="GridCell.Tab.0.right/0.23.1280.726@0.23.1280.726" timestamp="1599550641197" />
     <state width="1238" height="169" key="GridCell.Tab.0.right/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
     <state width="1877" height="452" key="GridCell.Tab.1.bottom" timestamp="1594955503801">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -435,13 +446,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1920.1040@0.0.1920.1040" timestamp="1594783795582" />
-    <state x="240" y="124" key="Vcs.Push.Dialog.v2" timestamp="1599533434238">
+    <state x="240" y="124" key="Vcs.Push.Dialog.v2" timestamp="1599546796411">
       <screen x="0" y="23" width="1280" height="726" />
     </state>
     <state x="288" y="115" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1599459600342" />
     <state x="360" y="145" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598949686850" />
     <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.723@0.23.1280.723" timestamp="1594170965651" />
-    <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.726@0.23.1280.726" timestamp="1599533434238" />
+    <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.726@0.23.1280.726" timestamp="1599546796411" />
     <state x="-150" y="117" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594785002426">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -476,7 +487,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/usersystem2/UserManager2.java</url>
-          <line>22</line>
+          <line>23</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

@@ -109,7 +109,6 @@ public class clientHandler extends Thread {
                     clientCookie = obj.getString("cookie");
                     //请求携带了cookie
                     if (clientCookie != null && !clientCookie.isEmpty()) {
-                        //TODO 校验cookie
                         String temp = CryptoUtil.decodeTarget(clientCookie);
                         if(Pattern.matches("].*}", temp)==true){
                             //如果校验通过
@@ -188,16 +187,16 @@ public class clientHandler extends Thread {
                                 || requestType == Request.UPDATE || requestType == Request.DELETE) { /*增删改查*/
                             // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
-                            System.out.println("into Select.");
+                            //System.out.println("into Select.");
                             boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
 
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
-                               // System.out.println("qualified");
+                             //   System.out.println("qualified");
                                 dqlDml.SelectInsertUpdateDelete(con, stmt, requestType, out, cmdString);
                             } else {
                                 //无权执行
-                               // System.out.println("unqualified");
+                             //   System.out.println("unqualified");
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
                             }
 
@@ -229,9 +228,7 @@ public class clientHandler extends Thread {
                     break;
                 }
 
-
             }
-
 
             out.close();
             in.close();
@@ -239,85 +236,6 @@ public class clientHandler extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-
-    public MyTableUtil buildResults(ResultSet rs) throws java.sql.SQLException {
-        System.out.println("======================================");
-        MyTableUtil myTableUtil = new MyTableUtil();
-        int numCols = 0, nameLength;
-        ResultSetMetaData meta = rs.getMetaData();
-        int cols = meta.getColumnCount();
-        int[] width = new int[cols];
-
-        boolean first = true;
-        StringBuffer head = new StringBuffer();
-
-        while (rs.next()) {
-
-            String text = new String();
-            List<String> textList = new ArrayList<>();
-
-            for (int ii = 0; ii < cols; ii++) {
-                String value = rs.getString(ii + 1);
-                if (first) {
-
-                    width[ii] = meta.getColumnDisplaySize(ii + 1);
-
-                    nameLength = meta.getColumnName(ii + 1).length();
-                    if (nameLength > width[ii]) width[ii] = nameLength;
-                    System.out.println(meta.getColumnName(ii + 1));
-                    myTableUtil.addColumn(meta.getColumnName(ii + 1));
-
-                }
-                text += padString(value, width[ii]);
-                System.out.println("value=" + value);
-                textList.add(value);
-                text += " ";   // the gap between the columns
-            }
-            first = false;
-            //      System.out.println("print text");
-            //     System.out.println(text);
-            String[] strs = new String[textList.size()];
-            for (int i = 0; i < textList.size(); i++) {
-                strs[i] = textList.get(i);
-            }
-            for (String s : strs) {
-                System.out.println(s);
-            }
-            myTableUtil.addRow(strs);
-
-            numCols++;
-
-        }
-        //  myTableUtil.addColumn("id");myTableUtil.addColumn("name");
-        //  myTableUtil.addRow("1","1");
-        System.out.println(myTableUtil.generate());
-        System.out.println("======================================");
-        return myTableUtil;
-    }
-
-
-    private static ArrayList<DatabaseMapper.MapperEntry> getDatabaseList() {
-        return DatabaseMapper.getDatabaseList();
-    }
-
-
-    private static String padString(int inputint, int padLength) {
-        return padString(Integer.toString(inputint), padLength);
-    }
-
-
-    private static String padString(String inputString, int padLength) {
-        StringBuffer outputBuffer;
-        String blanks = "                                        ";
-        if (inputString != (String) null)
-            outputBuffer = new StringBuffer(inputString);
-        else
-            outputBuffer = new StringBuffer(blanks);
-        while (outputBuffer.length() < padLength)
-            outputBuffer.append(blanks);
-        return outputBuffer.toString().substring(0, padLength);
     }
 
 
