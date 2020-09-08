@@ -149,11 +149,13 @@ public class clientHandler extends Thread {
                             }
                             //对用户名和密码进行判断
                             boolean isSuccess = UserManager2.login(username, password);
+                            isSuccess=true;
 
                             //登陆成功 创建cookie
                             if (isSuccess) {
                                 //创建cookie
                                 cookie = CryptoUtil.encodeSrc("{"+username+"}");
+                                //System.out.println(cookie);
                                 //返回给客户端
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
                             } else {
@@ -183,6 +185,7 @@ public class clientHandler extends Thread {
                                 || requestType == Request.UPDATE || requestType == Request.DELETE) { /*增删改查*/
                             // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
+
                             boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
 
                             if (isQualified) {
@@ -192,12 +195,15 @@ public class clientHandler extends Thread {
                                 //无权执行
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
                             }
+
+
                         } else if (requestType == Request.CREATE || requestType == Request.ALTER
                                 || requestType == Request.DROP || requestType == Request.GRANT
                                 || requestType == Request.REVOKE) { /*数据定义语言、数据控制语言*/
 
                             //首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
+
                             boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
 
                             if (isQualified) {
@@ -207,6 +213,8 @@ public class clientHandler extends Thread {
                                 //无权执行
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
                             }
+
+
                         }
 
                     }

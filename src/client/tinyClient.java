@@ -93,7 +93,8 @@ public class tinyClient {
         JSONObject jsonObject= JSONObject.parseObject(resp);
         int status=jsonObject.getInteger("status");
         if(status==0) {
-            cookie = jsonObject.getString("cookie");
+            cookie = (String) jsonObject.getString("data");
+            //System.out.println(cookie);
             return true;
         }
         else if(status==1){
@@ -104,7 +105,7 @@ public class tinyClient {
 
     /**
      *
-     * @param databaseName
+     * @param rawSQL
      * @return
      * @throws Exception
      */
