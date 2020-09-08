@@ -109,8 +109,8 @@ public class clientHandler extends Thread {
                     //请求携带了cookie
                     if (clientCookie != null && !clientCookie.isEmpty()) {
                         //TODO 校验cookie
-                        String temp=CryptoUtil.decodeTarget(clientCookie);
-                        if(temp.charAt(0)=='{'&&temp.charAt(temp.length()-1)=='}') {
+                        String temp = CryptoUtil.decodeTarget(clientCookie);
+                        if (temp.charAt(0) == '{' && temp.charAt(temp.length() - 1) == '}') {
                             //如果校验通过
                             cookie = clientCookie;
                             username = CryptoUtil.decodeTarget(cookie);
@@ -145,8 +145,8 @@ public class clientHandler extends Thread {
                             //JSONObject jsonObject = JSON.parseObject(cmdString);
                             username = obj.getString("username");
                             password = obj.getString("password");
-                            System.out.println("username="+username);
-                            System.out.println("password="+password);
+                            System.out.println("username=" + username);
+                            System.out.println("password=" + password);
                             //校验参数
                             if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
                                 //参数不正确
@@ -159,7 +159,7 @@ public class clientHandler extends Thread {
                             //登陆成功 创建cookie
                             if (isSuccess) {
                                 //创建cookie
-                                cookie = CryptoUtil.encodeSrc("{"+username+"}");
+                                cookie = CryptoUtil.encodeSrc("{" + username + "}");
                                 //返回给客户端
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
                             } else {
@@ -189,7 +189,8 @@ public class clientHandler extends Thread {
                                 || requestType == Request.UPDATE || requestType == Request.DELETE) { /*增删改查*/
                             // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
-                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
+                            BaseResponse resp = preParser.verifyPermission(cmdString, username, fName, con);
+                            boolean isQualified = resp.getStatus() == 0 ? true : false;
 
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
@@ -204,8 +205,8 @@ public class clientHandler extends Thread {
 
                             //首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
-                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName);
-
+                            BaseResponse resp = preParser.verifyPermission(cmdString, username, fName, con);
+                            boolean isQualified = resp.getStatus() == 0 ? true : false;
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
                                 ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString);

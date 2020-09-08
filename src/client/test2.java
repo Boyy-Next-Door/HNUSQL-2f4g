@@ -10,8 +10,8 @@ public class test2 {
             //client.startConnection("127.0.0.1",6666);
             String uname, pword;
             Scanner sc = new Scanner(System.in);
-            uname = sc.nextLine();
-            pword = sc.nextLine();
+            uname = "123";
+            pword = "123";
 
             if (client.login("127.0.0.1", 6666, uname, pword) == false) {
                 System.out.println("login failed");
