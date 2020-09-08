@@ -356,4 +356,24 @@ public class tinyClient {
     }
 
 
+
+
+    /*
+     * 测试服务器连通性
+     * @param host
+     * @param port
+     * @return true客户端成功和服务器连接，false客户端和服务器未连接
+     */
+    public boolean testConnect(String host,int port){
+        return clientSocket.isConnected();
+    }
+
+
+    public void stopConnection() throws Exception {
+        in.close();
+        out.close();
+        clientSocket.close();
+    }
+
+
 }
