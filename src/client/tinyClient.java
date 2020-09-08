@@ -153,9 +153,6 @@ public class tinyClient {
         String str= JSONObject.toJSONString(request);
         out.println(str);
         responseStr=in.readLine();
-       // System.out.println(responseStr);
-        //JSONObject jsonObject= JSONObject.parseObject(responseStr);
-       // BaseResponse baseResponse=jsonObject.toJavaObject(BaseResponse.class);
         BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
         return baseResponse;
     }
@@ -169,21 +166,23 @@ public class tinyClient {
      * @throws Exception
      */
     public BaseResponse Select(String rawSQL)throws Exception{
-        //BaseResponse baseResponse=new BaseResponse();
         Request request=new Request(cookie, Request.SELECT,rawSQL);
         String str= JSONObject.toJSONString(request);
         out.println(str);
         String responseStr=in.readLine();
-       // System.out.println(responseStr);
         BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
-        String tempStr=(String)baseResponse.getData();
-       //System.out.println(tempStr);
-       // System.out.println(tempStr.length());
 
+        //服务器请求失败，直接返回
+        if(baseResponse.getStatus()==1){
+            System.out.println(1);
+            return baseResponse;
+        }
+
+
+        String tempStr=(String)baseResponse.getData();
         /*
         解析字符串
          */
-
         MyTableUtil newTable=new MyTableUtil();
         int flag1=0;
         int flag2=0;
@@ -268,7 +267,7 @@ public class tinyClient {
         }
 
         BaseResponse returnResponse=BaseResponse.ok(newTable);
-        System.out.println(newTable.generate());
+       // System.out.println(newTable.generate());
       //  BaseResponse baseResponse=JSONObject.parseObject(responseStr,BaseResponse.class);
         return returnResponse;
     }
@@ -311,7 +310,7 @@ public class tinyClient {
 
     /**
      *
-     * @param username
+     *
      * @param rawSQL
      * @return
      * @throws Exception

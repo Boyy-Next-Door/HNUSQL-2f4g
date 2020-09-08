@@ -153,6 +153,7 @@ public class clientHandler extends Thread {
                             boolean isSuccess = UserManager2.login(username, password);
                             //isSuccess = true;
 
+
                             //登陆成功 创建cookie
                             if (isSuccess) {
                                 //创建cookie
@@ -187,14 +188,16 @@ public class clientHandler extends Thread {
                                 || requestType == Request.UPDATE || requestType == Request.DELETE) { /*增删改查*/
                             // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
-
+                            System.out.println("into Select.");
                             boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
 
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
+                               // System.out.println("qualified");
                                 dqlDml.SelectInsertUpdateDelete(con, stmt, requestType, out, cmdString);
                             } else {
                                 //无权执行
+                               // System.out.println("unqualified");
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
                             }
 
