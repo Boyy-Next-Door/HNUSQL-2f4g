@@ -19,6 +19,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 public class clientHandler extends Thread {
     static Vector tableList;
@@ -110,8 +111,9 @@ public class clientHandler extends Thread {
                     if (clientCookie != null && !clientCookie.isEmpty()) {
                         //TODO 校验cookie
                         String temp = CryptoUtil.decodeTarget(clientCookie);
-                        if (temp.charAt(0) == '{' && temp.charAt(temp.length() - 1) == '}') {
+                        if(Pattern.matches("].*}", temp)==true){
                             //如果校验通过
+                            //System.out.println("pass");
                             cookie = clientCookie;
                             username = CryptoUtil.decodeTarget(cookie);
                         }
@@ -149,12 +151,12 @@ public class clientHandler extends Thread {
                             }
                             //对用户名和密码进行判断
                             boolean isSuccess = UserManager2.login(username, password);
-                            isSuccess = true;
+                            //isSuccess = true;
 
                             //登陆成功 创建cookie
                             if (isSuccess) {
                                 //创建cookie
-                                cookie = CryptoUtil.encodeSrc("{" + username + "}");
+                                cookie = CryptoUtil.encodeSrc("]" + username + "}");
                                 //System.out.println(cookie);
                                 //返回给客户端
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
@@ -213,8 +215,6 @@ public class clientHandler extends Thread {
                                 //无权执行
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
                             }
-
-
                         }
 
                     }
