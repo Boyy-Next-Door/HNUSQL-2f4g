@@ -74,7 +74,7 @@ public class Show {
         } else if (requestType == Request.DESCRIBE_TABLE) {
             ArrayList<TableColumn> respList = new ArrayList<>();
             DatabaseMetaData metaData = con.getMetaData();
-            String tableName = cmdString.toUpperCase().substring(9);
+            String tableName = cmdString.toUpperCase().replace("DESCRIBE","").trim();
             ResultSet display_rs = metaData.getColumns(null, null, tableName, null);
 
             while (display_rs.next()) {

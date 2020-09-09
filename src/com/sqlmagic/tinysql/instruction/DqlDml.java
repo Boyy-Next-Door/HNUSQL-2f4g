@@ -66,7 +66,7 @@ public class DqlDml {
                 out.println(str);
             } catch (Exception upex) {
                 //System.out.println(upex.getMessage());
-                BaseResponse baseResponse =BaseResponse.fail(null);
+                BaseResponse baseResponse =BaseResponse.fail(upex.getMessage());
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
             }
@@ -83,7 +83,7 @@ public class DqlDml {
                 out.println(str);
             } catch (Exception upex) {
                 //System.out.println(upex.getMessage());
-                BaseResponse baseResponse =BaseResponse.fail(null);
+                BaseResponse baseResponse =BaseResponse.fail(upex.getMessage());
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
             }
@@ -100,7 +100,7 @@ public class DqlDml {
                 out.println(str);
             } catch (Exception upex) {
                 //System.out.println(upex.getMessage());
-                BaseResponse baseResponse =BaseResponse.fail(null);
+                BaseResponse baseResponse =BaseResponse.fail(upex.getMessage());
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
             }

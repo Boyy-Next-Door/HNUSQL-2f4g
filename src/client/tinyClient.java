@@ -2,11 +2,16 @@ package client;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sqlmagic.tinysql.entities.BaseResponse;
+import com.sqlmagic.tinysql.instruction.DqlDml;
+import com.sqlmagic.tinysql.instruction.Show;
 import com.sqlmagic.tinysql.protocol.Request;
 import com.sqlmagic.tinysql.utils.MyTableUtil;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import java.io.*;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -165,7 +170,7 @@ public class tinyClient {
      * @return
      * @throws Exception
      */
-    public BaseResponse getTables(String databaseName) throws Exception {
+    public BaseResponse getTables() throws Exception {
         String rawSQL = "show tables;";
         String responseStr;
         Request request = new Request(cookie, Request.SHOW_TABLES, rawSQL);
@@ -175,6 +180,7 @@ public class tinyClient {
         BaseResponse baseResponse = JSONObject.parseObject(responseStr, BaseResponse.class);
         return baseResponse;
     }
+
 
 
     /**
@@ -293,6 +299,38 @@ public class tinyClient {
         return baseResponse;
     }
 
+    /**
+     *
+     * @param rawSQL
+     * @return
+     * @throws Exception
+     */
+    public BaseResponse Update(String rawSQL) throws Exception {
+        Request request = new Request(cookie, Request.UPDATE, rawSQL);
+        String str = JSONObject.toJSONString(request);
+        out.println(str);
+        String responseStr = in.readLine();
+        //System.out.println(responseStr);
+        BaseResponse baseResponse = JSONObject.parseObject(responseStr, BaseResponse.class);
+        return baseResponse;
+    }
+
+    /**
+     *
+     * @param rawSQL
+     * @return
+     * @throws Exception
+     */
+    public BaseResponse Delete(String rawSQL) throws Exception {
+        Request request = new Request(cookie, Request.DELETE, rawSQL);
+        String str = JSONObject.toJSONString(request);
+        out.println(str);
+        String responseStr = in.readLine();
+        //System.out.println(responseStr);
+        BaseResponse baseResponse = JSONObject.parseObject(responseStr, BaseResponse.class);
+        return baseResponse;
+    }
+
     /*
     public static final int CREATE = 201;
     public static final int ALTER = 202;
@@ -336,6 +374,8 @@ public class tinyClient {
         BaseResponse baseResponse = JSONObject.parseObject(responseStr, BaseResponse.class);
         return baseResponse;
     }
+
+
 
     public BaseResponse Grant(String rawSQL) throws Exception {
         Request request = new Request(cookie, Request.GRANT, rawSQL);
@@ -407,86 +447,21 @@ public class tinyClient {
     }
 
 
-    /*
-     * 由于user和database之间的联系还没有完全实现，
-     * 所以接下来的的函数中暂且省略username和databasename，待以后补全
-     */
-
-
-    /*
-     * 返回数据库清单
-     * @param 用户名
-     * @return 用list的格式返回数据库清单
-     */
-    /*
-    public List getDatabases(String username){
-
-    }
-     */
-
-
     /**
      * 获取指定数据库的表清单
      * @param username 暂且省略
      * @param databaseName 暂且省略
      * @return 用list的格式返回指定数据库的表清单，list中的每一项都代表一个表
      */
-    /*
-    public List getTables(String username, String databaseName)throws Exception{
-        List<String> respList=new ArrayList<>();
-        String msg="show tables";
-        //out.println(msg);
-        respList=sendMessage(msg);
-        return respList;
-    }
 
-     */
-
-    /**
-     * 获取指定表的内容
-     *
-     * @param username     暂且省略
-     * @param databaseName 暂且省略
-     * @param tableName    暂且省略
-     * @return
-     */
-    public List getTableContent(String username, String databaseName, String tableName) throws Exception {
-        List<String> respList = new ArrayList<>();
-        List<String[]> listStr = new ArrayList<>();
-        String msg = "select * from " + tableName;
-        respList = sendMessage(msg);
-        if (respList.size() == 0) {
-            return respList;
-        } else {
-            Iterator<String> stringIterator = respList.iterator();
-            String[] colName;
-            int col = 0;
-            while (stringIterator.hasNext()) {
-                if (col == 0) {
-                    colName = stringIterator.next().split("\\s+");
-                    listStr.add(colName);
-                    col = col + 1;
-                    continue;
-                } else if (col == 1) {
-                    String[] arr = stringIterator.next().split("\\s+");
-                    col = col + 1;
-                    continue;
-                } else {
-                    String[] arr = stringIterator.next().split("\\s+");
-                    listStr.add(arr);
-                }
-            }
-        }
-        return listStr;
-    }
 
     /**
      * 获取指定表的字段
-     *
-     *      * @return
+     * <p>
+     * * @return
      */
     public BaseResponse getTableField(String tableName) throws Exception {
-        Request request = new Request(cookie, Request.DESCRIBE_TABLE, "DESCRIBE "+tableName);
+        Request request = new Request(cookie, Request.DESCRIBE_TABLE, "DESCRIBE " + tableName);
         String str = JSONObject.toJSONString(request);
         out.println(str);
         String responseStr = in.readLine();
@@ -520,6 +495,37 @@ public class tinyClient {
     }
 
 
+    //执行任意sql
+    public BaseResponse executeSQL(String sql) throws Exception {
+        DqlDml dqlDml = DqlDml.getInstance();
+        Show show = Show.getInstance();
+        String s = sql.replace(";", "").toUpperCase();
+        if (s.startsWith("SELECT")) {
+            return Select(sql);
+        } else if (s.startsWith("INSERT")) {
+            return Insert(sql);
+        } else if (s.startsWith("UPDATE")) {
+            return Update(sql);
+        } else if (s.startsWith("DELETE")) {
+            return Delete(sql);
+        } else if (s.startsWith("CREATE")) {
+            return Create(sql);
+        } else if (s.startsWith("ALTER")) {
+            return Alter(sql);
+        } else if (s.startsWith("GRANT")) {
+            return Grant(sql);
+        } else if (s.startsWith("REVOKE")) {
+            return Revoke(sql);
+        } else if (s.startsWith("SHOW DATABASES")) {
+            return getDatabases();
+        } else if (s.startsWith("SHOW TABLES")) {
+            return getTables();
+        } else if (s.startsWith("DESCRIBE")) {
+            //把describe去掉 然后trim 得到表名
+            return getTableField(s.replace("DESCRIBE ","").trim());
+        }
+        return BaseResponse.fail("command error.");
+    }
 
 
 }

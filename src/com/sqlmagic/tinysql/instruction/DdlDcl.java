@@ -9,11 +9,13 @@ import com.sqlmagic.tinysql.Logger;
 import com.sqlmagic.tinysql.entities.*;
 import com.sqlmagic.tinysql.protocol.*;
 import com.sqlmagic.tinysql.tinySQLGlobals;
+import usersystem2.*;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class DdlDcl {
@@ -28,7 +30,7 @@ public class DdlDcl {
         return instance;
     }
 
-    public void ddlAndDcl(Connection con, Statement statement, String username,
+    public void ddlAndDcl(String databaseName,Connection con, Statement statement, String username,
                           int requestType, PrintWriter out, String rawSQL, Logger logger)throws Exception{
         if(requestType== Request.CREATE){
             try {
@@ -42,9 +44,33 @@ public class DdlDcl {
                 BaseResponse baseResponse =BaseResponse.ok(null);
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
+
+                if(rawSQL.toUpperCase().startsWith("CREATE TABLE")){
+                    //todo  给见表的用户授权  给admin也授权
+                    PreParser preParser = new PreParser();
+                    preParser.setParser(rawSQL);
+                    String tableName = preParser.tableName;
+                    User user = UserManager2.getUserByName(username);
+                    User admin = UserManager2.getUserByName("admin");
+                    Permission permission = new Permission();
+                    HashMap<Table, Permission> tablePermissionHashMap= new HashMap<>();
+                    Database database = new Database(databaseName);
+                    Table table = new Table(database,tableName,(byte)0xff);
+                    permission.setTarget(1);
+                    permission.setDatabase(database);
+                    permission.setTable(table);
+                    permission.setPermission((byte)0xff);
+                    permission.setGrantedBy(admin);
+                    permission.setGrantType(2);
+                    tablePermissionHashMap.put(table,permission);
+                    user.setPermissions(tablePermissionHashMap);
+                    admin.setPermissions(tablePermissionHashMap);
+
+                    UserManager2.writeUsersToFile();
+                }
             } catch (Exception upex) {
                 //System.out.println(upex.getMessage());
-                BaseResponse baseResponse =BaseResponse.fail(null);
+                BaseResponse baseResponse =BaseResponse.fail(upex.getMessage());
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
             }
@@ -61,7 +87,7 @@ public class DdlDcl {
                 out.println(str);
             } catch (Exception upex) {
                 //System.out.println(upex.getMessage());
-                BaseResponse baseResponse =BaseResponse.fail(null);
+                BaseResponse baseResponse =BaseResponse.fail(upex.getMessage());
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
             }
@@ -78,13 +104,15 @@ public class DdlDcl {
                 out.println(str);
             } catch (Exception upex) {
                 //System.out.println(upex.getMessage());
-                BaseResponse baseResponse =BaseResponse.fail(null);
+                BaseResponse baseResponse =BaseResponse.fail(upex.getMessage());
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
             }
         }
         else if (requestType==Request.GRANT){
             try {
+//                int i = rawSQL.toUpperCase().indexOf("TO");
+//                String substring = rawSQL.substring(i + 2).trim().split("\\s+")[0];
                 rawSQL=rawSQL+" EX "+username;
                 statement.executeUpdate(rawSQL);
                 //logger记录
@@ -96,13 +124,15 @@ public class DdlDcl {
                 out.println(str);
             } catch (Exception upex) {
                 //System.out.println(upex.getMessage());
-                BaseResponse baseResponse =BaseResponse.fail(null);
+                BaseResponse baseResponse =BaseResponse.fail(upex.getMessage());
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
             }
         }
         else if (requestType==Request.REVOKE){
             try {
+//                int i = rawSQL.toUpperCase().indexOf("FROM");
+//                String substring = rawSQL.substring(i + 2).trim().split("\\s+")[0];
                 rawSQL=rawSQL+" EX "+username;
                 statement.executeUpdate(rawSQL);
                 //logger记录
@@ -114,7 +144,7 @@ public class DdlDcl {
                 out.println(str);
             } catch (Exception upex) {
                 //System.out.println(upex.getMessage());
-                BaseResponse baseResponse =BaseResponse.fail(null);
+                BaseResponse baseResponse =BaseResponse.fail(upex.getMessage());
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
             }

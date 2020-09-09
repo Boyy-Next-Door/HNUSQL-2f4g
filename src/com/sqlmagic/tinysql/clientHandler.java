@@ -116,7 +116,8 @@ public class clientHandler extends Thread {
                             //如果校验通过
                             //System.out.println("pass");
                             cookie = clientCookie;
-                            username = CryptoUtil.decodeTarget(cookie);
+                            String s = CryptoUtil.decodeTarget(cookie);
+                            username = s.substring(1,s.length()-1);
                         }
                         //如果校验没有通过 说明请求用户身份非法
                         else out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
@@ -191,6 +192,7 @@ public class clientHandler extends Thread {
                             } else {
                                 fName = databaseName;
                                 con = dbConnect(url);
+                                stmt = con.createStatement();
                             }
 
                             //若成功 为logger设置url 并返回结果
@@ -206,8 +208,8 @@ public class clientHandler extends Thread {
                             // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
                             System.out.println("into Select.");
-//                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
-                            boolean isQualified = true;
+                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
+//                            boolean isQualified = true;
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
                                 // System.out.println("qualified");
@@ -226,11 +228,11 @@ public class clientHandler extends Thread {
                             //首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
 
-//                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
-                            boolean isQualified = true;
+                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
+//                            boolean isQualified = true;
                             if (isQualified) {
                                 //如果有权执行 在内部返回结果
-                                ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString,logger);
+                                ddlDcl.ddlAndDcl(fName,con, stmt, username, requestType, out, cmdString,logger);
                             } else {
                                 //无权执行
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));

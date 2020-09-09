@@ -174,6 +174,7 @@ public abstract class tinySQL {
             tinyp = new tinySQLParser(SQLStream,this);
             tableName1=tinyp.tableName;
             userName=tinyp.userName;
+            nowUserName=tinyp.nowUserName;
             dbName=tinyp.dbName;
             permission=tinyp.Granting;
             tinySQLGlobals.writeLongNames();
@@ -317,7 +318,7 @@ public abstract class tinySQL {
             } else if ( actionType.equals("GRANT") ) {
                UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,0);
             } else if ( actionType.equals("REVOKE") ) {
-               UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,0);
+               UserManager2.revoke(nowUserName,userName,dbName,tableName1,permission);
             } else if( actionType.equals("GRANT_WITH_LINK") ){
                UserManager2.grant(nowUserName,userName,dbName,tableName1,permission,1);
             } else if( actionType.equals("GRANT_WITH_ADMIN") ){
@@ -357,7 +358,7 @@ public abstract class tinySQL {
       try
       {
       	jrs.setFetchSize(((tinySQLStatement)stmt).getFetchSize());
-        jrs.setType(((tinySQLStatement)stmt).getResultSetType());
+//        jrs.setType(((tinySQLStatement)stmt).getResultSetType());
       } catch (SQLException sqle) {
         Utils.log ("Caught SQLException while setting Fetchsize and ResultSetType");
         Utils.log ("   This event is (should be) impossible!"); 

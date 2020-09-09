@@ -43,7 +43,7 @@ public class tinySQLGlobals
    public static boolean DEBUG = false;
    public static boolean PARSER_DEBUG = true;
    public static boolean WHERE_DEBUG = false;
-   public static boolean EX_DEBUG = false;
+   public static boolean EX_DEBUG = true;
    public static int longNamesInFileCount;
    public static boolean debug = false;
    //日志功能标志位

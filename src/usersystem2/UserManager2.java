@@ -195,7 +195,7 @@ public class UserManager2 {
     }
 
     //将内存中的userList写入文件
-    private static synchronized void writeUsersToFile() {
+    public static synchronized void writeUsersToFile() {
 //        BufferedWriter bfw = null;
 //        try {
 //            //覆盖之前存储的users内容

@@ -312,7 +312,7 @@ public class tinySQLParser
             createColumn = parseColumnDefn(nextField);
             if ( createColumn != (tsColumn)null )
                columnList.addElement(createColumn);
-         } else if ( inputKeyWord.equals("FROM") ) {
+         } else if ( (!statementType.toUpperCase().equals("REVOKE"))&&inputKeyWord.equals("FROM") ) {
 /*
  *          Check for valid table 
  */
@@ -425,7 +425,7 @@ public class tinySQLParser
              if ( ft2.countFields() == 2 ){
                  dbName = ft2.getField(0);
                  tableName = ft2.getField(1);
-                 //System.out.println(dbName + "+" + tableName);
+                 System.out.println(dbName + "+" + tableName);
              }else if( ft2.countFields() == 1 ){
                  tableName = ft2.getField(0);
              }else{
@@ -433,7 +433,7 @@ public class tinySQLParser
              }
          }else if(inputKeyWord.equals("TO")){
              userName = nextField;     //获取用户名
-         }else if(inputKeyWord.equals("FROM")) {
+         }else if(statementType.toUpperCase().equals("REVOKE")&&inputKeyWord.equals("FROM")) {
              userName = nextField;    //获取用户名
          } else if(inputKeyWord.equals("WITH")){
             statementType = statementType + "_WITH";
@@ -452,14 +452,15 @@ public class tinySQLParser
                statementType = statementType  + "_LINK";
             }else if(getKeyWord1.toUpperCase().equals("ADMIN") && getKeyWord2.toUpperCase().equals("OPTION")){
                statementType = statementType  + "_ADMIN";
-            }else {
+            }
+             else {
                throwException(13);
             }
 
-         }
-         else if(inputKeyWord.equals("EX")){
+         }else if(inputKeyWord.equals("EX")){
             nowUserName=nextField;
          }
+
          else if ( !inputKeyWord.equals("TABLE") ) {
             throwException(10);
          }
