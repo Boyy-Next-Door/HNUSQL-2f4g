@@ -50,16 +50,16 @@ public class PreParser {
         String nextField;
         FieldTokenizer ft = new FieldTokenizer(inputString, ' ', false);
         nextField = ft.nextField();
-        if (nextField.toUpperCase().equals("CREATE")) {
-            operation = "CREATE";
+        if (nextField.toUpperCase().equals("INSERT")) {
+            operation = "INSERT";
             while (ft.hasMoreFields()) {
                 nextField = ft.nextField();
-                if (nextField.toUpperCase().equals("TABLE")) {
+                if (nextField.toUpperCase().equals("INTO")) {
                     tableName = ft.nextField();
                     break;
                 }
                 if(!ft.hasMoreFields()){
-                    System.err.println("Can't find keyword TABLE");
+                    System.err.println("Can't find keyword INTO");
                 }
             }
             perm = (byte) 0b10000000;
@@ -76,9 +76,35 @@ public class PreParser {
                 }
             }
             perm = (byte) 0b01000000;
+        } else if (nextField.toUpperCase().equals("Drop")) {
+            operation = "DROP";
+            while (ft.hasMoreFields()) {
+                nextField = ft.nextField();
+                if (nextField.toUpperCase().equals("TABLE")) {
+                    tableName = ft.nextField();
+                    break;
+                }
+                if(!ft.hasMoreFields()){
+                    System.err.println("Can't find keyword TABLE");
+                }
+            }
+            perm = (byte) 0b01000000;
         } else if (nextField.toUpperCase().equals("UPDATE")) {
             operation = "UPDATE";
             tableName = ft.nextField();
+            perm = (byte) 0b00100000;
+        } else if (nextField.toUpperCase().equals("ALTER")) {
+            operation = "ALTER";
+            while (ft.hasMoreFields()) {
+                nextField = ft.nextField();
+                if (nextField.toUpperCase().equals("TABLE")) {
+                    tableName = ft.nextField();
+                    break;
+                }
+                if(!ft.hasMoreFields()){
+                    System.err.println("Can't find keyword TABLE");
+                }
+            }
             perm = (byte) 0b00100000;
         } else if (nextField.toUpperCase().equals("SELECT")) {
             operation = "SELECT";
@@ -93,6 +119,10 @@ public class PreParser {
                 }
             }
             perm = (byte) 0b00010000;
+        } else {
+            operation = "OTHERS";
+            tableName = "";
+            perm = (byte) 0b11111111;
         }
     }
 
