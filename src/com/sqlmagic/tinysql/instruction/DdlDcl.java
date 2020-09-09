@@ -5,8 +5,10 @@ package com.sqlmagic.tinysql.instruction;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sqlmagic.tinysql.DatabaseMapper;
+import com.sqlmagic.tinysql.Logger;
 import com.sqlmagic.tinysql.entities.*;
 import com.sqlmagic.tinysql.protocol.*;
+import com.sqlmagic.tinysql.tinySQLGlobals;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -27,12 +29,16 @@ public class DdlDcl {
     }
 
     public void ddlAndDcl(Connection con, Statement statement, String username,
-                                 int requestType, PrintWriter out, String rawSQL)throws Exception{
+                          int requestType, PrintWriter out, String rawSQL, Logger logger)throws Exception{
         if(requestType== Request.CREATE){
             try {
 
                 statement.executeUpdate(rawSQL);
                 //logger记录
+                if(tinySQLGlobals.LOG) {
+                    logger.logStatement(rawSQL);
+                }
+
                 BaseResponse baseResponse =BaseResponse.ok(null);
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
@@ -47,6 +53,9 @@ public class DdlDcl {
             try {
                 statement.executeUpdate(rawSQL);
                 //logger记录
+                if(tinySQLGlobals.LOG) {
+                    logger.logStatement(rawSQL);
+                }
                 BaseResponse baseResponse =BaseResponse.ok(null);
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
@@ -61,6 +70,9 @@ public class DdlDcl {
             try {
                 statement.executeUpdate(rawSQL);
                 //logger记录
+                if(tinySQLGlobals.LOG) {
+                    logger.logStatement(rawSQL);
+                }
                 BaseResponse baseResponse =BaseResponse.ok(null);
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
@@ -76,6 +88,9 @@ public class DdlDcl {
                 rawSQL=rawSQL+" EX "+username;
                 statement.executeUpdate(rawSQL);
                 //logger记录
+                if(tinySQLGlobals.LOG) {
+                    logger.logStatement(rawSQL);
+                }
                 BaseResponse baseResponse =BaseResponse.ok(null);
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);
@@ -91,6 +106,9 @@ public class DdlDcl {
                 rawSQL=rawSQL+" EX "+username;
                 statement.executeUpdate(rawSQL);
                 //logger记录
+                if(tinySQLGlobals.LOG) {
+                    logger.logStatement(rawSQL);
+                }
                 BaseResponse baseResponse =BaseResponse.ok(null);
                 String str=JSONObject.toJSONString(baseResponse);
                 out.println(str);

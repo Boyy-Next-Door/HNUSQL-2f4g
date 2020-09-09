@@ -9,7 +9,6 @@ import com.sqlmagic.tinysql.instruction.PreParser;
 import com.sqlmagic.tinysql.instruction.Show;
 import com.sqlmagic.tinysql.protocol.Request;
 import com.sqlmagic.tinysql.utils.CryptoUtil;
-import com.sqlmagic.tinysql.utils.MD5Util;
 import com.sqlmagic.tinysql.utils.MyTableUtil;
 import usersystem2.UserManager2;
 
@@ -97,31 +96,34 @@ public class clientHandler extends Thread {
             DdlDcl ddlDcl = DdlDcl.getInstance();
             while (true) {
                 try {
-                    //è·å–å®¢æˆ·ç«¯å‘æ¥çš„è¯·æ±‚
+                    //»ñÈ¡¿Í»§¶Ë·¢À´µÄÇëÇó
                     inputString = in.readLine().trim();
-                    //ç©ºä¸²åˆ™å¿½ç•¥
+
+                    System.out.println(inputString);
+                    //¿Õ´®ÔòºöÂÔ
                     if (inputString == (String) null || inputString.isEmpty()) continue;
-                    //è§£æè¯·æ±‚
-                    String clientCookie;        //ç”¨æˆ·èº«ä»½cookie
-                    int requestType;            //è¯·æ±‚æ¥å£ç±»å‹
-                    String rawSQL;              //åŸå§‹SQLè¯­å¥
+                    //½âÎöÇëÇó
+                    String clientCookie;        //ÓÃ»§Éí·İcookie
+                    int requestType;            //ÇëÇó½Ó¿ÚÀàĞÍ
+                    String rawSQL;              //Ô­Ê¼SQLÓï¾ä
                     JSONObject obj = JSON.parseObject(inputString);
                     clientCookie = obj.getString("cookie");
-                    //è¯·æ±‚æºå¸¦äº†cookie
+                    //ÇëÇóĞ¯´øÁËcookie
                     if (clientCookie != null && !clientCookie.isEmpty()) {
+                        //TODO Ğ£Ñécookie
                         String temp = CryptoUtil.decodeTarget(clientCookie);
-                        if(Pattern.matches("].*}", temp)==true){
-                            //å¦‚æœæ ¡éªŒé€šè¿‡
+                        if (Pattern.matches("].*}", temp) == true) {
+                            //Èç¹ûĞ£ÑéÍ¨¹ı
                             //System.out.println("pass");
                             cookie = clientCookie;
                             username = CryptoUtil.decodeTarget(cookie);
                         }
-                        //å¦‚æœæ ¡éªŒæ²¡æœ‰é€šè¿‡ è¯´æ˜è¯·æ±‚ç”¨æˆ·èº«ä»½éæ³•
+                        //Èç¹ûĞ£ÑéÃ»ÓĞÍ¨¹ı ËµÃ÷ÇëÇóÓÃ»§Éí·İ·Ç·¨
                         else out.println(JSON.toJSONString(BaseResponse.fail("Login status error.")));
 
                     } else {
                         System.out.println("cookie is null.");
-                        //æ²¡æœ‰æºå¸¦cookie è¿™ä¸ªè¦æŒ‰ç…§å…·ä½“åŠŸèƒ½æ¥å£åšå¤„ç†
+                        //Ã»ÓĞĞ¯´øcookie Õâ¸öÒª°´ÕÕ¾ßÌå¹¦ÄÜ½Ó¿Ú×ö´¦Àí
                     }
                     requestType = obj.getInteger("requestType");
                     rawSQL = obj.getString("rawSQL");
@@ -130,44 +132,60 @@ public class clientHandler extends Thread {
 
                     while (startAt < inputString.length() - 1) {
                         endAt = inputString.indexOf(";", startAt);
-                        //è¿™é‡Œæ˜¯åœ¨å¤„ç†å¤šä¸ªä»¥åˆ†å·ç»“å°¾çš„ç‹¬ç«‹è¯­å¥  å®é™…ä¸Šæˆ‘ä»¬ä¸å…è®¸è¿™æ ·æ“ä½œ ä¸€æ¬¡å‘é€çš„æŒ‡ä»¤æŒ‡æŒ¥åŒ…å«ä¸€æ¡ç‹¬ç«‹è¯­å¥
-                        if (endAt == -1)                                //æ²¡æœ‰ä»¥;ç»“å°¾  è®¤ä¸ºå­—ç¬¦ä¸²çš„æœ«å°¾å°±æ˜¯æŒ‡ä»¤çš„ç»“å°¾
+                        //ÕâÀïÊÇÔÚ´¦Àí¶à¸öÒÔ·ÖºÅ½áÎ²µÄ¶ÀÁ¢Óï¾ä  Êµ¼ÊÉÏÎÒÃÇ²»ÔÊĞíÕâÑù²Ù×÷ Ò»´Î·¢ËÍµÄÖ¸ÁîÖ¸»Ó°üº¬Ò»Ìõ¶ÀÁ¢Óï¾ä
+                        if (endAt == -1)                                //Ã»ÓĞÒÔ;½áÎ²  ÈÏÎª×Ö·û´®µÄÄ©Î²¾ÍÊÇÖ¸ÁîµÄ½áÎ²
                             endAt = inputString.length();
                         cmdString = inputString.substring(startAt, endAt);
                         startAt = endAt + 1;
 
-
-                        if (requestType == Request.LOGIN) {     /*ç™»é™†*/
-                            //è¯»å–ä»å®¢æˆ·ç«¯å‘è¿‡æ¥çš„ç”¨æˆ·åå’Œå¯†ç 
-                            //JSONObject jsonObject = JSON.parseObject(cmdString);
+                        if (requestType == Request.REGISTER) {     /*×¢²á*/
                             username = obj.getString("username");
                             password = obj.getString("password");
-                            //æ ¡éªŒå‚æ•°
+                            //Ğ£Ñé²ÎÊı
                             if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-                                //å‚æ•°ä¸æ­£ç¡®
+                                //²ÎÊı²»ÕıÈ·
                                 out.println(JSON.toJSONString(BaseResponse.fail("Parameter error.")));
                                 continue;
                             }
-                            //å¯¹ç”¨æˆ·åå’Œå¯†ç è¿›è¡Œåˆ¤æ–­
+                            //¶ÔÓÃ»§ÃûºÍÃÜÂë½øĞĞÅĞ¶Ï
+                            boolean isSuccess = UserManager2.register(username, password);
+
+                            if (isSuccess) {
+                                //·µ»Ø¸ø¿Í»§¶Ë
+                                out.println(JSON.toJSONString(BaseResponse.ok("ok", null)));
+                            } else {
+                                out.println(JSON.toJSONString(BaseResponse.fail("Register failed.")));
+                            }
+                        } else if (requestType == Request.LOGIN) {     /*µÇÂ½*/
+                            //¶ÁÈ¡´Ó¿Í»§¶Ë·¢¹ıÀ´µÄÓÃ»§ÃûºÍÃÜÂë
+                            username = obj.getString("username");
+                            password = obj.getString("password");
+                            //Ğ£Ñé²ÎÊı
+                            if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+                                //²ÎÊı²»ÕıÈ·
+                                out.println(JSON.toJSONString(BaseResponse.fail("Parameter error.")));
+                                continue;
+                            }
+                            //¶ÔÓÃ»§ÃûºÍÃÜÂë½øĞĞÅĞ¶Ï
                             boolean isSuccess = UserManager2.login(username, password);
                             //isSuccess = true;
 
 
-                            //ç™»é™†æˆåŠŸ åˆ›å»ºcookie
+                            //µÇÂ½³É¹¦ ´´½¨cookie
                             if (isSuccess) {
-                                //åˆ›å»ºcookie
+                                //´´½¨cookie
                                 cookie = CryptoUtil.encodeSrc("]" + username + "}");
                                 //System.out.println(cookie);
-                                //è¿”å›ç»™å®¢æˆ·ç«¯
+                                //·µ»Ø¸ø¿Í»§¶Ë
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", cookie)));
                             } else {
                                 out.println(JSON.toJSONString(BaseResponse.fail("Username or password error.")));
                             }
 
-                        } else if (requestType == Request.USE_DATABASE) { /*é€‰æ‹©æ•°æ®åº“*/
-                            String databaseName = cmdString.substring(4, cmdString.indexOf(";"));
+                        } else if (requestType == Request.USE_DATABASE) { /*Ñ¡ÔñÊı¾İ¿â*/
+                            String databaseName = cmdString.substring(4, cmdString.indexOf(";")==-1?cmdString.length():cmdString.indexOf(";"));
                             String url = DatabaseMapper.getURL(databaseName);
-                            //æ•°æ®åº“ä¸å­˜åœ¨
+                            //Êı¾İ¿â²»´æÔÚ
                             if (url.equals("DB_NOT_EXIST")) {
                                 out.println(JSON.toJSONString(BaseResponse.fail("Database doesn't exist.")));
                             } else {
@@ -175,46 +193,46 @@ public class clientHandler extends Thread {
                                 con = dbConnect(url);
                             }
 
-                            //è‹¥æˆåŠŸ ä¸ºloggerè®¾ç½®url å¹¶è¿”å›ç»“æœ
+                            //Èô³É¹¦ ÎªloggerÉèÖÃurl ²¢·µ»Ø½á¹û
                             if (!"DB_NOT_EXIST".equals(url) && con != null) {
                                 logger.setDataDir(url);
-                                //è¿”å›ç»“æœç»™å®¢æˆ·ç«¯
+                               //·µ»Ø½á¹û¸ø¿Í»§¶Ë
                                 out.println(JSON.toJSONString(BaseResponse.ok("ok", null)));
                             }
-                        } else if (requestType == Request.SHOW_DATABASES || requestType == Request.SHOW_TABLES) { /*showç±»æ“ä½œ*/
-                            show.whichShow(con, out, requestType);
+                        } else if (requestType == Request.SHOW_DATABASES || requestType == Request.SHOW_TABLES||requestType == Request.DESCRIBE_TABLE) { /*showÀà²Ù×÷*/
+                            show.whichShow(con, out, requestType,cmdString);
                         } else if (requestType == Request.SELECT || requestType == Request.INSERT
-                                || requestType == Request.UPDATE || requestType == Request.DELETE) { /*å¢åˆ æ”¹æŸ¥*/
-                            // é¦–å…ˆå¯¹rowSQLè¿›è¡Œè¯æ³•åˆ†æ éœ€è¦æ ¹æ®cookieè§£æå¾—åˆ°çš„ç”¨æˆ·èº«ä»½  è®¨è®ºè¯¥ç”¨æˆ·æ˜¯å¦æœ‰æƒåˆ©æ‰§è¡Œè¿™é¡¹æ“ä½œ
+                                || requestType == Request.UPDATE || requestType == Request.DELETE) { /*ÔöÉ¾¸Ä²é*/
+                            // Ê×ÏÈ¶ÔrowSQL½øĞĞ´Ê·¨·ÖÎö ĞèÒª¸ù¾İcookie½âÎöµÃµ½µÄÓÃ»§Éí·İ  ÌÖÂÛ¸ÃÓÃ»§ÊÇ·ñÓĞÈ¨ÀûÖ´ĞĞÕâÏî²Ù×÷
                             PreParser preParser = new PreParser();
-                            //System.out.println("into Select.");
-                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
-
+                            System.out.println("into Select.");
+//                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
+                            boolean isQualified = true;
                             if (isQualified) {
-                                //å¦‚æœæœ‰æƒæ‰§è¡Œ åœ¨å†…éƒ¨è¿”å›ç»“æœ
-                             //   System.out.println("qualified");
-                                dqlDml.SelectInsertUpdateDelete(con, stmt, requestType, out, cmdString);
+                                //Èç¹ûÓĞÈ¨Ö´ĞĞ ÔÚÄÚ²¿·µ»Ø½á¹û
+                                // System.out.println("qualified");
+                                dqlDml.SelectInsertUpdateDelete(con, stmt, requestType, out, cmdString,logger);
                             } else {
-                                //æ— æƒæ‰§è¡Œ
-                             //   System.out.println("unqualified");
+                                //ÎŞÈ¨Ö´ĞĞ
+                                // System.out.println("unqualified");
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
                             }
 
 
                         } else if (requestType == Request.CREATE || requestType == Request.ALTER
                                 || requestType == Request.DROP || requestType == Request.GRANT
-                                || requestType == Request.REVOKE) { /*æ•°æ®å®šä¹‰è¯­è¨€ã€æ•°æ®æ§åˆ¶è¯­è¨€*/
+                                || requestType == Request.REVOKE) { /*Êı¾İ¶¨ÒåÓïÑÔ¡¢Êı¾İ¿ØÖÆÓïÑÔ*/
 
-                            //é¦–å…ˆå¯¹rowSQLè¿›è¡Œè¯æ³•åˆ†æ éœ€è¦æ ¹æ®cookieè§£æå¾—åˆ°çš„ç”¨æˆ·èº«ä»½  è®¨è®ºè¯¥ç”¨æˆ·æ˜¯å¦æœ‰æƒåˆ©æ‰§è¡Œè¿™é¡¹æ“ä½œ
+                            //Ê×ÏÈ¶ÔrowSQL½øĞĞ´Ê·¨·ÖÎö ĞèÒª¸ù¾İcookie½âÎöµÃµ½µÄÓÃ»§Éí·İ  ÌÖÂÛ¸ÃÓÃ»§ÊÇ·ñÓĞÈ¨ÀûÖ´ĞĞÕâÏî²Ù×÷
                             PreParser preParser = new PreParser();
 
-                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
-
+//                            boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
+                            boolean isQualified = true;
                             if (isQualified) {
-                                //å¦‚æœæœ‰æƒæ‰§è¡Œ åœ¨å†…éƒ¨è¿”å›ç»“æœ
-                                ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString);
+                                //Èç¹ûÓĞÈ¨Ö´ĞĞ ÔÚÄÚ²¿·µ»Ø½á¹û
+                                ddlDcl.ddlAndDcl(con, stmt, username, Request.DROP, out, cmdString,logger);
                             } else {
-                                //æ— æƒæ‰§è¡Œ
+                                //ÎŞÈ¨Ö´ĞĞ
                                 out.println(JSON.toJSONString(BaseResponse.fail("Operation denied.")));
                             }
                         }
@@ -228,7 +246,9 @@ public class clientHandler extends Thread {
                     break;
                 }
 
+
             }
+
 
             out.close();
             in.close();
@@ -236,6 +256,85 @@ public class clientHandler extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public MyTableUtil buildResults(ResultSet rs) throws java.sql.SQLException {
+        System.out.println("======================================");
+        MyTableUtil myTableUtil = new MyTableUtil();
+        int numCols = 0, nameLength;
+        ResultSetMetaData meta = rs.getMetaData();
+        int cols = meta.getColumnCount();
+        int[] width = new int[cols];
+
+        boolean first = true;
+        StringBuffer head = new StringBuffer();
+
+        while (rs.next()) {
+
+            String text = new String();
+            List<String> textList = new ArrayList<>();
+
+            for (int ii = 0; ii < cols; ii++) {
+                String value = rs.getString(ii + 1);
+                if (first) {
+
+                    width[ii] = meta.getColumnDisplaySize(ii + 1);
+
+                    nameLength = meta.getColumnName(ii + 1).length();
+                    if (nameLength > width[ii]) width[ii] = nameLength;
+                    System.out.println(meta.getColumnName(ii + 1));
+                    myTableUtil.addColumn(meta.getColumnName(ii + 1));
+
+                }
+                text += padString(value, width[ii]);
+                System.out.println("value=" + value);
+                textList.add(value);
+                text += " ";   // the gap between the columns
+            }
+            first = false;
+            //      System.out.println("print text");
+            //     System.out.println(text);
+            String[] strs = new String[textList.size()];
+            for (int i = 0; i < textList.size(); i++) {
+                strs[i] = textList.get(i);
+            }
+            for (String s : strs) {
+                System.out.println(s);
+            }
+            myTableUtil.addRow(strs);
+
+            numCols++;
+
+        }
+        //  myTableUtil.addColumn("id");myTableUtil.addColumn("name");
+        //  myTableUtil.addRow("1","1");
+        System.out.println(myTableUtil.generate());
+        System.out.println("======================================");
+        return myTableUtil;
+    }
+
+
+    private static ArrayList<DatabaseMapper.MapperEntry> getDatabaseList() {
+        return DatabaseMapper.getDatabaseList();
+    }
+
+
+    private static String padString(int inputint, int padLength) {
+        return padString(Integer.toString(inputint), padLength);
+    }
+
+
+    private static String padString(String inputString, int padLength) {
+        StringBuffer outputBuffer;
+        String blanks = "                                        ";
+        if (inputString != (String) null)
+            outputBuffer = new StringBuffer(inputString);
+        else
+            outputBuffer = new StringBuffer(blanks);
+        while (outputBuffer.length() < padLength)
+            outputBuffer.append(blanks);
+        return outputBuffer.toString().substring(0, padLength);
     }
 
 
@@ -247,7 +346,7 @@ public class clientHandler extends Thread {
         String tableName;
         ResultSet tables_rs;
         conPath = new File(tinySQLDir);
-        fileList = conPath.listFiles();//è¿”å›æŸä¸ªç›®å½•ä¸‹æ‰€æœ‰æ–‡ä»¶å’Œç›®å½•çš„ç»å¯¹è·¯å¾„
+        fileList = conPath.listFiles();//·µ»ØÄ³¸öÄ¿Â¼ÏÂËùÓĞÎÄ¼şºÍÄ¿Â¼µÄ¾ø¶ÔÂ·¾¶
         if (fileList == null) {
 //            System.out.println(tinySQLDir + " is not a valid directory.");
             System.out.println("database does not exist.");
