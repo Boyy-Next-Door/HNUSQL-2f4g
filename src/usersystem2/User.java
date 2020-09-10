@@ -486,12 +486,9 @@ public class User implements Serializable {
                                             break;
                                     }
                                 }
-                                else {
-                                    // System.out.println("此级联撤销链上最后一个user是：" + this.username);
-                                    return;
-                                }
 
                             }
+                            return;
                         }
                     }
                 } else {

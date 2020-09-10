@@ -20,20 +20,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca78b405-3c59-4686-a33d-9deeea40fec5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/client/GUI/DBMSFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/GUI/LoginFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/GUI/QQ图片20200713092249.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/tinyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/tinyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/client/tinyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/client/tinyClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/clientHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFile.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFileTable.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/dbfFileTable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/com/sqlmagic/tinysql/tinySQL.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/static_resourse/database_mapper" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/static_resourse/database_mapper" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/MainTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/MainTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/UserManager2.class" beforeDir="false" afterPath="$PROJECT_DIR$/classes/production/tinySQL-2/usersystem2/UserManager2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/clientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/dbfFileTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/dbfFileTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DdlDcl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DdlDcl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DqlDml.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/DqlDml.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/PreParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/PreParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/Show.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/Show.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLGlobals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLGlobals.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQLParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/static_resourse/database_mapper" beforeDir="false" afterPath="$PROJECT_DIR$/src/static_resourse/database_mapper" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/usersystem/MainTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem/MainTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/usersystem2/UserManager2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem2/UserManager2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/usersystem2/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/usersystem2/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +64,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/client/GUI" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -80,17 +82,18 @@
       <recent name="com.sqlmagic.tinysql.utils" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\大三小学期\tinySQL-2\src\client\GUI" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="RunManager" selected="Application.tinyServer">
-    <configuration name="MainTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="usersystem.MainTest" />
+    <configuration name="LoginFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="client.GUI.LoginFrame" />
       <module name="tinySQL-2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="usersystem.*" />
+          <option name="PATTERN" value="client.GUI.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -98,12 +101,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserManager2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="usersystem2.UserManager2" />
+    <configuration name="MainTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="usersystem.MainTest" />
       <module name="tinySQL-2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="usersystem2.*" />
+          <option name="PATTERN" value="usersystem.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -153,10 +156,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.tinyServer" />
+        <item itemvalue="Application.LoginFrame" />
         <item itemvalue="Application.tinySQLCmd" />
         <item itemvalue="Application.MainTest" />
         <item itemvalue="Application.test2" />
-        <item itemvalue="Application.UserManager2" />
       </list>
     </recent_temporary>
   </component>
@@ -181,7 +184,8 @@
       <workItem from="1599526002748" duration="9246000" />
       <workItem from="1599545357891" duration="860000" />
       <workItem from="1599568731100" duration="13511000" />
-      <workItem from="1599611653200" duration="26540000" />
+      <workItem from="1599611653200" duration="26910000" />
+      <workItem from="1599698065000" duration="3358000" />
     </task>
     <task id="LOCAL-00001" summary="一点点注释">
       <created>1594170959320</created>
@@ -316,7 +320,14 @@
       <option name="project" value="LOCAL" />
       <updated>1599583355308</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="改了一下午BUG 应该没有大问题了">
+      <created>1599642021113</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1599642021114</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -345,7 +356,8 @@
     <MESSAGE value=" 修改接口错误" />
     <MESSAGE value="增加一个简单的正则表达式" />
     <MESSAGE value="修改了挺多东西，暂时向所有用户开放所有权限。" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改了挺多东西，暂时向所有用户开放所有权限。" />
+    <MESSAGE value="改了一下午BUG 应该没有大问题了" />
+    <option name="LAST_COMMIT_MESSAGE" value="改了一下午BUG 应该没有大问题了" />
   </component>
   <component name="WindowStateProjectService">
     <state x="539" y="183" key="#Project_Structure" timestamp="1594953207836">
@@ -387,11 +399,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="703" y="374" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1599620285807" />
-    <state x="272" y="0" key="CommitChangelistDialog2" timestamp="1599583351943">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="341" y="0" key="CommitChangelistDialog2" timestamp="1599642018195">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="272" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1599583351943" />
-    <state x="341" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1594953233359" />
+    <state x="341" y="0" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1599642018195" />
     <state x="227" y="23" key="CommitChangelistDialog2/0.23.1280.723@0.23.1280.723" timestamp="1594170958918" />
     <state x="227" y="23" key="CommitChangelistDialog2/0.23.1280.726@0.23.1280.726" timestamp="1599533414867" />
     <state width="454" height="466" key="DebuggerActiveHint" timestamp="1599636342912">
@@ -406,38 +418,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="724" y="265" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1594023647448" />
-    <state width="1877" height="241" key="GridCell.Tab.0.bottom" timestamp="1599641538704">
+    <state width="1877" height="9" key="GridCell.Tab.0.bottom" timestamp="1599700038643">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="2" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1599583647565" />
-    <state width="1877" height="241" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1599641538704" />
+    <state width="1877" height="9" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1599700038643" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1594114452716" />
     <state width="1238" height="375" key="GridCell.Tab.0.bottom/0.23.1280.723@0.23.1280.723" timestamp="1594195265090" />
     <state width="1238" height="157" key="GridCell.Tab.0.bottom/0.23.1280.726@0.23.1280.726" timestamp="1599546519643" />
     <state width="1238" height="169" key="GridCell.Tab.0.bottom/0.23.1280.777@0.23.1280.777" timestamp="1594201209215" />
-    <state width="1877" height="241" key="GridCell.Tab.0.center" timestamp="1599641538703">
+    <state width="1877" height="9" key="GridCell.Tab.0.center" timestamp="1599700038641">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="2" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1599583647565" />
-    <state width="1877" height="241" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1599641538703" />
+    <state width="1877" height="9" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1599700038641" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.center/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
     <state width="1238" height="157" key="GridCell.Tab.0.center/0.23.1280.726@0.23.1280.726" timestamp="1599546519642" />
     <state width="1238" height="169" key="GridCell.Tab.0.center/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1877" height="241" key="GridCell.Tab.0.left" timestamp="1599641538703">
+    <state width="1877" height="9" key="GridCell.Tab.0.left" timestamp="1599700038640">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="2" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1599583647565" />
-    <state width="1877" height="241" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1599641538703" />
+    <state width="1877" height="9" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1599700038640" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.left/0.23.1280.723@0.23.1280.723" timestamp="1594195265086" />
     <state width="1238" height="157" key="GridCell.Tab.0.left/0.23.1280.726@0.23.1280.726" timestamp="1599546519642" />
     <state width="1238" height="169" key="GridCell.Tab.0.left/0.23.1280.777@0.23.1280.777" timestamp="1594201209214" />
-    <state width="1877" height="241" key="GridCell.Tab.0.right" timestamp="1599641538704">
+    <state width="1877" height="9" key="GridCell.Tab.0.right" timestamp="1599700038642">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1493" height="2" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1599583647565" />
-    <state width="1877" height="241" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599641538704" />
+    <state width="1877" height="9" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599700038642" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1594114452715" />
     <state width="1238" height="375" key="GridCell.Tab.0.right/0.23.1280.723@0.23.1280.723" timestamp="1594195265089" />
     <state width="1238" height="157" key="GridCell.Tab.0.right/0.23.1280.726@0.23.1280.726" timestamp="1599546519643" />
@@ -462,16 +474,16 @@
     </state>
     <state width="1493" height="267" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1599579882578" />
     <state width="1877" height="241" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1599641538705" />
-    <state x="31" y="75" width="1434" height="695" key="MergeDialog" timestamp="1599583631661">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="56" y="90" width="1847" height="869" key="MergeDialog" timestamp="1599642097394">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="31" y="75" width="1434" height="695" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1599583631661" />
-    <state x="56" y="90" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594783809470" />
-    <state x="574" y="255" key="MultipleFileMergeDialog" timestamp="1599583639530">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="56" y="90" width="1847" height="869" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599642097394" />
+    <state x="717" y="390" key="MultipleFileMergeDialog" timestamp="1599642098824">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="574" y="255" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1599583639530" />
-    <state x="717" y="390" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1594783821666" />
+    <state x="717" y="390" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599642098824" />
     <state x="558" y="175" key="RollbackChangesDialog" timestamp="1599583173129">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -485,11 +497,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="524" y="282" key="Vcs.Multiple.Commit.Info.Dialog.Key/0.0.1920.1040@0.0.1920.1040" timestamp="1594783795582" />
-    <state x="288" y="115" key="Vcs.Push.Dialog.v2" timestamp="1599583656106">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="360" y="145" key="Vcs.Push.Dialog.v2" timestamp="1599642113307">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="288" y="115" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1599583656106" />
-    <state x="360" y="145" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1598949686850" />
+    <state x="360" y="145" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1599642113307" />
     <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.723@0.23.1280.723" timestamp="1594170965651" />
     <state x="240" y="124" key="Vcs.Push.Dialog.v2/0.23.1280.726@0.23.1280.726" timestamp="1599533434238" />
     <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1599617534443">
@@ -501,11 +513,11 @@
     </state>
     <state x="4" y="78" width="1506" height="678" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1536.824@0.0.1536.824" timestamp="1599583284343" />
     <state x="5" y="99" width="1882" height="855" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599618292584" />
-    <state x="561" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1599611669124">
+    <state x="561" y="298" key="com.intellij.ide.util.TipDialog" timestamp="1599698070085">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1599568824255" />
-    <state x="561" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599611669124" />
+    <state x="561" y="298" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1599698070085" />
     <state x="173" y="98" width="1422" height="701" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1599640935981">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -626,7 +638,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/PreParser.java</url>
-          <line>22</line>
+          <line>25</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -656,13 +668,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/PreParser.java</url>
-          <line>119</line>
+          <line>172</line>
           <option name="timeStamp" value="46" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/sqlmagic/tinysql/instruction/PreParser.java</url>
-          <line>131</line>
-          <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/sqlmagic/tinysql/tinySQL.java</url>

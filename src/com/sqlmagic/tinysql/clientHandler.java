@@ -207,7 +207,6 @@ public class clientHandler extends Thread {
                                 || requestType == Request.UPDATE || requestType == Request.DELETE) { /*增删改查*/
                             // 首先对rowSQL进行词法分析 需要根据cookie解析得到的用户身份  讨论该用户是否有权利执行这项操作
                             PreParser preParser = new PreParser();
-                            System.out.println("into Select.");
                             boolean isQualified = preParser.verifyPermission(cmdString, username, fName, con).getStatus() == 0 ? true : false;
 //                            boolean isQualified = true;
                             if (isQualified) {

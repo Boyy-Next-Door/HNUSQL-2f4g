@@ -1,6 +1,2 @@
-StudentDB=src\static_resourse\dbf_file\StudentDB
-
-
+StudentDB=src\static_resourse\dbf_file\StudentDBdb_1=src\static_resourse\dbf_file\db_1
 db_1=src\static_resourse\dbf_file\db_1
-db_2=src\static_resourse\dbf_file\db_2
-db_3=src\static_resourse\dbf_file\db_3
